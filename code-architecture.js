@@ -498,21 +498,22 @@ class CodeArchitecture {
         
         this.ctx.save();
         
-        // Terminal area at bottom
+        // Terminal area at bottom - use display dimensions with offset
         const terminalHeight = 60;
-        const terminalY = this.canvas.height - terminalHeight;
+        const bottomOffset = 40; // Move up from bottom
+        const terminalY = this.displayHeight - terminalHeight - bottomOffset;
         const padding = 16;
         
         // Draw terminal background (light theme)
         this.ctx.fillStyle = 'rgba(250, 250, 249, 0.98)';
-        this.ctx.fillRect(0, terminalY, this.canvas.width, terminalHeight);
+        this.ctx.fillRect(0, terminalY, this.displayWidth, terminalHeight);
         
         // Draw top border
         this.ctx.strokeStyle = '#D6D3D1';
         this.ctx.lineWidth = 1;
         this.ctx.beginPath();
         this.ctx.moveTo(0, terminalY);
-        this.ctx.lineTo(this.canvas.width, terminalY);
+        this.ctx.lineTo(this.displayWidth, terminalY);
         this.ctx.stroke();
         
         // Word wrap the text - use Korean font if language is Korean
@@ -520,7 +521,7 @@ class CodeArchitecture {
         this.ctx.font = isKorean 
             ? '13px "IBM Plex Mono", "Noto Sans KR", monospace'
             : '13px "IBM Plex Mono", monospace';
-        const maxWidth = this.canvas.width - padding * 2;
+        const maxWidth = this.displayWidth - padding * 2;
         const words = this.typedText.split(' ');
         const lines = [];
         let currentLine = '';

@@ -1382,6 +1382,13 @@ class TerminalPortfolio {
                 
                 mobileContainer.innerHTML = content;
                 
+                // Apply beige background for hero section only
+                if (fileId === 'hero') {
+                    mobileContainer.classList.add('hero-bg');
+                } else {
+                    mobileContainer.classList.remove('hero-bg');
+                }
+                
                 // Reset scroll after content loads
                 setTimeout(() => {
                     window.scrollTo(0, 0);
@@ -1416,6 +1423,32 @@ class TerminalPortfolio {
         if ((fileId.startsWith('process-') || fileId.startsWith('exhibition') || fileId.startsWith('research-')) && typeof initProcessNodes === 'function') {
             // Wait for translation to complete before starting typewriter
             setTimeout(initProcessNodes, 200);
+        }
+        
+        // Show mobile scroll indicator on about page only
+        if (isMobile && fileId === 'about') {
+            const indicator = document.getElementById('mobile-scroll-indicator');
+            const mobileContentContainer = document.getElementById('mobile-content');
+            if (indicator && mobileContentContainer) {
+                indicator.style.display = 'block';
+                indicator.style.opacity = '0.4';
+                
+                // Hide indicator after user scrolls
+                const hideIndicator = () => {
+                    const scrolled = mobileContentContainer.scrollTop > 50;
+                    if (scrolled) {
+                        indicator.style.opacity = '0';
+                        indicator.style.transition = 'opacity 0.3s';
+                        setTimeout(() => indicator.style.display = 'none', 300);
+                        mobileContentContainer.removeEventListener('scroll', hideIndicator);
+                    }
+                };
+                mobileContentContainer.addEventListener('scroll', hideIndicator);
+            }
+        } else {
+            // Hide indicator on other pages
+            const indicator = document.getElementById('mobile-scroll-indicator');
+            if (indicator) indicator.style.display = 'none';
         }
         
         // Initialize video thumbnails for experience.md (desktop only)
