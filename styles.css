@@ -640,14 +640,19 @@ body {
         height: 100% !important;
     }
     
-    /* Add padding to all sections except hero */
+    /* Add padding to all sections except hero with safe areas */
     .mobile-content-container > *:not(.hero-intro) {
-        padding: 20px 20px !important;
+        padding: 20px calc(20px + env(safe-area-inset-right)) 20px calc(20px + env(safe-area-inset-left)) !important;
     }
     
-    /* Add extra bottom padding to prevent content cutoff */
+    /* Add extra bottom padding to prevent content cutoff with safe area */
     .mobile-content-container {
-        padding-bottom: 60px !important;
+        padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+    }
+    
+    /* Also add safe area padding to individual content sections */
+    .mobile-content-container > *:last-child {
+        margin-bottom: calc(40px + env(safe-area-inset-bottom)) !important;
     }
     
     /* Hero content (text part) gets padding */
