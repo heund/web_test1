@@ -26,6 +26,10 @@ function initProcessNodes() {
     
     const isMobile = window.innerWidth <= 1024;
     
+    // Check if user has visited this page before (desktop only)
+    const pageKey = window.location.pathname + window.location.hash;
+    const hasVisited = sessionStorage.getItem('visited_' + pageKey);
+    
     if (isMobile) {
         // Mobile: Fade in elements sequentially
         typewriterElements.forEach((element, index) => {
@@ -34,8 +38,14 @@ function initProcessNodes() {
                 element.classList.add('fade-in');
             }, index * 100);
         });
+    } else if (hasVisited) {
+        // Desktop return visit: Show all text immediately
+        typewriterElements.forEach(element => {
+            element.classList.add('typing');
+        });
     } else {
-        // Desktop: Typewriter effect
+        // Desktop first visit: Typewriter effect
+        sessionStorage.setItem('visited_' + pageKey, 'true');
         let currentIndex = 0;
         
         function typeNextElement() {

@@ -1369,10 +1369,10 @@ class TerminalPortfolio {
                             <div class="cv-location" data-en="${locationDataEn}" data-kr="${locationDataKr}">${location ? location.innerHTML : ''}</div>
                         </div>
                         ${imageGrid ? imageGrid.outerHTML : ''}
+                        <div class="cv-medium" data-en="${mediumDataEn}" data-kr="${mediumDataKr}">${medium ? medium.textContent : ''}</div>
                         <div class="mobile-exhibition-description">
                             ${descriptionsHTML}
                         </div>
-                        <div class="cv-medium" data-en="${mediumDataEn}" data-kr="${mediumDataKr}">${medium ? medium.textContent : ''}</div>
                     `;
                 } else {
                     // Strip emphasis spans for mobile
