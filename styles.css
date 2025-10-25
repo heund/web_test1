@@ -525,6 +525,7 @@ body {
         -webkit-overflow-scrolling: touch !important;
         scroll-behavior: smooth !important;
         padding: 0 !important;
+        padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
         margin: 0 !important;
         box-sizing: border-box !important;
     }
@@ -677,11 +678,6 @@ body {
     /* Add padding to all sections except hero with safe areas */
     .mobile-content-container > *:not(.hero-intro) {
         padding: 20px calc(20px + env(safe-area-inset-right)) 20px calc(20px + env(safe-area-inset-left)) !important;
-    }
-    
-    /* Add extra bottom padding to prevent content cutoff with safe area */
-    .mobile-content-container {
-        padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
     }
     
     /* Also add safe area padding to individual content sections */
