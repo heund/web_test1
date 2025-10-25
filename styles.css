@@ -574,11 +574,9 @@ body {
         font-size: 11px;
     }
     
-    /* Footer at bottom - like test */
+    /* Hide footer completely on mobile */
     .terminal-footer {
-        display: flex !important;
-        flex-shrink: 0 !important;
-        padding: 8px 16px !important;
+        display: none !important;
         background: var(--bg-sidebar) !important;
         border-top: 1px solid var(--border-color) !important;
         font-size: 10px !important;
@@ -655,9 +653,11 @@ body {
         margin-bottom: calc(40px + env(safe-area-inset-bottom)) !important;
     }
     
-    /* Hero content (text part) gets padding */
+    /* Hero content (text part) gets padding with extra bottom space */
     .hero-content {
         padding: 20px 20px !important;
+        padding-bottom: calc(15vh + 60px + env(safe-area-inset-bottom)) !important;
+        min-height: 40vh !important;
     }
     
     /* Hero canvas (animation) has no padding */
