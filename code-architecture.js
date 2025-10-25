@@ -101,12 +101,14 @@ class CodeArchitecture {
         const dpr = window.devicePixelRatio || 1;
         const rect = this.canvas.getBoundingClientRect();
         
+        // Store for later use
+        this.dpr = dpr;
+        this.displayWidth = rect.width;
+        this.displayHeight = rect.height;
+        
         // Set actual canvas size in memory (scaled for high-DPI)
         this.canvas.width = rect.width * dpr;
         this.canvas.height = rect.height * dpr;
-        
-        // Scale context to match device pixel ratio
-        this.ctx.scale(dpr, dpr);
         
         // Set display size (CSS pixels)
         this.canvas.style.width = rect.width + 'px';
@@ -567,9 +569,15 @@ class CodeArchitecture {
         // Clear canvas
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
+        // Apply DPR scaling for crisp rendering
+        this.ctx.save();
+        this.ctx.scale(this.dpr || 1, this.dpr || 1);
+        
         // Update phases
         this.updateCodePhase();
         this.updateArchitecturePhase();
+        
+        this.ctx.restore();
         
         requestAnimationFrame(() => this.animate());
     }
