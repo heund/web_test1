@@ -1,0 +1,103 @@
+{
+  "process": {
+    "research": {
+      "title": "Research",
+      "text": "Site-specific data collection and analysis begins each project, but not as objective observation. The process involves identifying data sources within specific contexts while interrogating what these systems reveal and what they hide. Collection methodologies are developed through dialogue with the environment and people within it. Analysis looks for patterns that expose underlying dynamics, treating data as narrative infrastructure containing embedded stories about human decisions and systemic relationships."
+    },
+    "systems": {
+      "title": "Systems",
+      "text": "Custom engines, real-time processing systems, and interactive software translate research into responsive architectures. But these aren't tools applied to content. Systems are built using agent-based models, feedback loops, and adaptive algorithms that enable emergent behaviour. Outcomes aren't predetermined but arise through continuous negotiation. Questions that surface during building inform design choices, which generate new methodologies. The system itself becomes the investigation."
+    },
+    "visual": {
+      "title": "Visual and Sonic Language",
+      "text": "Data visualisation, sonic cartography, and multimedia translation create perceptual interfaces for complex dynamics. Visual and sonic elements work together not to represent data accurately but to make invisible processes tangible. This isn't about clarity but about preserving complexity while making it experienceable. The translation refuses one-to-one mapping, instead revealing relational patterns and embedded logics that shape perception."
+    },
+    "experience": {
+      "title": "Experience",
+      "text": "Responsive systems complete themselves through audience participation. Not as interactive feature but as fundamental condition. Through encounter, viewers become implicated in the processes being revealed. Their presence and actions shape the system's evolution in real time, making them co-creators not of content but of the investigation itself. The work holds tension between observation and complicity."
+    }
+  },
+  "about": {
+    "name": "Hee-Eun Kim / Systems Artist",
+    "line1": {
+      "text1": "building",
+      "emphasis": "alternative infrastructures",
+      "text2": "for knowing and relating"
+    },
+    "line2": "through data, sound, and interaction",
+    "line3": {
+      "text1": "confronting the",
+      "emphasis": "reductionist violence",
+      "text2": "of frameworks that"
+    },
+    "line4": {
+      "text1": "demand legibility at the cost of",
+      "emphasis": "complexity"
+    },
+    "line5": {
+      "text1": "data as",
+      "emphasis": "narrative infrastructure",
+      "text2": ":"
+    },
+    "bullet1": "containing human decisions and systemic patterns",
+    "bullet2": "not pure information",
+    "bullet3": {
+      "emphasis": "behaviour",
+      "text": "rather than truth"
+    },
+    "line6": "refusing static one-to-one mappings",
+    "line7": "exposing logics without collapsing into simplified metrics",
+    "line8": {
+      "text1": "philosophical investigation becomes",
+      "emphasis": "systemic structure"
+    },
+    "line9": {
+      "text1": "creating conditions where complexity can be",
+      "emphasis": "experienced"
+    },
+    "line10": "not decoded",
+    "line11": {
+      "text1": "the work",
+      "emphasis": "holds tensions",
+      "text2": ", doesn't present answers"
+    },
+    "line12": "making visible mechanisms of algorithmic reality",
+    "line13": {
+      "text1": "while remaining",
+      "emphasis": "embedded",
+      "text2": "in those same processes"
+    },
+    "line14": {
+      "text1": "fundamentally",
+      "emphasis": "non-extractive"
+    },
+    "line15": {
+      "emphasis1": "coherence-first",
+      "emphasis2": "emergence-oriented"
+    },
+    "line16": "building not to optimize but to preserve what resists reduction",
+    "section2": {
+      "line1": "custom data engines, real-time sound processing, interactive software",
+      "line2": "not tools applied to content",
+      "line3": {
+        "text1": "systems that",
+        "emphasis": "sense and respond",
+        "text2": "to specific context"
+      },
+      "line4": {
+        "text1": "outcomes",
+        "emphasis": "emerge",
+        "text2": "through encounter, not predetermined"
+      },
+      "line5": {
+        "text1": "participation as",
+        "emphasis": "fundamental condition"
+      },
+      "line6": {
+        "text1": "audience becomes",
+        "emphasis": "implicated",
+        "text2": "in processes being made visible"
+      }
+    }
+  }
+}

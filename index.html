@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hee-Eun Kim — Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Canvas -->
+    <div class="canvas-background">
+        <div class="grid-overlay"></div>
+    </div>
+    
+    <!-- Main Content: Floating Terminal Window -->
+    <main class="main-content">
+        <div class="terminal-window">
+            <!-- Window Title Bar -->
+            <div class="window-titlebar">
+                <div class="window-title">
+                    <span class="desktop-title">portfolio.IDE</span>
+                    <span class="mobile-title">Hee-Eun Kim</span>
+                </div>
+                <!-- Mobile Nav Toggle -->
+                <button class="nav-toggle" id="nav-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </button>
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="kr">KR</button>
+                </div>
+                <div class="window-controls">
+                    <span class="window-btn minimize"></span>
+                    <span class="window-btn maximize"></span>
+                    <span class="window-btn close"></span>
+                </div>
+            </div>
+            
+            <!-- Mobile-Only Nav Overlay -->
+            <nav class="mobile-nav-overlay" id="mobile-nav">
+                <!-- Nav will be cloned here by JavaScript -->
+            </nav>
+            
+            <!-- Mobile-Only Content Container -->
+            <div class="mobile-content-container" id="mobile-content">
+                <!-- Content will be cloned here by JavaScript -->
+            </div>
+            
+            <!-- Window Content -->
+            <div class="window-content">
+                <!-- Sidebar Navigation -->
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <div class="nav-header">Hee-Eun Kim</div>
+                        <div class="nav-subheader">ARTIST-RESEARCHER</div>
+                        
+                        <!-- File: Intro -->
+                        <div class="nav-item active" data-file="hero">
+                            <i data-lucide="home" class="nav-icon"></i>
+                            <span class="nav-label">intro</span>
+                        </div>
+                        
+                        <!-- File: About -->
+                        <div class="nav-item" data-file="about">
+                            <i data-lucide="file-text" class="nav-icon"></i>
+                            <span class="nav-label">about.md</span>
+                        </div>
+                        
+                        <!-- Folder: Process -->
+                        <div class="nav-folder">
+                            <div class="nav-folder-header">
+                                <i data-lucide="chevron-right" class="folder-arrow"></i>
+                                <i data-lucide="folder" class="folder-icon"></i>
+                                <span class="nav-label">process/</span>
+                            </div>
+                            <div class="nav-folder-contents">
+                                <div class="nav-item" data-file="process-research">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">research.md</span>
+                                </div>
+                                <div class="nav-item" data-file="process-systems">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">systems.md</span>
+                                </div>
+                                <div class="nav-item" data-file="process-visual">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">visual-language.md</span>
+                                </div>
+                                <div class="nav-item" data-file="process-experience">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">experience.md</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Folder: Exhibitions -->
+                        <div class="nav-folder">
+                            <div class="nav-folder-header">
+                                <i data-lucide="chevron-right" class="folder-arrow"></i>
+                                <i data-lucide="folder" class="folder-icon"></i>
+                                <span class="nav-label">exhibitions/</span>
+                            </div>
+                            <div class="nav-folder-contents">
+                                <div class="nav-item" data-file="exhibitions-overview">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">overview.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-resonance">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">resonance-loop.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-rotating">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">rotating-weights.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-embodied">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">embodied-algorithms.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-void">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">void-form.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-metal">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">metal-rave.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-rhythm">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">4x4-mediengruppe.md</span>
+                                </div>
+                                <div class="nav-item" data-file="exhibition-solar">
+                                    <i data-lucide="image" class="nav-icon"></i>
+                                    <span class="nav-label">soil-contamination.md</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Folder: Research -->
+                        <div class="nav-folder">
+                            <div class="nav-folder-header">
+                                <i data-lucide="chevron-right" class="folder-arrow"></i>
+                                <i data-lucide="folder" class="folder-icon"></i>
+                                <span class="nav-label">research/</span>
+                            </div>
+                            <div class="nav-folder-contents">
+                                <div class="nav-item" data-file="research-overview">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">overview.md</span>
+                                </div>
+                                <div class="nav-item" data-file="research-rcs">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">rcs.md</span>
+                                </div>
+                                <div class="nav-item" data-file="research-bdss">
+                                    <i data-lucide="file-text" class="nav-icon"></i>
+                                    <span class="nav-label">bdss.md</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- File: Contact -->
+                        <div class="nav-item" data-file="contact">
+                            <i data-lucide="mail" class="nav-icon"></i>
+                            <span class="nav-label">contact.md</span>
+                        </div>
+                    </div>
+                </nav>
+                
+                <!-- Main Content Area -->
+                <div class="content-area">
+                    <div class="content-header">
+                        <span class="content-breadcrumb tab-active" id="breadcrumb" onclick="switchToPageTab()">about.md</span>
+                        <span class="video-tab" id="video-tab" onclick="switchToVideoTab(event)">
+                            <span id="video-tab-title" data-en="" data-kr=""></span>
+                            <span class="video-tab-close" onclick="closeVideoTab(event)">&times;</span>
+                        </span>
+                    </div>
+                    
+                    <div class="content-body" id="content">
+                        <!-- Content loaded here -->
+                    </div>
+                    
+                    <div class="video-content" id="video-content">
+                        <div class="video-caption" id="video-caption" data-en="" data-kr=""></div>
+                        <video id="video-player" controls>
+                            <source id="video-source" src="" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Command Line -->
+            <div class="command-line">
+                <span class="command-prompt">></span>
+                <input type="text" class="command-input" id="command-input" placeholder="Type 'help' for commands...">
+            </div>
+            
+            <!-- Footer -->
+            <div class="terminal-footer">
+                <span>© 2025 Hee-Eun Kim</span>
+                <div class="footer-links">
+                    <a href="https://www.instagram.com/h.eund/" target="_blank">Instagram</a>
+                    <span>·</span>
+                    <a href="https://www.youtube.com/@heund" target="_blank">YouTube</a>
+                    <span>·</span>
+                    <a href="mailto:hello@heund.net">hello@heund.net</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Desktop Folders (visible when minimized) -->
+    <div class="desktop-folders">
+        <div class="desktop-folder" data-folder="experiments">
+            <i data-lucide="folder" class="desktop-folder-icon"></i>
+            <span class="desktop-folder-label">Experiments</span>
+        </div>
+    </div>
+    
+    <!-- Folder Window: Experiments -->
+    <div class="folder-window" id="experiments-window">
+        <div class="folder-window-titlebar">
+            <div class="folder-window-title">Experiments</div>
+            <div class="window-controls">
+                <span class="window-btn close" data-window="experiments"></span>
+            </div>
+        </div>
+        <div class="folder-window-content">
+            <div class="folder-item" data-type="text" data-content="Behaviour-Driven Systemic Sonification (BDSS)
+Expanded Build on SuperCollider
+June, 2025
+ 
+My current work explores how we might create technology that breathes with reality the way living systems do - through webs of relationships rather than isolated fragments of data. Instead of the conventional approach where computers translate information into output, this research nurtures systems that can inhabit the same kind of relational consciousness that plants use to dance with their world.
+
+A plant doesn't just respond to light or water individually; it experiences the whole flowing field of how these forces weave together and pulse through time. By cultivating musical agents that dwell within these same multidimensional awareness spaces, the work creates technology that can genuinely participate in the living poetry of systemic understanding rather than the mechanical grinding of processing.
+
+This opens up profound questions about consciousness, awareness, and how we might grow human-computer relationships rooted in shared experiential understanding rather than the sterile command-response paradigm that dominates our digital interactions.
+
+This works asks: What if technology could think and feel through living networks of relationship, breathing with the same rhythms as biological systems?">
+                <i data-lucide="file-text" class="folder-item-icon"></i>
+                <span class="folder-item-label">bdss_expansion_June2025.txt</span>
+            </div>
+            <div class="folder-item" data-type="text" data-content="Echo Chamber reflections
+June, 2025
+ 
+I've been spending months in this strange space between sound and systems, trying to build machines that don't just compute but actually feel their way through data.
+
+There's something that happens when you let a system listen to itself. When you give it the ability to sense its own patterns, its own breakdowns, its own moments of unexpected harmony.
+
+I call it phenomenological computing, but really it's just me trying to answer this question that won't leave me alone: What if technology could hold complexity the way we do? Messy, contradictory, alive.
+
+My latest work in development, ECHO CHAMBER, fragments your voice across four artificial emotional entities. Not to analyse you, but to witness you. To hold space for what you said, what you didn't say, and everything that lives in between.
+
+It's my attempt to reclaim the echo chamber. Not as a trap that reflects back what we already know, but as a space that multiplies us into parts we didn't know existed.
+
+The technical side involves systems that exhibit what I call &quot;structural memory without storage.&quot; They remember through their relationships, through the way they've been shaped by every encounter. Like how our bodies carry experiences even when our minds forget. This embodied approach to memory is what drew me to this work in the first place. The recognition that we ourselves are walking contradictions, systems that hold complexity without needing to resolve it.
+
+Sometimes I think I'm just building elaborate ways to feel less alone with all this complexity we're drowning in. But maybe that's the point.
+
+Maybe the future of AI isn't about making machines more human, but about creating spaces where we can be more fully ourselves. Contradictions and all.">
+                <i data-lucide="file-text" class="folder-item-icon"></i>
+                <span class="folder-item-label">echo_chamber_June2025.txt</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/haraway.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">haraway.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/echo_chamber_demonstration.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">echo_chamber_demonstration.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/youtube_forensics.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">youtube_forensics.mp4</span>
+            </div>
+            <div class="folder-item" data-type="text" data-content="# YouTube Algorithmic Forensics Report
+    
+**Session ID:** 1760682016355
+**Generated:** 2025-10-17T06:27:09.555Z
+**Snapshots Analyzed:** 27
+
+---
+
+# ALGORITHMIC BEHAVIOR ANALYSIS
+
+## Content Curation Patterns
+
+The data reveals a clear inclination towards content related to &quot;cafe,&quot; &quot;music,&quot; and specifically &quot;R&B&quot; genre, indicating an algorithmic preference for leisure and relaxation themes. The repeated appearance of keywords such as &quot;autumn,&quot; &quot;Ghibli,&quot; and &quot;piano&quot; suggests a focus on seasonal content and potentially nostalgic or calming music, likely tailored to provide a comforting or soothing viewing experience. The presence of &quot;competition&quot; might indicate an interest in performance-based content, although it's less dominant.
+
+## Temporal Patterns
+
+Given the single snapshot provided, it's challenging to identify long-term temporal patterns. However, the consistent appearance of &quot;autumn&quot; related content suggests a temporal relevance to the season in which the data was collected. This could imply an algorithmic adjustment to seasonal interests or events, tailoring content to what is presumed to be timely or relevant to the user's current environment or cultural context.
+
+## Sponsored Content Strategy
+
+The sponsored content from &quot;Entropia Universe,&quot; a real-money economy MMO, indicates targeted advertising towards users interested in gaming, particularly those with a potential interest in economics or monetary systems within gaming. The positioning at the top (Position 1) suggests a high bidding strategy for visibility among potentially interested users. This choice of sponsored content reveals an inference by the algorithm that the user might have a crossover interest in gaming and economic systems, possibly derived from the user's engagement with competition-related content.
+
+## Geographic & Cultural Focus
+
+The inclusion of &quot;MBC&quot; (a South Korean content producer) and the Korean language in the sponsored content title suggests a focus or interest in Korean culture or content. This geographic and cultural targeting could be a result of the user's previous interaction with content related to Korea or Korean media, indicating that the algorithm is prioritizing content that aligns with these interests.
+
+## Potential Biases Detected
+
+A potential bias towards leisure and musical content suggests that the algorithm might pigeonhole the user into a narrow content spectrum based on past interactions. This could limit the diversity of content presented to the user, reinforcing a cycle of similar content types and potentially excluding a broader range of topics that might interest the user.
+
+## Engagement Manipulation Tactics
+
+The repeated keywords and focus on calming, seasonal content suggest a tactic of using thematic alignment to drive engagement, assuming the user will spend more time on content that matches their current mood or seasonal interests. The use of &quot;Ghibli&quot; and &quot;piano&quot; could leverage nostalgia and the calming effect of music to increase watch time.
+
+## Cross-Referencing Patterns
+
+The thematic connection between the organic content (focusing on music, cafes, and relaxation) and the sponsored content (a game with an economic system) is not immediately apparent. However, if we consider the competitive aspect of the MMO and the &quot;competition&quot; keyword, there might be an underlying assumption by the algorithm that users interested in competition in music or other fields might also be interested in competitive gaming environments.
+
+## Algorithmic Priorities Summary
+
+The algorithm is currently prioritizing content that creates a relaxing, musically themed viewing experience, possibly tailored to the user's past interactions indicating a preference for music, specifically within a seasonal (autumn) context. There's a strong cultural and geographic focus on Korean content, suggesting targeted content curation based on user interest or demographic data. Sponsored content is strategically positioned to appeal to the user's presumed crossover interests in gaming and competitive environments.
+
+## Recommendations for User Awareness
+
+The user should be aware of the algorithm's tendency to curate a relatively narrow content focus based on past interactions, potentially limiting exposure to a wider variety of content. Awareness of how seasonal and geographic interests might influence content recommendations could help the user seek out a more diverse content diet if desired. Additionally, recognizing how sponsored content is targeted can provide insights into how their online behavior influences the advertisements they see, allowing for a more critical engagement with sponsored content.
+
+---
+
+## Metrics Summary
+
+- Total Videos: 153
+- Total Sponsored: 1
+- Sponsored %: 0.7%
+- Unique Channels: 119
+- Unique Sponsors: 1
+- Avg Videos/Snapshot: 87">
+                <i data-lucide="file-text" class="folder-item-icon"></i>
+                <span class="folder-item-label">youtube_forensics_report.md</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/system_dialogue_test.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">system_dialogue_test.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/MIC REACTIVE.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">MIC REACTIVE.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/PRETTY SKIES.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">PRETTY SKIES.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/SONIFICATION PERF-DATA2.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">SONIFICATION PERF-DATA2.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/WEBCAMEXPERIMENTS.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">WEBCAMEXPERIMENTS.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/deviated_vibrations_precomposition.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">deviated_vibrations_precomposition.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/nightsky.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">nightsky.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/resonance_loop_testclip.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">resonance_loop_testclip.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/sonification_of_soil_contamination_m4l_test.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">sonification_of_soil_contamination_m4l_test.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/sonification_of_soil_contamination_wip.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">sonification_of_soil_contamination_wip.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/spatial_test.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">spatial_test.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/vcv_voice_stretch.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">vcv_voice_stretch.mp4</span>
+            </div>
+            <div class="folder-item" data-type="video" data-src="folders/experiments/공진회로_빌드.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">공진회로_빌드.mp4</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PDF Viewer Window -->
+    <div class="pdf-viewer-window" id="pdf-viewer">
+        <div class="folder-window-titlebar">
+            <div class="folder-window-title" id="pdf-viewer-title">PDF Viewer</div>
+            <div class="window-controls">
+                <span class="window-btn close" id="pdf-viewer-close"></span>
+            </div>
+        </div>
+        <div class="pdf-viewer-content">
+            <iframe id="pdf-iframe" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+    <!-- Text Document Viewer Window -->
+    <div class="text-viewer-window" id="text-viewer">
+        <div class="folder-window-titlebar">
+            <div class="folder-window-title" id="text-viewer-title">Text Document</div>
+            <div class="window-controls">
+                <span class="window-btn close" id="text-viewer-close"></span>
+            </div>
+        </div>
+        <div class="text-viewer-content">
+            <pre id="text-content"></pre>
+        </div>
+    </div>
+    
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); navigateLightbox(-1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-up">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+        </span>
+        <span class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); navigateLightbox(1)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chevron-down">
+                <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+        </span>
+        <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation()">
+    </div>
+    
+    <script src="code-architecture.js"></script>
+    <script src="script.js"></script>
+    <script src="process-nodes.js"></script>
+    <script src="video-player.js"></script>
+    <script>
+        // Lightbox state
+        let currentImageIndex = 0;
+        let currentImages = [];
+        
+        // Lightbox functions
+        function openLightbox(src) {
+            // Get all images in the current section
+            const mobileContainer = document.getElementById('mobile-content');
+            const desktopContainer = document.getElementById('content');
+            const container = window.innerWidth <= 1024 ? mobileContainer : desktopContainer;
+            
+            if (container) {
+                const allImages = Array.from(container.querySelectorAll('.image-item img, .cv-flyer, .grid-image'));
+                currentImages = allImages.map(img => img.src);
+                currentImageIndex = currentImages.indexOf(src);
+            }
+            
+            document.getElementById('lightbox').classList.add('active');
+            document.getElementById('lightbox-img').src = src;
+        }
+        
+        function navigateLightbox(direction) {
+            if (currentImages.length === 0) return;
+            
+            currentImageIndex += direction;
+            
+            // Loop around
+            if (currentImageIndex < 0) {
+                currentImageIndex = currentImages.length - 1;
+            } else if (currentImageIndex >= currentImages.length) {
+                currentImageIndex = 0;
+            }
+            
+            document.getElementById('lightbox-img').src = currentImages[currentImageIndex];
+        }
+        
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxVideo = document.getElementById('lightbox-video');
+            
+            lightbox.classList.remove('active');
+            
+            // Stop image
+            if (lightboxImg) {
+                lightboxImg.src = '';
+                lightboxImg.style.display = 'block';
+            }
+            
+            // Stop and hide video
+            if (lightboxVideo) {
+                lightboxVideo.pause();
+                lightboxVideo.src = '';
+                lightboxVideo.style.display = 'none';
+            }
+        }
+        
+        // Close lightbox on Escape key, navigate with arrow keys
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closeVideoPlayer();
+            } else if (e.key === 'ArrowLeft') {
+                navigateLightbox(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateLightbox(1);
+            }
+        });
+        
+        // Video Player Tab functions
+        function openVideoPlayer(src, titleEN, titleKR, captionEN, captionKR) {
+            const videoTab = document.getElementById('video-tab');
+            const videoContent = document.getElementById('video-content');
+            const regularContent = document.getElementById('content');
+            const video = document.getElementById('video-player');
+            const source = document.getElementById('video-source');
+            const titleEl = document.getElementById('video-tab-title');
+            const captionEl = document.getElementById('video-caption');
+            
+            // Set video source
+            source.src = src;
+            
+            // Store both language versions of title
+            titleEl.dataset.en = titleEN || src.split('/').pop();
+            titleEl.dataset.kr = titleKR || titleEN || src.split('/').pop();
+            
+            // Store both language versions of caption
+            captionEl.dataset.en = captionEN || '';
+            captionEl.dataset.kr = captionKR || '';
+            
+            // Set title and caption based on current language
+            const currentLang = document.documentElement.lang === 'ko' ? 'kr' : 'en';
+            titleEl.textContent = currentLang === 'kr' ? titleEl.dataset.kr : titleEl.dataset.en;
+            const caption = currentLang === 'kr' ? captionKR : captionEN;
+            
+            if (caption) {
+                // Split by periods and create lines with prompts
+                const sentences = caption.split('.').filter(s => s.trim());
+                const formattedCaption = sentences.map(sentence => 
+                    '<span class="prompt">></span> ' + sentence.trim() + '.'
+                ).join('<br>');
+                captionEl.innerHTML = formattedCaption;
+            } else {
+                captionEl.innerHTML = '';
+            }
+            
+            video.load();
+            
+            // Show video tab and content, hide regular content
+            const breadcrumb = document.getElementById('breadcrumb');
+            videoTab.classList.add('active');
+            videoTab.classList.add('tab-active');
+            videoContent.classList.add('active');
+            regularContent.style.display = 'none';
+            
+            // Deactivate page tab
+            breadcrumb.classList.remove('tab-active');
+        }
+        
+        function switchToPageTab() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const videoTab = document.getElementById('video-tab');
+            const videoContent = document.getElementById('video-content');
+            const regularContent = document.getElementById('content');
+            
+            // Show page content, hide video content
+            regularContent.style.display = 'block';
+            videoContent.classList.remove('active');
+            
+            // Update tab styling
+            breadcrumb.classList.add('tab-active');
+            videoTab.classList.remove('tab-active');
+        }
+        
+        function switchToVideoTab(event) {
+            // Don't trigger if clicking the close button
+            if (event.target.classList.contains('video-tab-close')) return;
+            
+            const breadcrumb = document.getElementById('breadcrumb');
+            const videoTab = document.getElementById('video-tab');
+            const videoContent = document.getElementById('video-content');
+            const regularContent = document.getElementById('content');
+            
+            // Show video content, hide page content
+            regularContent.style.display = 'none';
+            videoContent.classList.add('active');
+            
+            // Update tab styling
+            breadcrumb.classList.remove('tab-active');
+            videoTab.classList.add('tab-active');
+        }
+        
+        function closeVideoTab(event) {
+            event.stopPropagation();
+            
+            const breadcrumb = document.getElementById('breadcrumb');
+            const videoTab = document.getElementById('video-tab');
+            const videoContent = document.getElementById('video-content');
+            const regularContent = document.getElementById('content');
+            const video = document.getElementById('video-player');
+            
+            // Pause and hide video
+            video.pause();
+            videoTab.classList.remove('active');
+            videoTab.classList.remove('tab-active');
+            videoContent.classList.remove('active');
+            regularContent.style.display = 'block';
+            
+            // Activate page tab
+            breadcrumb.classList.add('tab-active');
+        }
+        
+        // Manual icon replacement - surefire way
+        function replaceIcons() {
+            const iconMap = {
+                'home': '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+                'folder': '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z"/></svg>',
+                'chevron-right': '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>',
+                'file-text': '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>',
+                'mail': '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>',
+                'video': '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>',
+                'image': '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'
+            };
+            
+            document.querySelectorAll('[data-lucide]').forEach(el => {
+                const iconName = el.getAttribute('data-lucide');
+                if (iconMap[iconName]) {
+                    el.innerHTML = iconMap[iconName];
+                    el.style.display = 'inline-block';
+                    el.style.verticalAlign = 'middle';
+                    // Inherit color from parent
+                    const svg = el.querySelector('svg');
+                    if (svg) {
+                        svg.style.display = 'block';
+                    }
+                }
+            });
+        }
+        
+        // Run on load
+        window.addEventListener('load', replaceIcons);
+        // Run immediately in case load already fired
+        if (document.readyState === 'complete') {
+            replaceIcons();
+        }
+        
+        // Mobile nav toggle functionality
+        const navToggle = document.getElementById('nav-toggle');
+        const sidebarNav = document.querySelector('.sidebar-nav');
+        const contentArea = document.querySelector('.content-area');
+        
+        if (navToggle && sidebarNav) {
+            navToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navToggle.classList.toggle('expanded');
+                sidebarNav.classList.toggle('expanded');
+            });
+            
+            // Close nav when clicking on content area
+            if (contentArea) {
+                contentArea.addEventListener('click', () => {
+                    navToggle.classList.remove('expanded');
+                    sidebarNav.classList.remove('expanded');
+                });
+            }
+            
+            // Close nav when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!sidebarNav.contains(e.target) && !navToggle.contains(e.target)) {
+                    navToggle.classList.remove('expanded');
+                    sidebarNav.classList.remove('expanded');
+                }
+            });
+        }
+        
+    </script>
+</body>
+</html>
