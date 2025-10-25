@@ -1178,6 +1178,7 @@ body {
     
     .hero-question {
         margin: 0 0 16px 0;
+        padding-bottom: 20px !important;
     }
     
     .hero-content p {
@@ -1186,6 +1187,12 @@ body {
     
     .hero-content p:last-child {
         margin-bottom: 0;
+        padding-bottom: calc(10vh + 40px) !important;
+    }
+    
+    /* Extra spacing for hero description typewriter */
+    .hero-description {
+        padding-bottom: calc(10vh + 40px) !important;
     }
     
     

@@ -98,10 +98,23 @@ class CodeArchitecture {
     }
     
     resize() {
-        this.canvas.width = this.canvas.offsetWidth;
-        this.canvas.height = this.canvas.offsetHeight;
-        this.centerX = this.canvas.width / 2;
-        this.centerY = this.canvas.height / 2;
+        const dpr = window.devicePixelRatio || 1;
+        const rect = this.canvas.getBoundingClientRect();
+        
+        // Set actual canvas size in memory (scaled for high-DPI)
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        
+        // Scale context to match device pixel ratio
+        this.ctx.scale(dpr, dpr);
+        
+        // Set display size (CSS pixels)
+        this.canvas.style.width = rect.width + 'px';
+        this.canvas.style.height = rect.height + 'px';
+        
+        // Use CSS pixel dimensions for calculations
+        this.centerX = rect.width / 2;
+        this.centerY = rect.height / 2;
     }
     
     generateCodeLine() {
