@@ -1482,10 +1482,21 @@ body {
     max-height: 700px;
 }
 
-/* Desktop-specific: Hide line breaks in h2 titles */
+/* Desktop-specific: Hide line breaks in collapsible h2 titles only */
 @media (min-width: 1025px) {
-    h2 br {
+    .collapsible-title br {
         display: none;
+    }
+    
+    /* Hide mobile-only line breaks on desktop */
+    .mobile-only-br {
+        display: none;
+    }
+    
+    /* Remove top margin from first h2 in language containers */
+    .lang-en > h2:first-child,
+    .lang-kr > h2:first-child {
+        margin-top: 0 !important;
     }
 }
 
@@ -2247,6 +2258,9 @@ h3 {
     font-size: 13px;
     line-height: 1.6;
     max-width: 900px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 24px;
+    border-radius: 4px;
 }
 
 .terminal-prompt {

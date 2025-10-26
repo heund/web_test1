@@ -336,6 +336,7 @@ class TerminalPortfolio {
                                     <p class="cv-description" data-en="Real-time facial recognition integrated with speech-to-text systems. Custom Machine Learning Models trained on artist's facial vectors generate language through Behaviour-Driven Systemic Sonification, creating recursive cycles where biometric data becomes voice." data-kr="실시간 얼굴 인식과 음성-텍스트 변환 시스템을 통합한 작업. 작가의 안면 벡터로 학습된 머신러닝 모델이 생체 데이터를 언어로 생성하며, 데이터가 목소리로 전환되는 재귀적 순환 구조를 형성한다.">Real-time facial recognition integrated with speech-to-text systems. Custom Machine Learning Models trained on artist's facial vectors generate language through Behaviour-Driven Systemic Sonification, creating recursive cycles where biometric data becomes voice.</p>
                                     <p class="cv-medium" data-en="Affective translation software, Short Film, LED display" data-kr="소프트웨어, 단편 영상, LED 디스플레이">Affective translation software, Short Film, LED display</p>
                                 </div>
+                                <img src="images/resonance_loop_flyer.png" alt="Resonance Loop" class="cv-flyer" onclick="openLightbox(this.src)">
                             </div>
                             
                             <div class="cv-entry">
@@ -1396,8 +1397,9 @@ class TerminalPortfolio {
         if (fileId === 'about') {
             this.setupProfileSwitcher();
             
-            // Fade in text lines in about section (after translation completes) - only on first visit
+            // Fade in text lines in about section (after translation completes)
             if (!this.animatedPages.has(fileId)) {
+                // First visit: animate
                 setTimeout(() => {
                     const outputLines = document.querySelectorAll('.output-line:not(.blank):not(.section-marker)');
                     outputLines.forEach((element, index) => {
@@ -1406,7 +1408,7 @@ class TerminalPortfolio {
                         }, index * 200);
                     });
                     
-                    // Fade in images in about section
+                    // Fade in grid images
                     const gridImages = document.querySelectorAll('.image-grid .grid-image');
                     gridImages.forEach((element, index) => {
                         setTimeout(() => {
@@ -1415,6 +1417,14 @@ class TerminalPortfolio {
                     });
                 }, 300);
                 this.animatedPages.add(fileId);
+            } else {
+                // Revisit: add classes immediately without animation
+                document.querySelectorAll('.output-line:not(.blank):not(.section-marker)').forEach(element => {
+                    element.classList.add('fade-in-about-text');
+                });
+                document.querySelectorAll('.image-grid .grid-image').forEach(element => {
+                    element.classList.add('fade-in-exhibition-image');
+                });
             }
         }
         
