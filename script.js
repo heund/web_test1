@@ -456,105 +456,17 @@ class TerminalPortfolio {
             // RESEARCH FOLDER
             'research-overview': {
                 breadcrumb: 'research/overview.md',
-                html: `
-                    <div class="process-section">
-                        <div class="process-header">
-                            <span class="line-marker">//</span> <span data-en="Research Overview" data-kr="연구">Research Overview</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="Hee-Eun's research operates as independent R&D, developing systematic frameworks for technology that engages with rather than controls living systems. Treating the development process itself as equally central to final outcomes, exhibitions function as research sites where theoretical approaches and technical methods evolve through implementation and public interaction." data-kr="김희은의 연구는 독립 R&D로 작동하며, 살아있는 시스템을 제어하기보다 관여하는 기술을 위한 체계적 프레임워크를 개발한다. 최종 결과물과 동등하게 개발 과정 자체를 연구의 핵심으로 다루며, 전시는 이론적 접근과 기술적 방법이 구현과 공공 상호작용을 통해 진화하는 연구 현장으로 기능한다.">Hee-Eun's research operates as independent R&D, developing systematic frameworks for technology that engages with rather than controls living systems. Treating the development process itself as equally central to final outcomes, exhibitions function as research sites where theoretical approaches and technical methods evolve through implementation and public interaction.</span><span class="cursor-blink">_</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="Practice centers on two primary methodologies: Relational Cognitive Systems (RCS), which models cognition as emerging from distributed negotiation rather than isolated processing, and Behaviour-Driven Systemic Sonification (BDSS), which renders system dynamics as sonic expressions of ongoing adaptive processes. BDSS has been implemented across various installation works that translate ecological and industrial process data into sound. Grounded in systems theory and dynamic systems approaches, these frameworks challenge computational paradigms that prioritise efficiency and predetermined outcomes, instead proposing architectures where meaning arises through relational exchange and negotiated equilibrium." data-kr="실천은 두 가지 주요 방법론을 중심으로 한다: 인지를 고립된 처리가 아닌 분산된 협상에서 발현되는 것으로 모델링하는 관계적 인지 시스템(RCS)과, 시스템 역학을 진행 중인 적응 과정의 사운드 표현으로 렌더링하는 행동 기반 시스템 소니피케이션(BDSS)이 있다. BDSS는 생태 데이터와 산업 공정 데이터를 사운드로 변환하는 다양한 설치 작업에서 구현되었다. 시스템 이론과 동적 시스템 접근에 기반한 이 프레임워크들은 효율성과 미리 정해진 결과를 우선시하는 계산 패러다임에 도전하며, 대신 의미가 관계적 교환과 협상된 균형을 통해 발생하는 아키텍처를 제안한다.">Practice centers on two primary methodologies: Relational Cognitive Systems (RCS), which models cognition as emerging from distributed negotiation rather than isolated processing, and Behaviour-Driven Systemic Sonification (BDSS), which renders system dynamics as sonic expressions of ongoing adaptive processes. BDSS has been implemented across various installation works that translate ecological and industrial process data into sound. Grounded in systems theory and dynamic systems approaches, these frameworks challenge computational paradigms that prioritise efficiency and predetermined outcomes, instead proposing architectures where meaning arises through relational exchange and negotiated equilibrium.</span><span class="cursor-blink">_</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="Research unfolds across interconnected activities: developing theoretical frameworks that reconceptualise perception and cognition as relational processes, building technical systems through agent-based architectures and real-time computing, and testing these approaches through installations that serve as experimental validation. Each exhibition generates insights that feed back into theoretical refinement and technical iteration. In this model, installations function as epistemological instruments where hypotheses about distributed cognition, systemic negotiation, and affective computation become observable through embodied encounter, treating artistic production not as application of completed research but as essential component of the research process itself." data-kr="연구는 상호 연결된 활동들을 통해 전개된다: 지각과 인지를 관계적 과정으로 재개념화하는 이론적 프레임워크 개발, 에이전트 기반 아키텍처와 실시간 컴퓨팅을 통한 기술 시스템 구축, 그리고 실험적 검증으로 기능하는 설치를 통한 이러한 접근의 테스트. 각 전시는 이론적 정제와 기술적 반복으로 피드백되는 통찰을 생성한다. 이 모델에서, 설치는 분산 인지, 시스템 협상, 정동적 계산에 대한 가설이 체화된 조우를 통해 관찰 가능해지는 인식론적 도구로 기능하며, 예술적 생산을 완성된 연구의 적용이 아니라 연구 과정 자체의 필수적 부분으로 다룬다.">Research unfolds across interconnected activities: developing theoretical frameworks that reconceptualise perception and cognition as relational processes, building technical systems through agent-based architectures and real-time computing, and testing these approaches through installations that serve as experimental validation. Each exhibition generates insights that feed back into theoretical refinement and technical iteration. In this model, installations function as epistemological instruments where hypotheses about distributed cognition, systemic negotiation, and affective computation become observable through embodied encounter, treating artistic production not as application of completed research but as essential component of the research process itself.</span><span class="cursor-blink">_</span>
-                        </div>
-                    </div>
-                `
+                htmlFile: 'research/research-overview.html'
             },
             
             'research-rcs': {
                 breadcrumb: 'research/rcs.md',
-                html: `
-                    <div class="process-section">
-                        <div class="process-header">
-                            <span class="line-marker">//</span> <span data-en="Relational Cognitive System (RCS)" data-kr="관계적 인지 시스템 (RCS)">Relational Cognitive System (RCS)</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="A framework for designing cognitive architectures that prioritise distributed emergence over centralised optimisation. RCS models cognition as negotiated processes arising from recursive symbolic interaction, affective entrainment, and coherence-seeking dynamics within relational fields rather than isolated computational units." data-kr="중앙 집중형 최적화보다 분산형 창발을 우선시하는 인지 아키텍처 설계 프레임워크. RCS는 인지를 독립된 계산 단위가 아닌 관계 속에서 재귀적 상호작용, 정서적 동기화, 일관성 추구를 통해 발생하는 협상 과정으로 모델링한다.">A framework for designing cognitive architectures that prioritise distributed emergence over centralised optimisation. RCS models cognition as negotiated processes arising from recursive symbolic interaction, affective entrainment, and coherence-seeking dynamics within relational fields rather than isolated computational units.</span><span class="cursor-blink">_</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="Drawing on systems theory, dynamic systems approaches, and Eastern philosophy, RCS employs multi-agent architectures with recursive feedback and resonance-based evaluation. The framework positions meaning as continuously stabilised through symbolic anchoring, emotional field modulation, and improvisational adaptation, enabling affect-sensitive systems capable of co-creating interpretation with human participants." data-kr="시스템 이론, 동역학계 이론, 동양 철학을 기반으로, RCS는 재귀적 피드백과 공명 기반 평가를 활용한 멀티 에이전트 아키텍처를 사용한다. 의미는 상징적 고정점, 정서장 변조, 즉흥적 적응을 통해 지속적으로 안정화되며, 인간 참여자와 해석을 공동 생성할 수 있는 감정 인식 시스템을 가능하게 한다.">Drawing on systems theory, dynamic systems approaches, and Eastern philosophy, RCS employs multi-agent architectures with recursive feedback and resonance-based evaluation. The framework positions meaning as continuously stabilised through symbolic anchoring, emotional field modulation, and improvisational adaptation, enabling affect-sensitive systems capable of co-creating interpretation with human participants.</span><span class="cursor-blink">_</span>
-                        </div>
-                        
-                        <div class="process-images">
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> Neural Network Sonification</div>
-                                <a href="https://youtube.com/shorts/QzUNDYefY_U" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtube.com/shorts/QzUNDYefY_U</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> CLARION Model</div>
-                                <a href="https://youtube.com/shorts/gr1eG__a7Cw" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtube.com/shorts/gr1eG__a7Cw</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> Temporal Pattern Recognition</div>
-                                <a href="https://youtube.com/shorts/R1rgIYHnlto" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtube.com/shorts/R1rgIYHnlto</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> Information Theory</div>
-                                <a href="https://youtube.com/shorts/fFN04Ja855s" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtube.com/shorts/fFN04Ja855s</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> Can AI Witness Instead of Solve?</div>
-                                <a href="https://youtube.com/shorts/Oj1zINkZP9A" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtube.com/shorts/Oj1zINkZP9A</a>
-                            </div>
-                        </div>
-                    </div>
-                `
+                htmlFile: 'research/research-rcs.html'
             },
             
             'research-bdss': {
                 breadcrumb: 'research/bdss.md',
-                html: `
-                    <div class="process-section">
-                        <div class="process-header">
-                            <span class="line-marker">//</span> <span data-en="Behaviour-Driven Systemic Sonification (BDSS)" data-kr="행동 기반 시스템 소니피케이션 (BDSS)">Behaviour-Driven Systemic Sonification (BDSS)</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="A sonification methodology modelling adaptive negotiation in complex systems through sound. BDSS conceptualises processes as trajectories within dynamic attractor spaces characterised by fuzzy, overlapping boundaries rather than discrete states. Agent-based layers simulate competing pressures, generating sonic textures that embody systemic tension, adaptation, and feedback." data-kr="복잡한 시스템의 적응적 협상을 소리로 모델링하는 소니피케이션 방법론. BDSS는 과정을 명확히 구분되는 상태가 아닌, 퍼지하고 중첩된 경계를 가진 동적 attractor space 내 궤적으로 다룬다. 에이전트 기반 레이어는 경쟁하는 압력들을 시뮬레이션하여 시스템의 긴장, 적응, 피드백을 담은 음향 텍스처를 생성한다.">A sonification methodology modelling adaptive negotiation in complex systems through sound. BDSS conceptualises processes as trajectories within dynamic attractor spaces characterised by fuzzy, overlapping boundaries rather than discrete states. Agent-based layers simulate competing pressures, generating sonic textures that embody systemic tension, adaptation, and feedback.</span><span class="cursor-blink">_</span>
-                        </div>
-                        
-                        <div class="typewriter-container">
-                            <span class="prompt">></span> <span class="typewriter-text" data-en="Sound functions as perceptual evidence of negotiation between internal and external forces, articulating how stability and change emerge through continuous relational adjustment. By treating sonification as expression of systemic behaviour rather than data translation, BDSS enables critical engagement with hidden dynamics through embodied listening." data-kr="소리는 내·외부 힘 간 협상의 지각 가능한 증거로 기능하며, 안정성과 변화가 지속적인 관계 조정을 통해 어떻게 나타나는지 드러낸다. 소니피케이션을 데이터 변환이 아닌 시스템 행동의 표현으로 접근함으로써, BDSS는 청취를 통해 보이지 않는 역학과 비판적으로 참여할 수 있게 한다.">Sound functions as perceptual evidence of negotiation between internal and external forces, articulating how stability and change emerge through continuous relational adjustment. By treating sonification as expression of systemic behaviour rather than data translation, BDSS enables critical engagement with hidden dynamics through embodied listening.</span><span class="cursor-blink">_</span>
-                        </div>
-                        
-                        <div class="process-images">
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> BDSS Prototype Implementation (Zenodo)</div>
-                                <a href="https://doi.org/10.5281/zenodo.15509042" target="_blank" style="color: var(--text-secondary); text-decoration: none;">doi.org/10.5281/zenodo.15509042</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> How a Leaf Sounds as a System</div>
-                                <a href="https://youtu.be/U3tuYjfow6o" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtu.be/U3tuYjfow6o</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> Photosynthesis as Generative Sound</div>
-                                <a href="https://youtu.be/TRb-llECHgI" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtu.be/TRb-llECHgI</a>
-                            </div>
-                            <div class="image-item">
-                                <div class="image-label"><span class="prompt">></span> Data-Driven Cross-Modal Sonification Engine</div>
-                                <a href="https://youtube.com/shorts/nCGHsyoMR84" target="_blank" style="color: var(--text-secondary); text-decoration: none;">youtube.com/shorts/nCGHsyoMR84</a>
-                            </div>
-                        </div>
-                    </div>
-                `
+                htmlFile: 'research/research-bdss.html'
             },
             
             // CONTACT
@@ -1523,24 +1435,36 @@ class TerminalPortfolio {
             }, 200);
         }
         
-        // Research pages: apply fade-in effect instead of typewriter
+        // Research pages: apply fade-in effect to text paragraphs
         if (fileId.startsWith('research-')) {
-            setTimeout(() => {
-                const typewriterElements = document.querySelectorAll('.typewriter-text');
-                typewriterElements.forEach((element, index) => {
-                    setTimeout(() => {
-                        element.classList.add('fade-in-research');
-                    }, index * 100);
+            if (!this.animatedPages.has(fileId)) {
+                // First visit: animate
+                setTimeout(() => {
+                    const exhibitionTexts = document.querySelectorAll('.exhibition-text');
+                    exhibitionTexts.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition');
+                        }, index * 150);
+                    });
+                    
+                    // Fade in images in process-images for research pages
+                    const processImages = document.querySelectorAll('.process-images .image-item');
+                    processImages.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition-image');
+                        }, index * 100);
+                    });
+                }, 200);
+                this.animatedPages.add(fileId);
+            } else {
+                // Revisit: add classes immediately without animation
+                document.querySelectorAll('.exhibition-text').forEach(element => {
+                    element.classList.add('fade-in-exhibition');
                 });
-                
-                // Fade in images in image-grid for research pages
-                const gridImages = document.querySelectorAll('.image-grid .grid-image');
-                gridImages.forEach((element, index) => {
-                    setTimeout(() => {
-                        element.classList.add('fade-in-exhibition-image');
-                    }, index * 200);
+                document.querySelectorAll('.process-images .image-item').forEach(element => {
+                    element.classList.add('fade-in-exhibition-image');
                 });
-            }, 200);
+            }
         }
         
         // Exhibition pages: apply fade-in effect to text paragraphs and images
