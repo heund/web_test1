@@ -10,7 +10,7 @@ function cancelAllTypewriters() {
 }
 
 // Typewriter effect for desktop, fade-in for mobile
-function initProcessNodes() {
+function initProcessNodes(fileId) {
     // Cancel any existing typewriters first
     cancelAllTypewriters();
     const typewriterElements = Array.from(document.querySelectorAll('.typewriter-text'));
@@ -20,14 +20,15 @@ function initProcessNodes() {
     // Check if first element has text
     const firstText = typewriterElements[0].textContent.trim();
     if (!firstText) {
-        setTimeout(initProcessNodes, 100);
+        setTimeout(() => initProcessNodes(fileId), 100);
         return;
     }
     
     const isMobile = window.innerWidth <= 1024;
     
     // Check if user has visited this page before (desktop only)
-    const pageKey = window.location.pathname + window.location.hash;
+    // Use fileId if provided, otherwise fall back to URL
+    const pageKey = fileId || (window.location.pathname + window.location.hash);
     const hasVisited = sessionStorage.getItem('visited_' + pageKey);
     
     if (isMobile) {

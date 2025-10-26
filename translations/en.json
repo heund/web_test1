@@ -20,83 +20,96 @@
   "about": {
     "name": "Hee-Eun Kim / Systems Artist",
     "line1": {
-      "text1": "building",
+      "text1": "Hee-Eun builds",
       "emphasis": "alternative infrastructures",
-      "text2": "for knowing and relating"
+      "text2": "for"
     },
-    "line2": "through data, sound, and interaction",
+    "line2": {
+      "text1": "knowing and relating through data, sound, and interaction,",
+      "emphasis": "",
+      "text2": ""
+    },
     "line3": {
-      "text1": "confronting the",
-      "emphasis": "reductionist violence",
-      "text2": "of frameworks that"
+      "text1": "preserving the",
+      "emphasis": "relational nature",
+      "text2": "of systems"
     },
-    "line4": {
-      "text1": "demand legibility at the cost of",
-      "emphasis": "complexity"
-    },
+    "line4": "against frameworks that reduce them to isolated components.",
     "line5": {
-      "text1": "data as",
-      "emphasis": "narrative infrastructure",
-      "text2": ":"
+      "text1": "Her work is grounded in",
+      "emphasis": "Eastern philosophical traditions",
+      "text2": ""
     },
-    "bullet1": "containing human decisions and systemic patterns",
-    "bullet2": "not pure information",
-    "bullet3": {
+    "line6": {
+      "text1": "that understand reality as",
+      "emphasis": "processual, relational, and inherently multiple.",
+      "text2": ""
+    },
+    "line7": {
+      "text1": "She treats data as",
       "emphasis": "behaviour",
-      "text": "rather than truth"
+      "text2": ", focusing on its actions and effects"
     },
-    "line6": "refusing static one-to-one mappings",
-    "line7": "exposing logics without collapsing into simplified metrics",
-    "line8": {
-      "text1": "philosophical investigation becomes",
-      "emphasis": "systemic structure"
-    },
+    "line8": "rather than static representation.",
     "line9": {
-      "text1": "creating conditions where complexity can be",
-      "emphasis": "experienced"
+      "text1": "Her work reveals the",
+      "emphasis": "narrative infrastructure",
+      "text2": ""
     },
-    "line10": "not decoded",
-    "line11": {
-      "text1": "the work",
-      "emphasis": "holds tensions",
-      "text2": ", doesn't present answers"
-    },
-    "line12": "making visible mechanisms of algorithmic reality",
-    "line13": {
-      "text1": "while remaining",
-      "emphasis": "embedded",
-      "text2": "in those same processes"
-    },
+    "line10": "containing human decisions and systemic patterns",
+    "line11": "without collapsing them into simplified metrics.",
+    "line12": "Through interactive installations,",
+    "line13": "experimental interfaces, and custom sonification engines,",
     "line14": {
-      "text1": "fundamentally",
-      "emphasis": "non-extractive"
+      "text1": "she creates conditions where",
+      "emphasis": "complexity",
+      "text2": ""
     },
     "line15": {
-      "emphasis1": "coherence-first",
-      "emphasis2": "emergence-oriented"
+      "text1": "can be",
+      "emphasis": "experienced",
+      "text2": "rather than decoded."
     },
-    "line16": "building not to optimize but to preserve what resists reduction",
+    "line16": {
+      "text1": "The work doesn't present answers but",
+      "emphasis": "holds tensions",
+      "text2": ","
+    },
+    "line17": "exposing how algorithmic processes shape reality.",
+    "line18": "It remains aware that this exposure itself",
+    "line19": "relies on algorithmic systems,",
+    "line20": {
+      "text1": "an",
+      "emphasis": "impossible loop",
+      "text2": "the work inhabits rather than resolves."
+    },
+    "line21": {
+      "text1": "Her practice works towards being",
+      "emphasis": "non-extractive and emergence-oriented",
+      "text2": ","
+    },
+    "line22": "building not to optimise but to preserve what resists flattening.",
     "section2": {
-      "line1": "custom data engines, real-time sound processing, interactive software",
-      "line2": "not tools applied to content",
-      "line3": {
-        "text1": "systems that",
-        "emphasis": "sense and respond",
-        "text2": "to specific context"
-      },
+      "line1": "Hee-Eun develops custom data engines,",
+      "line2": "real-time sound processing systems, and interactive software,",
+      "line3": "not as tools applied to content, but as systems",
       "line4": {
-        "text1": "outcomes",
-        "emphasis": "emerge",
-        "text2": "through encounter, not predetermined"
+        "text1": "built to",
+        "emphasis": "sense and respond",
+        "text2": "to specific contexts."
       },
       "line5": {
-        "text1": "participation as",
-        "emphasis": "fundamental condition"
+        "text1": "Each operates through",
+        "emphasis": "open structures",
+        "text2": ""
       },
-      "line6": {
-        "text1": "audience becomes",
-        "emphasis": "implicated",
-        "text2": "in processes being made visible"
+      "line6": "where outcomes emerge through encounter",
+      "line7": "rather than being predetermined.",
+      "line8": "The work completes itself through audience participation,",
+      "line9": {
+        "text1": "not as an interactive feature but as a",
+        "emphasis": "fundamental condition",
+        "text2": ":"
       }
     }
   }

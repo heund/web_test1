@@ -1,0 +1,375 @@
+<!-- ENGLISH VERSION -->
+<div class="lang-en">
+    <h1>[" "] // Resonance Loop</h1>
+    <p class="cv-year">2025</p>
+    <p class="cv-location">Sound Diaries: Memory Space Exhibition<br>Café Comma/Gallery ÀMiDi, Seoul, South Korea</p>
+    
+    <div class="image-grid" style="margin-bottom: 12px;">
+        <img src="images/resonance_loop/Sequence 12.00_02_29_12.Still003.jpg" alt="Resonance Loop" class="grid-image" onclick="openLightbox(this.src)">
+        <img src="images/resonance_loop/Sequence 12.00_02_54_07.Still002.jpg" alt="Resonance Loop" class="grid-image" onclick="openLightbox(this.src)">
+        <img src="images/resonance_loop/Sequence 12.00_07_26_13.Still001.jpg" alt="Resonance Loop" class="grid-image" onclick="openLightbox(this.src)">
+    </div>
+    
+    <p class="cv-medium">Affective translation software, Short Film, LED display</p>
+    
+    <!-- Two-column grid layout starts here -->
+    <div class="exhibition-content-wrapper">
+        <div class="exhibition-text-column">
+            <p class="exhibition-text">Resonance Loop explores what happens when you hear AI-generated versions of your own thoughts. The artist stands silently before a camera. A custom system reads microexpressions in real-time, translating them into inner monologue fragments synthesized in the artist's own voice. Through headphones, the artist hears these AI-generated "thoughts" and reacts. These reactions become new facial data, generating new monologue. The loop continues.</p>
+            
+            <p class="exhibition-text">The work's core is this impossible circuit. A living subject reduced to 468 facial landmark coordinates, transformed into language, then synthesized voice. A fundamental gap exists between what the algorithm captures as "expression" and what it presumes to mean as "interiority." Yet the system translates this into definitive narrative, and the artist listens to this translated self while simultaneously reacting, becoming data again.</p>
+            
+            <p class="exhibition-text" style="margin-bottom: 32px;">The work doesn't avoid the paradox of using technology to critique technology. It makes that impossibility the structure itself. The system continuously reads, interprets, and responds to the artist's face, a process familiar from facial recognition systems deployed in surveillance, emotion detection interfaces, and affective computing applications. But here, the artist is both subject and observer of this process. Audiences watch the artist being watched by the system, witnessing how algorithms translate lived experience into data, then back into representation. In this act of watching, audiences become implicated in the very mechanisms of observation the work examines. When are we observers and when are we participants in systems of capture?</p>
+            
+    <div class="collapsible-section">
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">System Architecture <span class="toggle-icon">▼</span></h2>
+        <div class="section-content">
+        <h3 class="exhibition-subheading">Recursive Loop Structure</h3>
+    <div class="flowchart">
+        <div class="flowchart-circle">
+            <div class="orbit-dot"></div>
+        </div>
+        <span class="flow-step">facial expression</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">468 landmarks</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">XYZ meta-coordinates</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">custom ML model</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">narrative phase classification</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">dual-signal word injection</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">GPT-4 inner monologue</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">TTS voice synthesis</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">artist hears and reacts</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">new facial data</span>
+        <span class="flow-arrow flow-loop">↻</span>
+    </div>
+    <p class="exhibition-text" style="margin-bottom: 32px;">The loop is intentionally closed. The system takes the artist's reactions to its own outputs as new inputs.</p>
+        
+        <h3 class="exhibition-subheading">System Architecture</h3>
+    <p class="exhibition-text">Resonance Loop operates through the following integrated pipeline:</p>
+    <ol class="exhibition-list">
+        <li><strong>Real-time facial tracking:</strong> MediaPipe extracts 468 facial landmarks at 30fps</li>
+        <li><strong>XYZ meta-coordinate transformation:</strong> Landmark coordinates converted to 3D meta-coordinates representing behavioral dynamics</li>
+        <li><strong>Narrative phase classification:</strong> Temporal patterns in XYZ values classified into one of six narrative phases</li>
+        <li><strong>Custom ML model application:</strong> Machine learning model trained on the artist's own facial data provides personalized interpretation</li>
+        <li><strong>Dual-signal semantic analysis:</strong> Combines temporal sequences and cluster-based similarity for word injection</li>
+        <li><strong>GPT-4 inner monologue generation:</strong> Prompt engineering produces fragmentary inner speech</li>
+        <li><strong>Voice synthesis:</strong> Output through TTS model trained on the artist's voice</li>
+        <li><strong>Recursive feedback:</strong> Artist's reactions to generated voice become new inputs</li>
+    </ol>
+    
+    <h3 class="exhibition-subheading">Pre-Verbal Affective Dynamics (PVAD) System</h3>
+    <p class="exhibition-text">Traditional emotion recognition systems ask: what emotion is this? PVAD asks a fundamentally different question: how does affective experience flow through time?</p>
+    
+    <h3 class="exhibition-subheading">468 Landmarks and the XYZ Meta-Coordinate System</h3>
+    <p class="exhibition-text">The 468 facial landmarks extracted through MediaPipe are transformed into a three-dimensional meta-coordinate system (XYZ) that represents not spatial position but the character of temporal dynamics:</p>
+    <ul class="exhibition-list">
+        <li><strong>X-axis (Directionality/Flow):</strong> Expansion (opening, engagement) versus contraction (closing, withdrawal) of expression. Computed from frame-to-frame deltas in mouth width and brow height.</li>
+        <li><strong>Y-axis (Intensity/Amplitude):</strong> Speed and strength of facial change. Aggregates movement velocity, asymmetry, and z-depth tension.</li>
+        <li><strong>Z-axis (Temporal Cohesion):</strong> Duration and complexity. Increases with sustained states, directional reversals, and hesitation patterns, capturing the "layering" of emotional experience over time.</li>
+    </ul>
+    
+    <h3 class="exhibition-subheading">Six Narrative Phases</h3>
+    <p class="exhibition-text">Rather than classifying emotions, PVAD identifies six narrative phases characterizing different temporal positions within affective experience:</p>
+    <ol class="exhibition-list">
+        <li><strong>Neutral:</strong> Minimal facial activity. XYZ characteristics: X≈0, Y&lt;0.5, Z&lt;0.3. Baseline between affective events.</li>
+        <li><strong>Sensory Reaction:</strong> Sudden intensity spike. XYZ: Y&gt;15 OR ΔY&gt;8. Immediate, involuntary response to stimulus, occurring before conscious emotional regulation.</li>
+        <li><strong>Pre-Verbal Hesitation:</strong> Microexpressions before speech commitment. XYZ: |X|&gt;0.5, Y&lt;2.0, Z&lt;1.0. The "thinking face": contemplation, uncertainty, processing. The gap between internal experience and external expression.</li>
+        <li><strong>Post-Verbal Residue:</strong> Expressions lingering after verbal utterance. XYZ: Y&gt;2.0, Z&gt;2.0. Emotional "hangover", feelings persisting beyond the immediate moment. What remains unsaid but still felt.</li>
+        <li><strong>Sharp Transition:</strong> Brief, intense changes. XYZ: Y&gt;1.5, Z&lt;1.0. Punctuated shifts: decisions, rejections, conclusions.</li>
+        <li><strong>Systemic Shift:</strong> Broader baseline changes. Default classification for patterns not fitting other categories.</li>
+    </ol>
+    
+    <h3 class="exhibition-subheading">Custom Machine Learning Model</h3>
+    <p class="exhibition-text">One of the system's core innovations is a personalized machine learning model trained on the artist's own facial data. Unlike general emotion recognition models assuming universal expression patterns, this model:</p>
+    <ul class="exhibition-list">
+        <li>Learns the artist's individual microexpression characteristics</li>
+        <li>Recognizes the artist's unique narrative phase transition patterns</li>
+        <li>Applies personalized XYZ thresholds</li>
+    </ul>
+    <p class="exhibition-text">The system interprets the artist's expressions through their own expressive language rather than universal categories.</p>
+    
+    <h3 class="exhibition-subheading">Dual-Signal Semantic Analysis and Word Injection</h3>
+    <p class="exhibition-text">Users typically produce only 1-3 words, but coherent (if fragmentary) sentences require more material. PVAD solves this through intelligent word injection combining two signals:</p>
+    
+    <p class="exhibition-text"><strong>Signal 1: Temporal Sequences</strong></p>
+    <ul class="exhibition-list">
+        <li>Analyses training data to find which words historically followed input words</li>
+        <li>Builds probabilistic chains: "thought" → ["if", "and", "do"]</li>
+        <li>Injects 5-10 words naturally extending the user's utterance</li>
+    </ul>
+    
+    <p class="exhibition-text"><strong>Signal 2: Cluster-Based Similarity</strong></p>
+    <ul class="exhibition-list">
+        <li>Uses GMM (Gaussian Mixture Model) to cluster words semantically</li>
+        <li>Finds words in neighboring clusters (similar meanings)</li>
+        <li>Adds vocabulary maintaining thematic coherence</li>
+    </ul>
+    
+    <p class="exhibition-text">The system scores candidate sentences using both signals:</p>
+    <pre class="code-block"><code>semantic_coherence = (cluster_similarity × 0.5) + (temporal_probability × 0.5)</code></pre>
+    
+    <h3 class="exhibition-subheading">Inner Monologue Generation: Refusing Polished Language</h3>
+    <p class="exhibition-text">XYZ coordinates and narrative phases are translated into fragmentary inner monologue through GPT-4. Crucially, this monologue is not complete sentences.</p>
+    <p class="exhibition-text">Standard language models are trained to produce polished, coherent, communicative text. But inner speech isn't polished. According to Vygotsky's theory of inner speech, it's characterized by abbreviation and predicativity. Subjects are omitted, only predicates remain, because "the subject of thought is always known to the thinker."</p>
+    
+    <p class="exhibition-text">PVAD's prompt engineering implements this through:</p>
+    <ol class="exhibition-list">
+        <li><strong>Removing the audience:</strong> "You have no listener, no intent to communicate"</li>
+        <li><strong>Encouraging incompleteness:</strong> "Don't 'try' to speak, let thoughts flow by themselves"</li>
+        <li><strong>Structural constraints:</strong>
+            <ul class="exhibition-list">
+                <li>No subjects (Korean inner speech drops pronouns)</li>
+                <li>No conjunctions (logical bridges presume explanation)</li>
+                <li>Interjections encouraged (captures pre-verbal hesitation)</li>
+                <li>Self-talk verb endings (marks private rather than public speech)</li>
+            </ul>
+        </li>
+        <li><strong>Length restriction:</strong> Maximum 35 tokens (3-12 words), preventing elaboration</li>
+        <li><strong>High temperature (1.15):</strong> Increases randomness, suppresses GPT's semantic completion tendency</li>
+    </ol>
+    
+    <p class="exhibition-text">PVAD state to linguistic style mapping:</p>
+    <ul class="exhibition-list">
+        <li><strong>Y &gt; 30:</strong> Single-word utterances: "Done."</li>
+        <li><strong>Y &lt; 5:</strong> Mumbled, uncertain: "Um... what was it."</li>
+        <li><strong>Z &gt; 3:</strong> Topic drift allowed: "It was like that... ah, I'm hungry."</li>
+        <li><strong>neutral:</strong> Flat observation: "It's like that."</li>
+        <li><strong>sensory_reaction:</strong> Direct perception: "Hot."</li>
+        <li><strong>pre_verbal_hesitation:</strong> Uncertain emergence: "Why did I..."</li>
+        <li><strong>post_verbal_residue:</strong> Trailing reflection: "That thing said back then... still remember."</li>
+    </ul>
+    
+    <p class="exhibition-text">Generated voice uses a TTS (Text-to-Speech) model trained on the artist's own voice.</p>
+        </div>
+    </div>
+    
+    <div class="collapsible-section">
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">Why Refuse Categorization: PVAD's Philosophical Significance <span class="toggle-icon">▼</span></h2>
+        <div class="section-content">
+    
+    <p class="exhibition-text">Traditional emotion recognition systems, based on Ekman's Basic Emotions Theory, classify human experience into happiness, sadness, anger, fear, surprise, disgust. This approach embeds a fundamental assumption: that human affective experience can be adequately captured through discrete categories. PVAD refuses this assumption for three critical reasons:</p>
+    
+    <h3 class="exhibition-subheading">1. Static Snapshots vs Dynamic Flow</h3>
+    <p class="exhibition-text">Emotions are temporal phenomena unfolding over time. Most systems analyze individual frames independently, like trying to understand a film's narrative from a single scene. PVAD models affect as narrative arc with beginning, middle, and end phases.</p>
+    
+    <h3 class="exhibition-subheading">2. The Between-State Problem</h3>
+    <p class="exhibition-text">Human affective experience frequently exists in ambiguous, transitional, mixed states that resist categorical classification. When you're neither fully happy nor fully sad, uncertain and hesitant and not-yet-determined, what do you call that state? Traditional systems treat this as classification error or collapse it into broader categories. PVAD makes these in-between states, particularly pre-verbal hesitation and post-verbal residue, the system's core focus.</p>
+    
+    <h3 class="exhibition-subheading">3. The Pre-Verbal Gap</h3>
+    <p class="exhibition-text">A temporal gap exists between internal affective experience and its external verbal expression. We feel before we speak, and we continue feeling after. Traditional systems capture neither the anticipatory facial behavior before speech nor the residual expressions that linger afterward. PVAD explicitly models this gap.</p>
+    
+    <h3 class="exhibition-subheading">From Classification to Consciousness Modelling</h3>
+    <p class="exhibition-text">PVAD represents a conceptual shift from emotion recognition to consciousness modelling. Where traditional systems ask "what is this person feeling?", PVAD asks "how does this person's experience flow through time?"</p>
+    
+    <p class="exhibition-text">This distinction matters for three reasons:</p>
+    <ul class="exhibition-list">
+        <li>Experience unfolds as process, not fixed point, flowing through time</li>
+        <li>Internal states manifest as expression before linguistic articulation</li>
+        <li>Actual inner speech exists in fragmentary form, not complete sentences</li>
+    </ul>
+    
+    <p class="exhibition-text">By refusing categorization, PVAD pursues a different aim: modeling not what is felt but how it flows.</p>
+        </div>
+    </div>
+        </div>
+        
+        <div class="exhibition-image-column">
+            <!-- Right column - empty for now, will contain images later -->
+        </div>
+    </div>
+</div>
+
+<!-- KOREAN VERSION -->
+<div class="lang-kr">
+    <h1>[" "] // 공진회로</h1>
+    <p class="cv-year">2025</p>
+    <p class="cv-location">《사운드 다이어리: 기억의 공간》<br>카페 꼼마 x 갤러리 아미디, 서울</p>
+    
+    <div class="image-grid" style="margin-bottom: 12px;">
+        <img src="images/resonance_loop/Sequence 12.00_02_29_12.Still003.jpg" alt="Resonance Loop" class="grid-image" onclick="openLightbox(this.src)">
+        <img src="images/resonance_loop/Sequence 12.00_02_54_07.Still002.jpg" alt="Resonance Loop" class="grid-image" onclick="openLightbox(this.src)">
+        <img src="images/resonance_loop/Sequence 12.00_07_26_13.Still001.jpg" alt="Resonance Loop" class="grid-image" onclick="openLightbox(this.src)">
+    </div>
+    
+    <p class="cv-medium">Affective translation software, Short Film, LED display</p>
+    
+    <!-- Two-column grid layout starts here -->
+    <div class="exhibition-content-wrapper">
+        <div class="exhibition-text-column">
+            <p class="exhibition-text">공진회로는 AI가 생성한 "나"의 목소리를 듣는 경험에 관한 작업이다. 영상 속 작가는 카메라 앞에 말없이 서 있다. 시스템은 작가의 미세한 표정 변화를 실시간으로 읽어내고, 이를 작가 자신의 목소리로 합성된 내면 독백으로 변환한다. 작가는 헤드폰을 통해 들려오는 AI가 만든 "자신의 생각"을 듣고 반응한다. 이 반응은 다시 표정 데이터가 되어 새로운 독백을 생성한다. 순환은 계속된다.</p>
+            
+            <p class="exhibition-text">이 작업의 핵심은 불가능한 고리에 있다. 살아있는 주체가 468개의 얼굴 랜드마크 좌표로 환원되고, 이 숫자들이 언어로, 그리고 합성된 목소리로 재구성된다. 알고리즘이 포착한 "표정"과 그것이 의미한다고 간주되는 "내면" 사이에는 언제나 간극이 존재한다. 그러나 시스템은 이를 확정된 서사로 번역하고, 작가는 이 번역된 자아를 듣는 동시에 그에 반응하며 다시 데이터가 된다.</p>
+            
+            <p class="exhibition-text" style="margin-bottom: 32px;">기술을 사용해 기술을 비판해야 하는 역설을 회피하지 않는다. 오히려 그 불가능성을 작업의 구조 자체로 만든다. 관객은 영상 속 작가를 관찰하며 감시 시스템의 작동을 목격한다. 그러나 관찰하는 순간, 자신도 그 감시 구조에 참여하고 있음을 깨닫게 된다. 우리는 언제 관찰자이고 언제 감시자인가?</p>
+            
+    <div class="collapsible-section">
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">기술적 구조: PVAD 시스템 <span class="toggle-icon">▼</span></h2>
+        <div class="section-content">
+        <h3 class="exhibition-subheading">재귀적 순환 구조</h3>
+    <div class="flowchart">
+        <div class="flowchart-circle">
+            <div class="orbit-dot"></div>
+        </div>
+        <span class="flow-step">작가의 표정</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">468 랜드마크 추출</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">XYZ 메타좌표 변환</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">커스텀 ML 모델 적용</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">서사 단계 분류</span>
+        <br>
+        <span class="flow-step">Dual-Signal 단어 삽입</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">GPT-4 내면 독백 생성</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">TTS 음성 합성</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">작가가 듣고 반응</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">새로운 표정 데이터</span>
+        <span class="flow-arrow flow-loop">↻</span>
+    </div>
+    <p class="exhibition-text" style="margin-bottom: 32px;">이 고리는 의도적으로 닫혀있다. 시스템은 자신이 생성한 출력에 반응하는 작가를 다시 입력으로 받아들인다.</p>
+        
+        <h3 class="exhibition-subheading">시스템 아키텍처</h3>
+    <p class="exhibition-text">공진회로는 다음의 통합 파이프라인으로 작동한다:</p>
+    <ol class="exhibition-list">
+        <li><strong>실시간 얼굴 추적:</strong> MediaPipe를 통해 468개 얼굴 랜드마크를 초당 30프레임으로 추출</li>
+        <li><strong>XYZ 메타좌표 변환:</strong> 랜드마크 좌표를 행동 역학을 나타내는 3차원 메타좌표로 변환</li>
+        <li><strong>서사 단계 분류:</strong> XYZ 값의 시간적 패턴을 분석해 6가지 서사 단계 중 하나로 분류</li>
+        <li><strong>커스텀 ML 모델 적용:</strong> 작가 본인의 표정 데이터로 학습된 머신러닝 모델이 개인화된 해석 제공</li>
+        <li><strong>Dual-Signal 의미 분석:</strong> 시간적 시퀀스와 클러스터 기반 유사도를 결합해 단어 삽입</li>
+        <li><strong>GPT-4 기반 내면 독백 생성:</strong> 프롬프트 엔지니어링을 통해 파편적 내면 언어 생성</li>
+        <li><strong>음성 합성:</strong> 작가 본인 목소리로 학습된 TTS 모델로 출력</li>
+        <li><strong>재귀적 피드백:</strong> 생성된 음성에 대한 작가의 반응을 다시 입력으로 받아 순환</li>
+    </ol>
+    
+    <h3 class="exhibition-subheading">Pre-Verbal Affective Dynamics (PVAD) 시스템</h3>
+    <p class="exhibition-text">전통적인 감정 인식 시스템은 지금 무슨 감정인가를 분류한다. PVAD는 근본적으로 다른 질문을 던진다: 감정적 경험이 시간에 따라 어떻게 흐르는가?</p>
+    
+    <h3 class="exhibition-subheading">468개 랜드마크와 XYZ 메타좌표계</h3>
+    <p class="exhibition-text">MediaPipe를 통해 추출된 468개의 얼굴 랜드마크는 공간적 위치가 아닌 시간적 역학의 성격을 나타내는 3차원 메타좌표계(XYZ)로 변환된다:</p>
+    <ul class="exhibition-list">
+        <li><strong>X축 (방향성/흐름):</strong> 표정의 확장(열림, 개입) 또는 수축(닫힘, 회피). 입 너비와 눈썹 높이의 프레임 간 변화량으로 계산</li>
+        <li><strong>Y축 (강도/진폭):</strong> 표정 변화의 속도와 강도. 움직임 속도, 비대칭성, z축 깊이 긴장을 종합</li>
+        <li><strong>Z축 (시간적 응집성):</strong> 지속 시간과 복잡성. 지속된 상태, 방향 반전, 망설임 패턴에 따라 증가하며 감정 경험의 층위를 포착</li>
+    </ul>
+    
+    <h3 class="exhibition-subheading">6가지 서사 단계 (Narrative Phases)</h3>
+    <p class="exhibition-text">PVAD는 감정을 분류하는 대신 감정 경험 내 시간적 위치를 특징짓는 6가지 서사 단계를 식별한다:</p>
+    <ol class="exhibition-list">
+        <li><strong>중립 (Neutral):</strong> 최소한의 표정 활동. XYZ 특성: X≈0, Y&lt;0.5, Z&lt;0.3. 감정적 사건 사이의 기준선</li>
+        <li><strong>감각 반응 (Sensory Reaction):</strong> 갑작스러운 강도 급증. XYZ 특성: Y&gt;15 또는 ΔY&gt;8. 자극에 대한 즉각적, 무의식적 반응. 의식적 감정 조절 이전에 발생</li>
+        <li><strong>언어 이전 망설임 (Pre-Verbal Hesitation):</strong> 말하기 전에 나타나는 미세표정. XYZ 특성: |X|&gt;0.5, Y&lt;2.0, Z&lt;1.0. 생각하는 얼굴, 사색, 불확실성, 처리 과정. 내적 경험과 외적 표현 사이의 간극</li>
+        <li><strong>언어 이후 잔여 (Post-Verbal Residue):</strong> 언어 표현 이후에도 지속되는 표정. XYZ 특성: Y&gt;2.0, Z&gt;2.0. 감정적 여운, 즉각적 순간을 넘어 지속되는 감정. 말해지지 않았지만 여전히 느껴지는 것</li>
+        <li><strong>급격한 전환 (Sharp Transition):</strong> 짧고 강렬한 변화. XYZ 특성: Y&gt;1.5, Z&lt;1.0. 결정, 거부, 결론</li>
+        <li><strong>체계적 변화 (Systemic Shift):</strong> 전반적인 감정 기준선의 변화. 다른 범주에 맞지 않는 패턴의 기본 분류</li>
+    </ol>
+    
+    <h3 class="exhibition-subheading">커스텀 머신러닝 모델</h3>
+    <p class="exhibition-text">시스템의 핵심 혁신 중 하나는 작가 본인의 표정 데이터로 학습된 개인화된 머신러닝 모델이다. 일반적인 감정 인식 모델이 보편적 표정 패턴을 가정하는 것과 달리, 이 모델은:</p>
+    <ul class="exhibition-list">
+        <li>작가 개인의 미세표정 특성을 학습</li>
+        <li>작가 고유의 서사 단계 전환 패턴 인식</li>
+        <li>개인화된 XYZ 임계값 적용</li>
+    </ul>
+    <p class="exhibition-text">이는 시스템이 작가의 표정을 보편적 범주가 아닌 작가 자신의 표정 언어로 해석하게 한다.</p>
+    
+    <h3 class="exhibition-subheading">Dual-Signal 의미 분석과 단어 삽입</h3>
+    <p class="exhibition-text">사용자는 보통 1~3개의 단어만 입력하지만, 일관된(비록 파편적이더라도) 문장은 더 많은 재료를 필요로 한다. PVAD는 두 가지 신호를 결합한 지능형 단어 삽입으로 이를 해결한다:</p>
+    
+    <p class="exhibition-text"><strong>Signal 1: 시간적 시퀀스</strong></p>
+    <ul class="exhibition-list">
+        <li>훈련 데이터를 분석해 입력 단어 다음에 역사적으로 어떤 단어가 따라왔는지 파악</li>
+        <li>확률적 체인 구축: 생각을 → [하면, 하고, 한다]</li>
+        <li>사용자의 발화를 자연스럽게 확장하는 5~10개 단어 삽입</li>
+    </ul>
+    
+    <p class="exhibition-text"><strong>Signal 2: 클러스터 기반 유사도</strong></p>
+    <ul class="exhibition-list">
+        <li>GMM(Gaussian Mixture Model)을 사용해 단어를 의미적으로 클러스터링</li>
+        <li>이웃 클러스터(유사한 의미)에서 단어 찾기</li>
+        <li>주제적 일관성을 유지하는 어휘 추가</li>
+    </ul>
+    
+    <p class="exhibition-text">시스템은 두 신호를 모두 사용해 후보 문장을 채점한다:</p>
+    <pre class="code-block"><code>semantic_coherence = (cluster_similarity × 0.5) + (temporal_probability × 0.5)</code></pre>
+    
+    <h3 class="exhibition-subheading">내면 독백 생성: 완성된 언어의 거부</h3>
+    <p class="exhibition-text">XYZ 좌표와 서사 단계는 GPT-4를 통해 파편적인 내면 독백으로 변환된다. 여기서 중요한 것은 이 독백이 완성된 문장이 아니라는 점이다.</p>
+    <p class="exhibition-text">표준 언어 모델은 세련되고 일관된 소통적 텍스트를 생성하도록 훈련되었다. 그러나 내면 언어는 세련되지 않다. Vygotsky의 내면 언어 이론에 따르면, 내면 언어는 축약성과 술어성을 특징으로 한다. 주어를 생략하고 술어만 유지하는데, 이는 사고의 주체가 사고하는 이에게 항상 알려져 있기 때문이다.</p>
+    
+    <p class="exhibition-text">PVAD의 프롬프트 엔지니어링은 다음을 통해 이를 구현한다:</p>
+    <ol class="exhibition-list">
+        <li><strong>청취자 제거:</strong> 당신에게는 청취자도, 전달 의도도 없습니다</li>
+        <li><strong>불완전성 장려:</strong> 말을 하려 하지 마세요, 생각이 스스로 흘러가게 두세요</li>
+        <li><strong>구조적 제약:</strong>
+            <ul class="exhibition-list">
+                <li>주어 없음 (한국어 내면 언어는 대명사를 생략)</li>
+                <li>접속사 없음 (논리적 연결은 설명을 전제)</li>
+                <li>감탄사 장려 (언어 이전 망설임 포착)</li>
+                <li>혼잣말 어미 사용 (공적이 아닌 사적 언어 표시)</li>
+            </ul>
+        </li>
+        <li><strong>길이 제한:</strong> 최대 35토큰 (3~12단어), 정교화나 설명을 방지</li>
+        <li><strong>높은 Temperature (1.15):</strong> 무작위성 증가, GPT의 의미적 완성 경향 억제</li>
+    </ol>
+    
+    <p class="exhibition-text">PVAD 상태와 언어 스타일 매핑:</p>
+    <ul class="exhibition-list">
+        <li><strong>Y &gt; 30:</strong> 단어 단위 발화: 됐다.</li>
+        <li><strong>Y &lt; 5:</strong> 중얼거림, 불확실: 음... 뭐였지.</li>
+        <li><strong>Z &gt; 3:</strong> 주제 이탈 허용: 그랬는데... 아 배고프다.</li>
+        <li><strong>neutral:</strong> 평탄한 관찰: 그렇네.</li>
+        <li><strong>sensory_reaction:</strong> 직접적 지각: 덥다.</li>
+        <li><strong>pre_verbal_hesitation:</strong> 불확실한 출현: 왜 그랬지.</li>
+        <li><strong>post_verbal_residue:</strong> 끌리는 반추: 그때 그 말... 아직도 생각나네.</li>
+    </ul>
+    
+    <p class="exhibition-text">생성된 목소리는 작가 본인의 음성으로 학습된 TTS(Text-to-Speech) 모델을 사용한다.</p>
+        </div>
+    </div>
+    
+    <div class="collapsible-section">
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">범주화를 거부하는 이유: PVAD의 철학적 의미 <span class="toggle-icon">▼</span></h2>
+        <div class="section-content">
+    
+    <p class="exhibition-text">전통적인 감정 인식 시스템은 Ekman의 기본 감정 이론에 기반해 인간 경험을 행복, 슬픔, 분노, 두려움, 놀라움, 혐오로 분류한다. 이 접근은 근본적인 가정을 내포한다: 인간의 감정 경험은 이산적 범주로 적절히 포착될 수 있다는 것. PVAD는 이 가정을 거부한다. 세 가지 비판적 이유에서다:</p>
+    
+    <h3 class="exhibition-subheading">1. 정적 스냅샷 vs 동적 흐름</h3>
+    <p class="exhibition-text">감정은 시간에 따라 펼쳐지는 시간적 현상이다. 대부분의 시스템은 개별 프레임을 독립적으로 분석한다. 이는 영화의 한 장면을 보고 전체 서사를 이해하려는 것과 같다. PVAD는 감정을 시작, 중간, 끝 단계가 있는 서사적 호로 모델링한다.</p>
+    
+    <h3 class="exhibition-subheading">2. 중간 상태 문제</h3>
+    <p class="exhibition-text">인간의 감정 경험은 범주적 분류에 저항하는 모호하고 전환적이며 혼합된 상태에 자주 존재한다. 당신이 완전히 행복하지도 완전히 슬프지도 않을 때, 불확실하고 망설이며 아직 확정되지 않았을 때, 그 상태를 무엇이라 부르는가? 전통적 시스템은 이를 분류 오류로 취급하거나 더 넓은 범주로 묶는다. PVAD는 이러한 중간 상태, 특히 언어 이전 망설임과 언어 이후 잔여를 시스템의 핵심으로 만든다.</p>
+    
+    <h3 class="exhibition-subheading">3. 언어 이전의 간극</h3>
+    <p class="exhibition-text">내적 감정 경험과 그것의 외적 언어 표현 사이에는 시간적 간극이 존재한다. 우리는 말하기 전에 느끼고, 말한 후에도 느낀다. 전통적 시스템은 언어 이전의 예측적 표정 행동도, 언어 이후에 지속되는 잔여 표정도 포착하지 못한다. PVAD는 이 간극을 명시적으로 모델링한다.</p>
+    
+    <h3 class="exhibition-subheading">분류에서 의식 모델링으로</h3>
+    <p class="exhibition-text">PVAD는 감정 인식에서 의식 모델링으로의 개념적 전환을 나타낸다. 전통적 시스템이 이 사람은 무엇을 느끼는가를 묻는다면, PVAD는 이 사람의 경험이 시간에 따라 어떻게 흐르는가를 묻는다.</p>
+    <p class="exhibition-text">이 구분이 중요한 세 가지 이유:</p>
+    <ol class="exhibition-list">
+        <li>경험은 고정된 지점이 아니라 시간 속에서 펼쳐지는 과정이다</li>
+        <li>내적 상태는 언어로 표현되기 전에 이미 표정으로 나타난다</li>
+        <li>실제 내면 언어는 완성된 문장이 아닌 파편적 형태로 존재한다</li>
+    </ol>
+    <p class="exhibition-text">범주화를 거부함으로써, PVAD는 다른 목표를 추구한다. 무엇을 느끼는가가 아니라 어떻게 흐르는가를 모델링한다.</p>
+        </div>
+    </div>
+        </div>
+        
+        <div class="exhibition-image-column">
+            <!-- Right column - empty for now, will contain images later -->
+        </div>
+    </div>
+</div>
