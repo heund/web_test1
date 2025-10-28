@@ -492,6 +492,15 @@ class TerminalPortfolio {
         const contentData = this.content[fileId];
         if (!contentData) return;
         
+        // Clean up any existing scroll listeners before loading new content
+        if (this.profileScrollHandler) {
+            const contentBody = document.querySelector('.content-body');
+            if (contentBody) {
+                contentBody.removeEventListener('scroll', this.profileScrollHandler);
+            }
+            this.profileScrollHandler = null;
+        }
+        
         // Check if mobile
         const isMobile = window.innerWidth <= 1024;
         
@@ -835,6 +844,11 @@ class TerminalPortfolio {
         
         if (!profilePic || !contentBody) return;
         
+        // Clean up any existing scroll listeners first
+        if (this.profileScrollHandler) {
+            contentBody.removeEventListener('scroll', this.profileScrollHandler);
+        }
+        
         const images = [
             'images/profile/image1.jpg',
             'images/profile/image2.jpg',
@@ -861,6 +875,8 @@ class TerminalPortfolio {
             }
         };
         
+        // Store the handler reference for cleanup
+        this.profileScrollHandler = updateImage;
         contentBody.addEventListener('scroll', updateImage);
     }
     
