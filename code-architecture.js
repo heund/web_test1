@@ -126,12 +126,29 @@ class CodeArchitecture {
         this.canvas.addEventListener('mouseup', (e) => this.handleMouseUp(e));
         this.canvas.addEventListener('mouseleave', (e) => this.handleMouseUp(e));
         this.canvas.addEventListener('click', (e) => this.handleClick(e));
+        
+        // Generate first 3 lines immediately so animation starts right away
+        this.generateCodeLine();
+        this.generateCodeLine();
+        this.generateCodeLine();
+        
         this.animate();
     }
     
     resize() {
+        // Clear any inline styles first to let CSS take over
+        this.canvas.style.width = '';
+        this.canvas.style.height = '';
+        
+        // Force a reflow to get accurate dimensions
+        this.canvas.offsetHeight;
+        
         const dpr = window.devicePixelRatio || 1;
         const rect = this.canvas.getBoundingClientRect();
+        
+        // Store OLD center before updating
+        const oldCenterX = this.centerX || rect.width / 2;
+        const oldCenterY = this.centerY || rect.height / 2;
         
         // Store for later use
         this.dpr = dpr;
@@ -146,9 +163,28 @@ class CodeArchitecture {
         this.canvas.style.width = rect.width + 'px';
         this.canvas.style.height = rect.height + 'px';
         
-        // Use CSS pixel dimensions for calculations
-        this.centerX = rect.width / 2;
-        this.centerY = rect.height / 2;
+        // Calculate NEW center
+        const newCenterX = rect.width / 2;
+        const newCenterY = rect.height / 2;
+        
+        // Calculate the offset
+        const offsetX = newCenterX - oldCenterX;
+        const offsetY = newCenterY - oldCenterY;
+        
+        // Update center
+        this.centerX = newCenterX;
+        this.centerY = newCenterY;
+        
+        // Reposition all existing nodes to maintain their relative positions
+        // (only if nodes array has been initialized)
+        if (this.nodes && this.nodes.length > 0) {
+            this.nodes.forEach(node => {
+                node.x += offsetX;
+                node.y += offsetY;
+                node.targetX += offsetX;
+                node.targetY += offsetY;
+            });
+        }
     }
     
     generateCodeLine() {
@@ -171,8 +207,10 @@ class CodeArchitecture {
     }
     
     updateCodePhase() {
-        // Generate new code lines (with limit) - slower rate
-        if (Math.random() < 0.03 && this.codeLines.length < 8) {
+        // Generate new code lines (with limit)
+        // First 3 lines generate much faster to get animation started quickly
+        const generateChance = this.codeLines.length < 3 ? 0.15 : 0.03;
+        if (Math.random() < generateChance && this.codeLines.length < 8) {
             this.generateCodeLine();
         }
         
@@ -194,11 +232,15 @@ class CodeArchitecture {
             }
             
             // Start fading and transforming after fully typed and aged
-            if (line.typeIndex >= line.text.length && line.age > 150) {
+            // First few NODES appear faster (when total node count is low)
+            const ageThreshold = this.nodes.length < 3 ? 30 : 150;
+            
+            if (line.typeIndex >= line.text.length && line.age > ageThreshold) {
                 line.opacity -= 0.008;
                 
-                // Transform into node
-                if (line.opacity <= 0.5 && Math.random() < 0.03) {
+                // Transform into node - much higher chance for first 3 nodes
+                const transformChance = this.nodes.length < 3 ? 0.3 : 0.03;
+                if (line.opacity <= 0.5 && Math.random() < transformChance) {
                     this.createNodeFromCode(line);
                     return false;
                 }
@@ -373,7 +415,9 @@ class CodeArchitecture {
         // Don't create if at limit
         if (this.nodes.length >= 25) return;
         
-        const index = Math.floor(Math.random() * this.statementsEN.length);
+        // Use separate indices for EN and KR to handle different array lengths
+        const indexEN = Math.floor(Math.random() * this.statementsEN.length);
+        const indexKR = Math.floor(Math.random() * this.statementsKR.length);
         const lineIndex = this.codeLines.indexOf(codeLine);
         const yPosition = 30 + (lineIndex * 22);
         
@@ -388,8 +432,8 @@ class CodeArchitecture {
             targetRadius: 4 + Math.random() * 6,
             opacity: 0,
             label: codeLine.text.split(' ')[0].replace(/[(){}]/g, ''),
-            statementEN: this.statementsEN[index],
-            statementKR: this.statementsKR[index],
+            statementEN: this.statementsEN[indexEN],
+            statementKR: this.statementsKR[indexKR],
             connections: [],
             age: 0
         };
@@ -530,22 +574,26 @@ class CodeArchitecture {
         
         this.ctx.save();
         
-        // Terminal area at bottom - use display dimensions with offset
+        // Terminal area at bottom - get FRESH dimensions to handle fullscreen changes
+        const rect = this.canvas.getBoundingClientRect();
+        const currentHeight = rect.height;
+        const currentWidth = rect.width;
         const terminalHeight = 60;
-        const bottomOffset = 40; // Move up from bottom
-        const terminalY = this.displayHeight - terminalHeight - bottomOffset;
+        // Desktop: less offset to appear lower (closer to bottom), Mobile: keep original
+        const bottomOffset = currentWidth > 1024 ? 20 : 40;
+        const terminalY = currentHeight - terminalHeight - bottomOffset;
         const padding = 16;
         
         // Draw terminal background (light theme)
         this.ctx.fillStyle = 'rgba(250, 250, 249, 0.98)';
-        this.ctx.fillRect(0, terminalY, this.displayWidth, terminalHeight);
+        this.ctx.fillRect(0, terminalY, currentWidth, terminalHeight);
         
         // Draw top border
         this.ctx.strokeStyle = '#D6D3D1';
         this.ctx.lineWidth = 1;
         this.ctx.beginPath();
         this.ctx.moveTo(0, terminalY);
-        this.ctx.lineTo(this.displayWidth, terminalY);
+        this.ctx.lineTo(currentWidth, terminalY);
         this.ctx.stroke();
         
         // Word wrap the text - use Korean font if language is Korean
@@ -553,7 +601,7 @@ class CodeArchitecture {
         this.ctx.font = isKorean 
             ? '13px "IBM Plex Mono", "Noto Sans KR", monospace'
             : '13px "IBM Plex Mono", monospace';
-        const maxWidth = this.displayWidth - padding * 2;
+        const maxWidth = currentWidth - padding * 2;
         const words = this.typedText.split(' ');
         const lines = [];
         let currentLine = '';

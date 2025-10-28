@@ -418,6 +418,12 @@ class TerminalPortfolio {
                 html: null
             },
             
+            'exhibition-resonance2': {
+                breadcrumb: 'exhibitions/resonance-loop2.md',
+                htmlFile: 'exhibitions/resonance-loop2.html',
+                html: null
+            },
+            
             'exhibition-rotating': {
                 breadcrumb: 'exhibitions/rotating-weights.md',
                 htmlFile: 'exhibitions/rotating-weights.html',
@@ -602,13 +608,16 @@ class TerminalPortfolio {
         // STEP 4: Load and apply all translations (both data-i18n and data-en/kr)
         await this.loadTranslations(lang);
         
-        // STEP 4.5: Reload about section if currently viewing it on DESKTOP (to switch HTML structure)
-        // Mobile uses hardcoded data-en/data-kr attributes, so no reload needed
+        // STEP 4.5: Reload about section if currently viewing it (both desktop and mobile)
+        // Mobile needs reload too because sticky text is generated in loadContent()
         if (this.currentFile === 'about') {
             const isMobile = window.innerWidth <= 1024;
             
-            if (!isMobile) {
-                // Desktop only - reload with correct language template
+            if (isMobile) {
+                // Mobile - reload to regenerate sticky text with correct language
+                this.loadContent('about');
+            } else {
+                // Desktop - reload with correct language template
                 const data = this.content['about'];
                 const htmlContent = data.getHTML ? data.getHTML() : data.html;
                 document.getElementById('content').innerHTML = htmlContent;
@@ -729,6 +738,40 @@ class TerminalPortfolio {
                 }
             });
         });
+        
+        // Add click handler for nav-header (Hee-Eun Kim) to go to hero page
+        const navHeader = document.querySelector('.nav-header[data-file]');
+        if (navHeader) {
+            navHeader.addEventListener('click', () => {
+                const fileId = navHeader.dataset.file;
+                if (fileId) {
+                    this.loadContent(fileId);
+                    
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    const heroNavItem = document.querySelector('.nav-item[data-file="hero"]');
+                    if (heroNavItem) {
+                        heroNavItem.classList.add('active');
+                    }
+                }
+            });
+        }
+        
+        // Add click handler for mobile-title (Hee-Eun Kim) to go to hero page
+        const mobileTitle = document.querySelector('.mobile-title[data-file]');
+        if (mobileTitle) {
+            mobileTitle.addEventListener('click', () => {
+                const fileId = mobileTitle.dataset.file;
+                if (fileId) {
+                    this.loadContent(fileId);
+                    
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    const heroNavItem = document.querySelector('.nav-item[data-file="hero"]');
+                    if (heroNavItem) {
+                        heroNavItem.classList.add('active');
+                    }
+                }
+            });
+        }
     }
     
     setupCommands() {
@@ -856,14 +899,21 @@ class TerminalPortfolio {
                         terminalWindow.classList.remove('fullscreen');
                         terminalWindow.classList.remove('fullscreen-restoring');
                         
-                        // Resize canvas after restore completes
+                        // Resize canvas after restore completes - wait longer for CSS to settle
                         setTimeout(() => {
                             if (window.codeArchAnimation && window.codeArchAnimation.resize) {
                                 window.codeArchAnimation.resize();
                             }
                             // Trigger window resize event
                             window.dispatchEvent(new Event('resize'));
-                        }, 350);
+                            
+                            // Force another resize after a bit more time to ensure it takes
+                            setTimeout(() => {
+                                if (window.codeArchAnimation && window.codeArchAnimation.resize) {
+                                    window.codeArchAnimation.resize();
+                                }
+                            }, 100);
+                        }, 400);
                     }, 100);
                 } 
                 // If normal, go to fullscreen
@@ -1204,20 +1254,27 @@ class TerminalPortfolio {
                 
                 // Special handling for about.md on mobile - create new parallax structure
                 if (fileId === 'about') {
-                    // Create a temporary div to parse the HTML
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = content;
+                    // Use the SAME system as scrollable content - extract from hardcoded data-en/data-kr
+                    // This ensures language switching works correctly
+                    const scrollableContent = `
+                        <p class="output-line"><span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></p>
+                        <p class="output-line"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures</span></p>
+                        <p class="output-line"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions</span></p>
+                        <p class="output-line"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines</span></p>
+                    `;
                     
-                    // Extract all spans with data-i18n from output-line elements (excluding blank and section markers)
-                    const lines = Array.from(tempDiv.querySelectorAll('.output-line:not(.blank):not(.section-marker)'));
-                    const spans = [];
-                    lines.forEach(line => {
-                        const i18nSpans = line.querySelectorAll('[data-i18n]');
-                        i18nSpans.forEach(span => spans.push(span.outerHTML));
+                    // Extract text using the SAME method as translate() for data-en/data-kr
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = scrollableContent;
+                    
+                    const textPieces = [];
+                    tempDiv.querySelectorAll('[data-en][data-kr]').forEach((element) => {
+                        const text = this.currentLang === 'kr' ? element.dataset.kr : element.dataset.en;
+                        if (text) textPieces.push(text);
                     });
                     
-                    // Join all spans with spaces for scattered effect
-                    const scatteredText = spans.join(' ');
+                    // Join all text pieces with spaces for scattered effect
+                    const scatteredText = textPieces.join(' ');
                     
                     // Create mobile-only parallax structure
                     content = `
@@ -1230,7 +1287,7 @@ class TerminalPortfolio {
                                         <span class="prompt-command">about_me.txt</span>
                                     </div>
                                     <div class="terminal-output">
-                                        <p class="output-line"><span class="line-marker">></span> ${scatteredText}</p>
+                                        <p class="output-line">${scatteredText}</p>
                                     </div>
                                 </div>
                             </div>
@@ -1239,17 +1296,10 @@ class TerminalPortfolio {
                             <div class="mobile-about-scroll-content">
                                 <div class="mobile-about-spacer"></div>
                                 <div class="mobile-about-text-section">
-                                    <p class="output-line"><span class="line-marker">></span> <span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line section-marker"><span class="line-marker">//</span> 01</p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line section-marker"><span class="line-marker">//</span> 02</p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 직접 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
+                                    <h2><span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></h2>
+                                    <p class="exhibition-text"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
+                                    <p class="exhibition-text"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
+                                    <p class="exhibition-text"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
                                 </div>
                             </div>
                         </div>
@@ -1480,40 +1530,68 @@ class TerminalPortfolio {
         // Exhibition pages: apply fade-in effect to text paragraphs and images
         if (fileId.startsWith('exhibition')) {
             if (!this.animatedPages.has(fileId)) {
-                // First visit: animate
+                // First visit: animate text immediately, images independently
+                
+                // Start text animations immediately (no initial delay)
                 setTimeout(() => {
-                    // For individual exhibition pages: fade in exhibition-text paragraphs (slower)
+                    // For individual exhibition pages: fade in exhibition-text paragraphs
                     const exhibitionTexts = document.querySelectorAll('.exhibition-text');
                     exhibitionTexts.forEach((element, index) => {
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');
-                        }, index * 250);
+                        }, index * 150); // Reduced from 250ms to 150ms
                     });
                     
-                    // For exhibitions-overview: fade in cv-entry items (keep at 150ms)
+                    // For exhibitions-overview: fade in cv-entry items
                     const cvEntries = document.querySelectorAll('.cv-entry');
                     cvEntries.forEach((element, index) => {
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');
-                        }, index * 150);
+                        }, index * 100); // Reduced from 150ms to 100ms
                     });
-                    
-                    // Fade in images in image-grid (slower for individual pages)
-                    const gridImages = document.querySelectorAll('.image-grid .grid-image');
-                    gridImages.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition-image');
-                        }, index * 200);
-                    });
-                    
-                    // Fade in cv-flyer images (keep at 100ms for overview)
-                    const flyerImages = document.querySelectorAll('.cv-flyer');
-                    flyerImages.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition-image');
-                        }, index * 100);
-                    });
-                }, 200);
+                }, 50); // Reduced from 200ms to 50ms
+                
+                // Images fade in independently as they load
+                const gridImages = document.querySelectorAll('.image-grid .grid-image');
+                gridImages.forEach((element, index) => {
+                    const img = element.tagName === 'IMG' ? element : element.querySelector('img');
+                    if (img) {
+                        if (img.complete) {
+                            // Image already loaded
+                            setTimeout(() => {
+                                element.classList.add('fade-in-exhibition-image');
+                            }, index * 100); // Faster stagger
+                        } else {
+                            // Wait for image to load
+                            img.addEventListener('load', () => {
+                                element.classList.add('fade-in-exhibition-image');
+                            });
+                        }
+                    } else {
+                        // No image, fade in immediately
+                        element.classList.add('fade-in-exhibition-image');
+                    }
+                });
+                
+                // Fade in cv-flyer images
+                const flyerImages = document.querySelectorAll('.cv-flyer');
+                flyerImages.forEach((element, index) => {
+                    const img = element.tagName === 'IMG' ? element : element.querySelector('img');
+                    if (img) {
+                        if (img.complete) {
+                            setTimeout(() => {
+                                element.classList.add('fade-in-exhibition-image');
+                            }, index * 80);
+                        } else {
+                            img.addEventListener('load', () => {
+                                element.classList.add('fade-in-exhibition-image');
+                            });
+                        }
+                    } else {
+                        element.classList.add('fade-in-exhibition-image');
+                    }
+                });
+                
                 this.animatedPages.add(fileId);
             } else {
                 // Revisit: add classes immediately without animation
@@ -1639,22 +1717,42 @@ class TerminalPortfolio {
     }
     
     executeCommand(command) {
+        // Debug: log what we're checking
+        console.log('Checking command:', `"${command}"`);
+        console.log('Easter egg handler exists?', !!window.easterEggHandler);
+        if (window.easterEggHandler) {
+            console.log('Is easter egg?', window.easterEggHandler.isEasterEgg(command));
+            console.log('Available commands:', window.easterEggHandler.listCommands());
+        }
+        
+        // Check if the full command (including spaces) is an easter egg first
+        if (window.easterEggHandler && window.easterEggHandler.isEasterEgg(command)) {
+            console.log('Found easter egg:', command);
+            window.easterEggHandler.execute(command);
+            return;
+        }
+        
         const parts = command.split(' ');
         const cmd = parts[0];
         const arg = parts.slice(1).join(' ');
         
         switch(cmd) {
             case 'help':
-                alert('// you\'re already navigating a living system\n' +
-                      '// meaning emerges through interaction, not instruction\n\n' +
-                      '~ available gestures ~\n\n' +
-                      'ls — witness what exists\n' +
-                      'open [file] — enter a node\n' +
-                      'lang [en/kr] — shift perspective\n' +
-                      'clear — (but can you ever truly clear a relational field?)\n\n' +
-                      '// this interface adapts to you\n' +
-                      '// you are co-creating it by being here\n' +
-                      '// coherence > optimization');
+                if (this.currentLang === 'kr') {
+                    alert('> about.md: 소개\n' +
+                          '> process: 작업 방식\n' +
+                          '> exhibitions: 전시\n' +
+                          '> research: 연구, 이론적 기반\n' +
+                          '> contact: 연락처\n\n' +
+                          '사이드바의 섹션을 클릭하여 이동하세요');
+                } else {
+                    alert('> about.md: Background and practice\n' +
+                          '> process: How I work and think\n' +
+                          '> exhibitions: Project documentation\n' +
+                          '> research: Theoretical foundations\n' +
+                          '> contact: Get in touch\n\n' +
+                          'Click any section in the sidebar to navigate');
+                }
                 break;
                 
             case 'ls':
@@ -1690,7 +1788,7 @@ class TerminalPortfolio {
                 break;
                 
             default:
-                alert(`Command not found: ${cmd}\nType 'help' for available commands.`);
+                alert(`Command not found: ${cmd}`);
         }
     }
 }
