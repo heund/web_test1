@@ -947,7 +947,7 @@ body {
     .mobile-about-text-section {
         padding: 100px 30px 100px 30px !important;
         background: rgba(255, 255, 255, 0.3) !important;
-        backdrop-filter: blur(3.5px) !important;
+        backdrop-filter: blur(4px) !important;
         -webkit-backdrop-filter: blur(3.5px) !important;
     }
     
