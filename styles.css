@@ -101,6 +101,33 @@ body {
         align-items: flex-end;
         padding-bottom: 60px;
     }
+    
+    /* Center main content when browser is in fullscreen mode (F11) on desktop */
+    html:fullscreen .main-content,
+    html:-webkit-full-screen .main-content,
+    html:-moz-full-screen .main-content,
+    body:fullscreen .main-content,
+    body:-webkit-full-screen .main-content,
+    body:-moz-full-screen .main-content {
+        align-items: center !important;
+        padding-bottom: 20px !important;
+    }
+}
+
+/* Alternative approach: Use display-mode media query for fullscreen */
+@media (min-width: 1025px) and (display-mode: fullscreen) {
+    .main-content {
+        align-items: center !important;
+        padding-bottom: 20px !important;
+    }
+}
+
+/* JavaScript-based fullscreen detection */
+@media (min-width: 1025px) {
+    body.browser-fullscreen .main-content {
+        align-items: center !important;
+        padding-bottom: 20px !important;
+    }
 }
 
 /* ============================================

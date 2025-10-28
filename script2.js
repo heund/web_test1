@@ -789,6 +789,17 @@ class TerminalPortfolio {
                     mobileContentContainer.scrollTop = 0;
                 }
             }, 0);
+        } else {
+            // Reset scroll after content loads on desktop
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                const contentBody = document.querySelector('.content-body');
+                if (contentBody) {
+                    contentBody.scrollTop = 0;
+                }
+            }, 0);
         }
         
         // Show mobile scroll indicator on about page only
@@ -934,6 +945,32 @@ class TerminalPortfolio {
         }
     }
     
+    // Helper function to close all folder windows and content viewers
+    closeAllFolderWindows() {
+        // Close all folder windows
+        document.querySelectorAll('.folder-window.active').forEach(window => {
+            window.classList.remove('active');
+        });
+        
+        // Close PDF viewer
+        const pdfViewer = document.getElementById('pdf-viewer');
+        if (pdfViewer && pdfViewer.classList.contains('active')) {
+            this.closePDFViewer();
+        }
+        
+        // Close text viewer
+        const textViewer = document.getElementById('text-viewer');
+        if (textViewer && textViewer.classList.contains('active')) {
+            this.closeTextViewer();
+        }
+        
+        // Close lightbox if open
+        const lightbox = document.getElementById('lightbox');
+        if (lightbox && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    }
+
     setupWindowControls() {
         const terminalWindow = document.querySelector('.terminal-window');
         const desktopFolders = document.querySelector('.desktop-folders');
@@ -988,6 +1025,9 @@ class TerminalPortfolio {
                             desktopFolders.classList.remove('visible');
                         }
                         
+                        // Close all folder windows and content viewers
+                        this.closeAllFolderWindows();
+                        
                         resetAndResize();
                     }
                 }
@@ -1009,6 +1049,9 @@ class TerminalPortfolio {
                     if (desktopFolders) {
                         desktopFolders.classList.remove('visible');
                     }
+                    
+                    // Close all folder windows and content viewers
+                    this.closeAllFolderWindows();
                     
                     resetAndResize();
                 }
@@ -1373,6 +1416,26 @@ class TerminalPortfolio {
 
 // Initialize
 window.portfolio = new TerminalPortfolio();
+
+// Fullscreen detection for centering main content
+function handleFullscreenChange() {
+    const isFullscreen = !!(document.fullscreenElement || 
+                           document.webkitFullscreenElement || 
+                           document.mozFullScreenElement || 
+                           document.msFullscreenElement);
+    
+    if (isFullscreen) {
+        document.body.classList.add('browser-fullscreen');
+    } else {
+        document.body.classList.remove('browser-fullscreen');
+    }
+}
+
+// Listen for fullscreen changes
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
 // Toggle function for collapsible sections
 window.toggleSection = function(titleElement) {
