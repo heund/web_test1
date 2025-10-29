@@ -56,17 +56,20 @@
     <p class="exhibition-text">Resonance Loop operates through the following integrated pipeline:</p>
     <ol class="exhibition-list">
         <li><strong>Real-time facial tracking:</strong> MediaPipe extracts 468 facial landmarks at 30fps</li>
-        <li><strong>XYZ meta-coordinate transformation:</strong> Landmark coordinates converted to 3D meta-coordinates representing behavioral dynamics</li>
+        <li><strong>XYZ meta-coordinate transformation:</strong> Landmark coordinates converted to 3D meta-coordinates representing behavioural dynamics</li>
         <li><strong>Narrative phase classification:</strong> Temporal patterns in XYZ values classified into one of six narrative phases</li>
         <li><strong>Custom ML model application:</strong> Machine learning model trained on the artist's own facial data provides personalized interpretation</li>
         <li><strong>Dual-signal semantic analysis:</strong> Combines temporal sequences and cluster-based similarity for word injection</li>
         <li><strong>GPT-4 inner monologue generation:</strong> Prompt engineering produces fragmentary inner speech</li>
         <li><strong>Voice synthesis:</strong> Output through TTS model trained on the artist's voice</li>
-        <li><strong>Recursive feedback:</strong> Artist's reactions to generated voice become new inputs</li>
+        <li><strong>Recursive feedback:</strong> The artist’s facial reactions to the generated voice are tracked again as new input</li>
     </ol>
     
     <h3 class="exhibition-subheading">Pre-Verbal Affective Dynamics (PVAD) System</h3>
     <p class="exhibition-text">Traditional emotion recognition systems ask: what emotion is this? PVAD asks a fundamentally different question: how does affective experience flow through time?</p>
+    
+    <h3 class="exhibition-subheading">Custom Machine Learning Model</h3>
+    <p class="exhibition-text">Facial microexpression data is captured simultaneously while recording the artist's natural speech. After recording, the system processes the material again to align specific moments of facial movement with the words spoken at those moments. These aligned expression–word pairs are then used to train two models: a <strong>Gaussian Mixture Model (GMM)</strong>, which identifies similarity structures across the paired data, and a <strong>Hidden Markov Model (HMM)</strong>, which captures how these similarity structures transition over time. Clusters emerge from statistical proximity within both the facial expression features and the associated word tendencies, allowing the system to reflect the artist's own expressive patterns.</p>
     
     <h3 class="exhibition-subheading">468 Landmarks and the XYZ Meta-Coordinate System</h3>
     <p class="exhibition-text">The 468 facial landmarks extracted through MediaPipe are transformed into a three-dimensional meta-coordinate system (XYZ) that represents not spatial position but the character of temporal dynamics:</p>
@@ -87,15 +90,6 @@
         <li><strong>Systemic Shift:</strong> Broader baseline changes. Default classification for patterns not fitting other categories.</li>
     </ol>
     
-    <h3 class="exhibition-subheading">Custom Machine Learning Model</h3>
-    <p class="exhibition-text">One of the system's core innovations is a personalized machine learning model trained on the artist's own facial data. Unlike general emotion recognition models assuming universal expression patterns, this model:</p>
-    <ul class="exhibition-list">
-        <li>Learns the artist's individual microexpression characteristics</li>
-        <li>Recognizes the artist's unique narrative phase transition patterns</li>
-        <li>Applies personalized XYZ thresholds</li>
-    </ul>
-    <p class="exhibition-text">The system interprets the artist's expressions through their own expressive language rather than universal categories.</p>
-    
     <h3 class="exhibition-subheading">Dual-Signal Semantic Analysis and Word Injection</h3>
     <p class="exhibition-text">Users typically produce only 1-3 words, but coherent (if fragmentary) sentences require more material. PVAD solves this through intelligent word injection combining two signals:</p>
     
@@ -109,7 +103,7 @@
     <p class="exhibition-text"><strong>Signal 2: Cluster-Based Similarity</strong></p>
     <ul class="exhibition-list">
         <li>Uses GMM (Gaussian Mixture Model) to cluster words semantically</li>
-        <li>Finds words in neighboring clusters (similar meanings)</li>
+        <li>Finds words in neighbouring clusters (similar meanings)</li>
         <li>Adds vocabulary maintaining thematic coherence</li>
     </ul>
     
@@ -158,13 +152,13 @@
     <p class="exhibition-text">Traditional emotion recognition systems, based on Ekman's Basic Emotions Theory, classify human experience into happiness, sadness, anger, fear, surprise, disgust. This approach embeds a fundamental assumption: that human affective experience can be adequately captured through discrete categories. PVAD refuses this assumption for three critical reasons:</p>
     
     <h3 class="exhibition-subheading">1. Static Snapshots vs Dynamic Flow</h3>
-    <p class="exhibition-text">Emotions are temporal phenomena unfolding over time. Most systems analyze individual frames independently, like trying to understand a film's narrative from a single scene. PVAD models affect as narrative arc with beginning, middle, and end phases.</p>
+    <p class="exhibition-text">Emotions are temporal phenomena unfolding over time. Most systems analyse individual frames independently, like trying to understand a film's narrative from a single scene. PVAD models affect as narrative arc with beginning, middle, and end phases.</p>
     
     <h3 class="exhibition-subheading">2. The Between-State Problem</h3>
     <p class="exhibition-text">Human affective experience frequently exists in ambiguous, transitional, mixed states that resist categorical classification. When you're neither fully happy nor fully sad, uncertain and hesitant and not-yet-determined, what do you call that state? Traditional systems treat this as classification error or collapse it into broader categories. PVAD makes these in-between states, particularly pre-verbal hesitation and post-verbal residue, the system's core focus.</p>
     
     <h3 class="exhibition-subheading">3. The Pre-Verbal Gap</h3>
-    <p class="exhibition-text">A temporal gap exists between internal affective experience and its external verbal expression. We feel before we speak, and we continue feeling after. Traditional systems capture neither the anticipatory facial behavior before speech nor the residual expressions that linger afterward. PVAD explicitly models this gap.</p>
+    <p class="exhibition-text">A temporal gap exists between internal affective experience and its external verbal expression. We feel before we speak, and we continue feeling after. Traditional systems capture neither the anticipatory facial behaviour before speech nor the residual expressions that linger afterward. PVAD explicitly models this gap.</p>
     
     <h3 class="exhibition-subheading">From Classification to Consciousness Modelling</h3>
     <p class="exhibition-text">PVAD represents a conceptual shift from emotion recognition to consciousness modelling. Where traditional systems ask "what is this person feeling?", PVAD asks "how does this person's experience flow through time?"</p>
@@ -176,7 +170,7 @@
         <li>Actual inner speech exists in fragmentary form, not complete sentences</li>
     </ul>
     
-    <p class="exhibition-text">By refusing categorization, PVAD pursues a different aim: modeling not what is felt but how it flows.</p>
+    <p class="exhibition-text">By refusing categorization, PVAD pursues a different aim: modelling not what is felt but how it flows.</p>
         </div>
     </div>
         </div>

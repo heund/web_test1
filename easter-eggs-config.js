@@ -481,6 +481,11 @@ const EASTER_EGG_COMMANDS = {
         handler: 'showFunny',
         description: 'This is fucking sick'
     },
+    'this is sick': {
+        type: 'animation',
+        handler: 'showFunny',
+        description: 'This is fucking sick'
+    },
     'awesomeness': {
         type: 'animation',
         handler: 'showFunny',
@@ -556,74 +561,7 @@ const EASTER_EGG_COMMANDS = {
         handler: 'showFunny',
         description: 'Awesome (Korean)'
     },
-    
-    // Fire expressions - all trigger fire
-    'fire': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Fire'
-    },
-    'fiiire': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Fire'
-    },
-    'fiire': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Fire'
-    },
-    'this is fire': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'This is fire'
-    },
-    'lit': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Lit'
-    },
-    '돌았다': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Crazy (Korean)'
-    },
-    '찢었다': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Killed it (Korean)'
-    },
-    '찢음': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Killed it (Korean)'
-    },
-    '도름': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Crazy (Korean slang)'
-    },
-    '도랏': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Crazy (Korean slang)'
-    },
-    '천재': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Genius (Korean)'
-    },
-    '천재다': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Genius (Korean)'
-    },
-    '등': {
-        type: 'animation',
-        handler: 'showFire',
-        description: 'Etc (Korean)'
-    },
-    
+     
     // Developer code snippets with terminal overlay
     'console.log': {
         type: 'animation',
