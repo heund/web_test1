@@ -769,7 +769,7 @@ body {
     .about-section strong,
     .mobile-content-container strong {
         font-weight: 600 !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
         display: inline !important;
     }
     
@@ -2727,7 +2727,16 @@ body[data-lang="kr"] .lang-kr {
 .lang-en .exhibition-list strong,
 .lang-en .exhibition-list li strong {
     font-weight: 600;
+    font-size: 14px;
     letter-spacing: 0.01em;
+}
+
+/* Bold text styling for Korean exhibition content */
+.lang-kr .exhibition-text strong,
+.lang-kr .exhibition-list strong,
+.lang-kr .exhibition-list li strong {
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .flow-step {
