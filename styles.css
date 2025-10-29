@@ -791,10 +791,22 @@ body {
     }
     
     /* Fix headings */
-    .mobile-content-container h1,
-    .mobile-content-container h2,
+    .mobile-content-container h1 {
+        font-size: 20px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 12px !important;
+        word-wrap: break-word !important;
+    }
+    
+    .mobile-content-container h2 {
+        font-size: 22px !important;
+        line-height: 1.4 !important;
+        margin-bottom: 12px !important;
+        word-wrap: break-word !important;
+    }
+    
     .mobile-content-container h3 {
-        font-size: 18px !important;
+        font-size: 20px !important;
         line-height: 1.4 !important;
         margin-bottom: 12px !important;
         word-wrap: break-word !important;
@@ -1025,7 +1037,7 @@ body {
     
     .mobile-exhibition-description .exhibition-text {
         margin: 0 0 16px 0 !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
         line-height: 1.8 !important;
         font-family: 'Noto Sans', sans-serif !important;
         letter-spacing: 0.02em;
@@ -1035,7 +1047,7 @@ body {
     /* Korean exhibition text for mobile */
     :lang(ko) .mobile-exhibition-description .exhibition-text {
         font-family: 'Noto Sans KR', sans-serif !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
         letter-spacing: 0.02em;
         line-height: 1.8 !important;
         word-break: keep-all;
@@ -1044,7 +1056,7 @@ body {
     /* English exhibition text for mobile */
     :lang(en) .mobile-exhibition-description .exhibition-text {
         font-family: var(--font-sans) !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
         font-weight: 400 !important;
         letter-spacing: 0.02em;
         line-height: 1.8 !important;
@@ -1102,7 +1114,7 @@ body {
     /* Mobile-specific: Bold and larger h2 titles on research pages */
     .mobile-content-container h2 {
         font-weight: 600 !important;
-        font-size: 20px !important;
+        font-size: 22px !important;
     }
     
     /* Mobile-specific: Extra spacing before 내면 독백 생성 section on resonance loop page */
