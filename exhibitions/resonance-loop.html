@@ -18,9 +18,10 @@
             <p class="exhibition-text">Resonance Loop explores what happens when you hear AI-generated versions of your own thoughts. The artist stands silently before a camera. A custom system reads microexpressions in real-time, translating them into inner monologue fragments synthesized in the artist's own voice. Through headphones, the artist hears these AI-generated "thoughts" and reacts. These reactions become new facial data, generating new monologue. The loop continues.</p>
             
             <p class="exhibition-text">The work's core is this impossible circuit. A living subject reduced to 468 facial landmark coordinates, transformed into language, then synthesized voice. A fundamental gap exists between what the algorithm captures as "expression" and what it presumes to mean as "interiority." Yet the system translates this into definitive narrative, and the artist listens to this translated self while simultaneously reacting, becoming data again.</p>
-            
-            <p class="exhibition-text" style="margin-bottom: 80px;">The work doesn't avoid the paradox of using technology to critique technology. It makes that impossibility the structure itself. The system continuously reads, interprets, and responds to the artist's face, a process familiar from facial recognition systems deployed in surveillance, emotion detection interfaces, and affective computing applications. But here, the artist is both subject and observer of this process. Audiences watch the artist being watched by the system, witnessing how algorithms translate lived experience into data, then back into representation. In this act of watching, audiences become implicated in the very mechanisms of observation the work examines. When are we observers and when are we participants in systems of capture?</p>
+                        
+            <p class="exhibition-text" style="margin-bottom: 80px;">The work doesn't avoid the paradox of using technology to critique technology. It makes that impossibility the structure itself. The system continuously reads, interprets, and responds to the artist's face, a process familiar from facial recognition systems deployed in surveillance, emotion detection interfaces, and affective computing applications. But here, the artist is both subject and observer of this process. Audiences watch the artist being watched by the system, witnessing how algorithms translate lived experience into data, then back into representation. In this act of watching, audiences become implicated in the very mechanisms of observation the work examines. <strong>When are we observers and when are we participants in systems of capture?</strong></p>
             <br class="mobile-only-br">
+
     <div class="collapsible-section">
         <h2 class="collapsible-title" onclick="window.toggleSection(this)">System Architecture <span class="toggle-icon">▼</span></h2>
         <div class="section-content">
@@ -55,32 +56,31 @@
         <h3 class="exhibition-subheading">System Architecture</h3>
     <p class="exhibition-text">Resonance Loop operates through the following integrated pipeline:</p>
     <ol class="exhibition-list">
-        <li><strong>Real-time facial tracking:</strong> MediaPipe extracts 468 facial landmarks at 30fps</li>
-        <li><strong>XYZ meta-coordinate transformation:</strong> Landmark coordinates converted to 3D meta-coordinates representing behavioural dynamics</li>
-        <li><strong>Narrative phase classification:</strong> Temporal patterns in XYZ values classified into one of six narrative phases</li>
-        <li><strong>Custom ML model application:</strong> Machine learning model trained on the artist's own facial data provides personalized interpretation</li>
-        <li><strong>Dual-signal semantic analysis:</strong> Combines temporal sequences and cluster-based similarity for word injection</li>
-        <li><strong>GPT-4 inner monologue generation:</strong> Prompt engineering produces fragmentary inner speech</li>
-        <li><strong>Voice synthesis:</strong> Output through TTS model trained on the artist's voice</li>
-        <li><strong>Recursive feedback:</strong> The artist’s facial reactions to the generated voice are tracked again as new input</li>
+        <li><strong>Real-time facial tracking:</strong> MediaPipe extracts 468 facial landmarks at 30fps.</li>
+        <li><strong>XYZ meta-coordinate transformation:</strong> Landmark movement is interpreted as directionality, intensity, and temporal cohesion.</li>
+        <li><strong>Narrative phase classification:</strong> Temporal changes in XYZ values are mapped to six phases that describe different positions within unfolding affect.</li>
+        <li><strong>Custom ML model application:</strong> A Gaussian Mixture Model (GMM) and Hidden Markov Model (HMM) trained on paired expression–word data provide a small dictionary of words associated with stable microexpression states and their transitions.</li>
+        <li><strong>Word selection:</strong> Narrative phase output is combined with neighbouring cluster words to form a short candidate set for inner monologue.</li>
+        <li><strong>Inner monologue generation:</strong> Prompt engineering produces brief, fragmentary internal speech shaped by the current phase.</li>
+        <li><strong>Voice synthesis:</strong> Text is rendered through a TTS model trained on the artist’s voice.</li>
+        <li><strong>Recursive feedback:</strong> The artist’s facial reactions to the generated voice are tracked again as new input.</li>
     </ol>
     
-    <h3 class="exhibition-subheading">Pre-Verbal Affective Dynamics (PVAD) System</h3>
-    <p class="exhibition-text">Traditional emotion recognition systems ask: what emotion is this? PVAD asks a fundamentally different question: how does affective experience flow through time?</p>
-    
-    <h3 class="exhibition-subheading">Custom Machine Learning Model</h3>
-    <p class="exhibition-text">Facial microexpression data is captured simultaneously while recording the artist's natural speech. After recording, the system processes the material again to align specific moments of facial movement with the words spoken at those moments. These aligned expression–word pairs are then used to train two models: a <strong>Gaussian Mixture Model (GMM)</strong>, which identifies similarity structures across the paired data, and a <strong>Hidden Markov Model (HMM)</strong>, which captures how these similarity structures transition over time. Clusters emerge from statistical proximity within both the facial expression features and the associated word tendencies, allowing the system to reflect the artist's own expressive patterns.</p>
+    <h3 class="exhibition-subheading">Pre-Verbal Affective Dynamics (PVAD)</h3>
+    <p class="exhibition-text">PVAD models how affective expression unfolds over time by linking microexpressions, linguistic tendencies, and temporal behaviour into a continuous loop. Facial microexpression data was captured simultaneously with natural speech and later processed to align specific moments of movement with the words spoken at those moments, producing a paired dataset.</p>
+    <p class="exhibition-text">A GMM identifies similarity structures within this data, while an HMM describes how these structures transition over time. Together, they produce a limited dictionary of words statistically associated with stable expressive states. At runtime, this dictionary is combined with real-time XYZ analysis and narrative phase classification. The resulting internal speech is played back through headphones, prompting new microexpressions that continue the loop.</p>
+
     
     <h3 class="exhibition-subheading">468 Landmarks and the XYZ Meta-Coordinate System</h3>
-    <p class="exhibition-text">The 468 facial landmarks extracted through MediaPipe are transformed into a three-dimensional meta-coordinate system (XYZ) that represents not spatial position but the character of temporal dynamics:</p>
+    <p class="exhibition-text">The 468 landmarks extracted through MediaPipe are transformed into a three-dimensional representation of temporal dynamics:</p>
     <ul class="exhibition-list">
-        <li><strong>X-axis (Directionality/Flow):</strong> Expansion (opening, engagement) versus contraction (closing, withdrawal) of expression. Computed from frame-to-frame deltas in mouth width and brow height.</li>
+        <li><strong>X-axis (Directionality/Flow):</strong> Expansion versus contraction of expression, computed from frame-to-frame changes in features such as mouth width and brow height.</li>
         <li><strong>Y-axis (Intensity/Amplitude):</strong> Speed and strength of facial change. Aggregates movement velocity, asymmetry, and z-depth tension.</li>
-        <li><strong>Z-axis (Temporal Cohesion):</strong> Duration and complexity. Increases with sustained states, directional reversals, and hesitation patterns, capturing the "layering" of emotional experience over time.</li>
+        <li><strong>Z-axis (Temporal Cohesion):</strong> Duration and layering of states, increasing with sustained expression, directional reversals, and hesitation patterns.</li>
     </ul>
     
     <h3 class="exhibition-subheading">Six Narrative Phases</h3>
-    <p class="exhibition-text">Rather than classifying emotions, PVAD identifies six narrative phases characterizing different temporal positions within affective experience:</p>
+    <p class="exhibition-text">PVAD identifies six phases that describe temporal positions within affective experience:</p>
     <ol class="exhibition-list">
         <li><strong>Neutral:</strong> Minimal facial activity. XYZ characteristics: X≈0, Y&lt;0.5, Z&lt;0.3. Baseline between affective events.</li>
         <li><strong>Sensory Reaction:</strong> Sudden intensity spike. XYZ: Y&gt;15 OR ΔY&gt;8. Immediate, involuntary response to stimulus, occurring before conscious emotional regulation.</li>
@@ -90,87 +90,70 @@
         <li><strong>Systemic Shift:</strong> Broader baseline changes. Default classification for patterns not fitting other categories.</li>
     </ol>
     
-    <h3 class="exhibition-subheading">Dual-Signal Semantic Analysis and Word Injection</h3>
-    <p class="exhibition-text">Users typically produce only 1-3 words, but coherent (if fragmentary) sentences require more material. PVAD solves this through intelligent word injection combining two signals:</p>
+    <h3 class="exhibition-subheading">Custom Machine Learning Model</h3>
+    <p class="exhibition-text">Facial microexpression data was captured alongside natural speech and later aligned at the level of specific moments. These expression–word pairs trained a GMM to identify similarity structures and an HMM to describe their transitions over time. Clusters emerge from statistical proximity across both expression features and associated word tendencies.</p>
     
-    <p class="exhibition-text"><strong>Signal 1: Temporal Sequences</strong></p>
+    <h3 class="exhibition-subheading">Dual-Signal Semantic Analysis</h3>
+    <p class="exhibition-text">Brief user utterances are supplemented through two signals:</p>
+
     <ul class="exhibition-list">
-        <li>Analyses training data to find which words historically followed input words</li>
-        <li>Builds probabilistic chains: "thought" → ["if", "and", "do"]</li>
-        <li>Injects 5-10 words naturally extending the user's utterance</li>
+        <li><strong>Temporal sequences:</strong> Probabilistic chains based on observed pairing patterns.</li>
+        <li><strong>Cluster similarity:</strong> Neighbouring words in feature space, maintaining thematic coherence.</li>
+    </ul>
+    <p class="exhibition-text">These signals produce a short candidate set for internal speech.</p>
+        <pre class="code-block"><code>semantic_coherence = (cluster_similarity × 0.5) + (temporal_probability × 0.5)</code></pre>
+
+    <h3 class="exhibition-subheading">Inner Monologue Generation</h3>
+    <p class="exhibition-text">XYZ values and narrative phases condition a language model to produce fragmentary internal speech. Prompt engineering shapes:</p>
+    <ul class="exhibition-list">
+        <li>Incomplete phrasing</li>
+        <li>Dropped subjects</li>
+        <li>Interjections</li>
+        <li>Private verb endings</li>
+        <li>Short length</li>
     </ul>
     
-    <p class="exhibition-text"><strong>Signal 2: Cluster-Based Similarity</strong></p>
-    <ul class="exhibition-list">
-        <li>Uses GMM (Gaussian Mixture Model) to cluster words semantically</li>
-        <li>Finds words in neighbouring clusters (similar meanings)</li>
-        <li>Adds vocabulary maintaining thematic coherence</li>
-    </ul>
-    
-    <p class="exhibition-text">The system scores candidate sentences using both signals:</p>
-    <pre class="code-block"><code>semantic_coherence = (cluster_similarity × 0.5) + (temporal_probability × 0.5)</code></pre>
-    
-    <h3 class="exhibition-subheading">Inner Monologue Generation: Refusing Polished Language</h3>
-    <p class="exhibition-text">XYZ coordinates and narrative phases are translated into fragmentary inner monologue through GPT-4. Crucially, this monologue is not complete sentences.</p>
-    <p class="exhibition-text">Standard language models are trained to produce polished, coherent, communicative text. But inner speech isn't polished. According to Vygotsky's theory of inner speech, it's characterized by abbreviation and predicativity. Subjects are omitted, only predicates remain, because "the subject of thought is always known to the thinker."</p>
-    
-    <p class="exhibition-text">PVAD's prompt engineering implements this through:</p>
+    <p class="exhibition-text">This style reflects immediate, non-communicative inner speech.</p>
+
+    <h3 class="exhibition-subheading">Linguistic Style Mapping</h3>
+    <p class="exhibition-text">Changes in XYZ influence linguistic qualities:</p>
     <ol class="exhibition-list">
-        <li><strong>Removing the audience:</strong> "You have no listener, no intent to communicate"</li>
-        <li><strong>Encouraging incompleteness:</strong> "Don't 'try' to speak, let thoughts flow by themselves"</li>
-        <li><strong>Structural constraints:</strong>
-            <ul class="exhibition-list">
-                <li>No subjects (Korean inner speech drops pronouns)</li>
-                <li>No conjunctions (logical bridges presume explanation)</li>
-                <li>Interjections encouraged (captures pre-verbal hesitation)</li>
-                <li>Self-talk verb endings (marks private rather than public speech)</li>
-            </ul>
-        </li>
-        <li><strong>Length restriction:</strong> Maximum 35 tokens (3-12 words), preventing elaboration</li>
-        <li><strong>High temperature (1.15):</strong> Increases randomness, suppresses GPT's semantic completion tendency</li>
+        <li><strong>High Y:</strong> Single-word utterances.</li>
+        <li><strong>Low Y:</strong> Soft, hesitant phrasing..</li>
+        <li><strong>High Z:</strong> Topic drift and lingering reflection.</li>
+        <li><strong>Phase-specific:</strong> Direct perception, hesitation, trailing memory, etc</li>
     </ol>
-    
-    <p class="exhibition-text">PVAD state to linguistic style mapping:</p>
-    <ul class="exhibition-list">
-        <li><strong>Y &gt; 30:</strong> Single-word utterances: "Done."</li>
-        <li><strong>Y &lt; 5:</strong> Mumbled, uncertain: "Um... what was it."</li>
-        <li><strong>Z &gt; 3:</strong> Topic drift allowed: "It was like that... ah, I'm hungry."</li>
-        <li><strong>neutral:</strong> Flat observation: "It's like that."</li>
-        <li><strong>sensory_reaction:</strong> Direct perception: "Hot."</li>
-        <li><strong>pre_verbal_hesitation:</strong> Uncertain emergence: "Why did I..."</li>
-        <li><strong>post_verbal_residue:</strong> Trailing reflection: "That thing said back then... still remember."</li>
-    </ul>
-    
-    <p class="exhibition-text">Generated voice uses a TTS (Text-to-Speech) model trained on the artist's own voice.</p>
         </div>
     </div>
     
     <div class="collapsible-section">
-        <h2 class="collapsible-title" onclick="window.toggleSection(this)">Why Refuse Categorization: PVAD's Philosophical Significance <span class="toggle-icon">▼</span></h2>
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">Philosophical Implications: The Affective Mirror <span class="toggle-icon">▼</span></h2>
         <div class="section-content">
+
+    <h3 class="exhibition-subheading">Ambiguity as Resistance in Affective Computation</h3>
     
-    <p class="exhibition-text">Traditional emotion recognition systems, based on Ekman's Basic Emotions Theory, classify human experience into happiness, sadness, anger, fear, surprise, disgust. This approach embeds a fundamental assumption: that human affective experience can be adequately captured through discrete categories. PVAD refuses this assumption for three critical reasons:</p>
+    <p class="exhibition-text">PVAD builds on the ongoing debates in affective computing, where researchers increasingly recognise that emotion cannot be fully formalised or captured through discrete categories. Rather than viewing this limitation as a technical flaw, PVAD makes it the central condition of the system. Emotion is treated not as information to be resolved but as a dynamic field of unfolding uncertainty.</p>
+
+    <p class="exhibition-text">In most research environments, affective systems are optimised to minimise ambiguity and maximise prediction accuracy. In this work, ambiguity itself becomes method. The continuous loop between face, language, and voice does not aim for stable classification but sustains the tension between sensation and interpretation. This refusal of closure functions as a quiet form of resistance to the instrumental logic of affective AI, which depends on certainty to operate.</p>
     
-    <h3 class="exhibition-subheading">1. Static Snapshots vs Dynamic Flow</h3>
-    <p class="exhibition-text">Emotions are temporal phenomena unfolding over time. Most systems analyse individual frames independently, like trying to understand a film's narrative from a single scene. PVAD models affect as narrative arc with beginning, middle, and end phases.</p>
+    <p class="exhibition-text">Within the art context, PVAD serves as a mirror that reflects the epistemological limits of machine perception. It exposes how data-driven systems convert lived immediacy into representation and how that conversion reshapes the sense of self. The artist’s participation is not an act of self-portraiture but of self-translation under algorithmic observation. Emotion, here, is not private interiority but a relational negotiation between the biological, the linguistic, and the computational.</p>
+
+    <p class="exhibition-text">By bringing this process into public view, Resonance Loop transforms what would normally occur within a closed research environment into a shared inquiry into perception and ethics. As viewers watch the system unfold, they become implicated in the same question: when affect is made visible, what remains unseen? In Resonance Loop, that question extends into the very technologies of observation themselves.</p>
+
+
+    <h3 class="exhibition-subheading">Systems of Capture: Surveillance and Self-Observation</h3>
+
+    <p class="exhibition-text">Resonance Loop operates within a public setting rather than a closed gallery space. Installed in a book café in Yeouido, Seoul’s main financial district surrounded by offices, screens and surveillance cameras, the work sits within the quiet rhythms of daily life, where reading, rest and observation coexist. This context reframes surveillance as something quietly woven into public experience rather than restricted to institutional systems of control. Cameras and sensors appear not as exceptional instruments of watching but as part of the social atmosphere that shapes how people appear to one another.</p>
     
-    <h3 class="exhibition-subheading">2. The Between-State Problem</h3>
-    <p class="exhibition-text">Human affective experience frequently exists in ambiguous, transitional, mixed states that resist categorical classification. When you're neither fully happy nor fully sad, uncertain and hesitant and not-yet-determined, what do you call that state? Traditional systems treat this as classification error or collapse it into broader categories. PVAD makes these in-between states, particularly pre-verbal hesitation and post-verbal residue, the system's core focus.</p>
+    <p class="exhibition-text">The system mirrors the same facial recognition and affect detection technologies used in digital surveillance and consumer analytics. Here, those mechanisms are exposed as aesthetic experience. The algorithm’s gaze is made visible, its interpretive logic rendered audible. The artist subjects themself to continuous observation, transforming what would normally be invisible computation into a shared temporal event.</p>
     
-    <h3 class="exhibition-subheading">3. The Pre-Verbal Gap</h3>
-    <p class="exhibition-text">A temporal gap exists between internal affective experience and its external verbal expression. We feel before we speak, and we continue feeling after. Traditional systems capture neither the anticipatory facial behaviour before speech nor the residual expressions that linger afterward. PVAD explicitly models this gap.</p>
+    <p class="exhibition-text">In this configuration, the work blurs the line between voluntary and involuntary visibility. The artist chooses to be seen by the system, yet that choice exposes how limited agency becomes under infrastructures of constant observation. The algorithm listens to the face, translates it into words, and returns those words as voice. Each repetition subtly erodes the boundary between self-expression and system interpretation.</p>
     
-    <h3 class="exhibition-subheading">From Classification to Consciousness Modelling</h3>
-    <p class="exhibition-text">PVAD represents a conceptual shift from emotion recognition to consciousness modelling. Where traditional systems ask "what is this person feeling?", PVAD asks "how does this person's experience flow through time?"</p>
+    <p class="exhibition-text">By placing this process in a public environment, Resonance Loop reveals surveillance as an ordinary affective condition rather than an external system of control. Observation here is quiet, continuous, and relational. Viewers do not simply watch; they share the same informational field as the artist, aware that presence itself can become data.</p>
     
-    <p class="exhibition-text">This distinction matters for three reasons:</p>
-    <ul class="exhibition-list">
-        <li>Experience unfolds as process, not fixed point, flowing through time</li>
-        <li>Internal states manifest as expression before linguistic articulation</li>
-        <li>Actual inner speech exists in fragmentary form, not complete sentences</li>
-    </ul>
-    
-    <p class="exhibition-text">By refusing categorization, PVAD pursues a different aim: modelling not what is felt but how it flows.</p>
+    <p class="exhibition-text">The work reframes surveillance as more than a mechanism of control. It becomes a way of sensing the conditions of modern subjectivity, where to exist is already to be translated, measured, and inferred upon. What remains is not spectacle but an awareness of mutual exposure, where watching becomes a form of participation and recognition.</p>
+
+
         </div>
     </div>
         </div>
