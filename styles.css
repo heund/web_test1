@@ -30,6 +30,7 @@
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
     --font-display: 'Crimson Pro', serif;
+    --font-cambria: 'Cambria', serif;
 }
 
 * {
@@ -1038,6 +1039,16 @@ body {
         letter-spacing: 0.02em;
         line-height: 1.8 !important;
         word-break: keep-all;
+    }
+    
+    /* English exhibition text for mobile */
+    :lang(en) .mobile-exhibition-description .exhibition-text {
+        font-family: var(--font-sans) !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.02em;
+        line-height: 1.8 !important;
+        word-break: break-word;
     }
     
     .mobile-exhibition-description .exhibition-text:last-child {
@@ -2654,15 +2665,18 @@ body[data-lang="kr"] .lang-kr {
 }
 
 .lang-en .exhibition-text {
-    font-family: 'Noto Sans', sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 14px !important;
+    font-weight: 400 !important;
     letter-spacing: 0.02em;
-    line-height: 1.8;
+    line-height: 1.8 !important;
+    word-break: break-word;
 }
 
 .lang-en .exhibition-list {
-    font-family: 'Noto Sans', sans-serif !important;
+    font-family: var(--font-sans) !important;
     font-size: 14px !important;
+    font-weight: 400 !important;
     letter-spacing: 0.02em;
     line-height: 1.8;
 }
@@ -2673,6 +2687,16 @@ body[data-lang="kr"] .lang-kr {
 
 .lang-en .flowchart {
     font-family: 'IBM Plex Mono', monospace !important;
+}
+
+/* English headings use Cambria */
+.lang-en h1,
+.lang-en h2,
+.lang-en h3,
+.lang-en h4,
+.lang-en h5,
+.lang-en h6 {
+    font-family: var(--font-cambria) !important;
 }
 
 /* Bold text styling for English exhibition content */
