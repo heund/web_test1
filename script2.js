@@ -892,26 +892,61 @@ class TerminalPortfolio {
             if (!this.animatedPages.has(fileId)) {
                 // Check if mobile
                 const isMobile = window.innerWidth <= 1024;
+                const isContactPage = fileId === 'contact';
                 
                 // First visit: animate with staggered timing (faster on mobile)
                 let delay = 0;
                 const staggerDelay = isMobile ? 50 : 100; // Faster stagger on mobile
                 
-                // Animate h1 and h2 headings (0.1s delay)
-                const headings = document.querySelectorAll('h1, h2');
-                headings.forEach((element, index) => {
-                    setTimeout(() => {
-                        element.classList.add('fade-in-exhibition');
-                    }, delay + 100);
-                });
-                
-                // Animate paragraphs and text (0.2s + stagger)
-                document.querySelectorAll('.exhibition-text, p, .process-section p').forEach((element, index) => {
-                    setTimeout(() => {
-                        element.classList.add('fade-in-exhibition');
-                        element.style.visibility = 'visible';
-                    }, delay + 200 + (index * staggerDelay));
-                });
+                // Special handling for contact page
+                if (isContactPage) {
+                    const isKorean = this.currentLang === 'kr';
+                    
+                    // Animate regular terminal lines with ambient fade (slower, 1.2s)
+                    document.querySelectorAll('.terminal-line').forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition');
+                            element.style.visibility = 'visible';
+                            element.style.animation = 'fadeInAmbient 1.2s ease-in-out forwards';
+                        }, delay + 300 + (index * 400));
+                    });
+                    
+                    // "say hello" text - much longer delay and slower fade (2s)
+                    // Korean: shorter delay since there's only one line before it
+                    const sayHello = document.querySelector('.terminal-line-primary');
+                    if (sayHello) {
+                        setTimeout(() => {
+                            sayHello.classList.add('fade-in-contact');
+                        }, isKorean ? delay + 800 : delay + 1500);
+                    }
+                    
+                    // Email and socials - normal timing after "say hello"
+                    // Korean: shorter delay to match the faster "say hello" timing
+                    const emailDelay = isKorean ? delay + 2500 : delay + 3500;
+                    document.querySelectorAll('.terminal-line-email, .terminal-line-muted').forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition');
+                            element.style.visibility = 'visible';
+                        }, emailDelay + (index * 300));
+                    });
+                } else {
+                    // Normal animation for other pages
+                    // Animate h1 and h2 headings (0.1s delay)
+                    const headings = document.querySelectorAll('h1, h2');
+                    headings.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition');
+                        }, delay + 100);
+                    });
+                    
+                    // Animate paragraphs and text (0.2s + stagger)
+                    document.querySelectorAll('.exhibition-text, p, .process-section p').forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition');
+                            element.style.visibility = 'visible';
+                        }, delay + 200 + (index * staggerDelay));
+                    });
+                }
                 
                 // Animate images (0.4s + stagger)
                 const images = document.querySelectorAll('.grid-image, .image-item, .cv-flyer, .process-carousel, .mobile-process-carousel');
@@ -940,9 +975,10 @@ class TerminalPortfolio {
                 this.animatedPages.add(fileId);
             } else {
                 // Revisit: add classes immediately without animation
-                document.querySelectorAll('h1, h2, .exhibition-text, .cv-entry, p, .process-section p').forEach(element => {
+                document.querySelectorAll('h1, h2, .exhibition-text, .cv-entry, p, .process-section p, .terminal-line, .terminal-line-primary, .terminal-line-email, .terminal-line-muted').forEach(element => {
                     element.classList.add('fade-in-exhibition');
                     element.style.opacity = '1';
+                    element.style.visibility = 'visible';
                 });
                 document.querySelectorAll('.grid-image, .image-item, .cv-flyer, .process-carousel, .mobile-process-carousel').forEach(element => {
                     element.classList.add('fade-in-exhibition');
@@ -950,6 +986,7 @@ class TerminalPortfolio {
                 });
                 document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach(element => {
                     element.style.opacity = '1';
+                    element.style.visibility = 'visible';
                 });
             }
         }

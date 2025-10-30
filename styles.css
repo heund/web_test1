@@ -2950,7 +2950,11 @@ ol.exhibition-list {
 .cv-year,
 .cv-location,
 .cv-medium,
-.cv-title {
+.cv-title,
+.terminal-line,
+.terminal-line-primary,
+.terminal-line-email,
+.terminal-line-muted {
     opacity: 0;
     visibility: hidden;
 }
@@ -2973,7 +2977,11 @@ ol.exhibition-list {
 .lang-kr h1.fade-in-exhibition,
 .lang-kr h2.fade-in-exhibition,
 .exhibition-text.fade-in-exhibition,
-.cv-entry.fade-in-exhibition {
+.cv-entry.fade-in-exhibition,
+.terminal-line.fade-in-exhibition,
+.terminal-line-primary.fade-in-exhibition,
+.terminal-line-email.fade-in-exhibition,
+.terminal-line-muted.fade-in-exhibition {
     opacity: 0;
     animation: fadeInExhibition 0.8s ease-out forwards;
 }
@@ -2992,6 +3000,27 @@ ol.exhibition-list {
         visibility: visible;
         transform: translateY(0);
     }
+}
+
+/* Ambient fade-in for contact page - slower, smoother */
+@keyframes fadeInAmbient {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+    1% {
+        visibility: visible;
+    }
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+/* Special slow fade for "say hello" text */
+.terminal-line-primary.fade-in-contact {
+    opacity: 0;
+    animation: fadeInAmbient 2s ease-in-out forwards;
 }
 
 /* Fade-in for exhibition images - use same class as text */
