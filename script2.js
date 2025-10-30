@@ -402,9 +402,13 @@ class TerminalPortfolio {
         if (mainContent && terminalWindow) {
             const isMobile = window.innerWidth <= 1024;
             const isMinimized = terminalWindow.classList.contains('minimized');
+            const isHeroPage = this.currentFile === 'hero';
             
-            // Only apply bottom positioning on desktop when terminal is not minimized
-            if (!isMobile && !isMinimized) {
+            // Only apply bottom positioning on desktop when:
+            // 1. Not mobile
+            // 2. Terminal is not minimized  
+            // 3. Not on hero page (hero should be perfectly centered)
+            if (!isMobile && !isMinimized && !isHeroPage) {
                 mainContent.classList.add('has-active-terminal');
             } else {
                 mainContent.classList.remove('has-active-terminal');
@@ -815,6 +819,9 @@ class TerminalPortfolio {
         
         this.currentFile = fileId;
         
+        // Update main content position based on current page
+        this.updateMainContentPosition();
+        
         // Update breadcrumb on desktop
         if (!isMobile) {
             const breadcrumb = document.getElementById('breadcrumb');
@@ -880,7 +887,7 @@ class TerminalPortfolio {
         }, 10);
         
         // Global fade-in animation for all content pages (except hero and about)
-        if (fileId !== 'hero' && fileId !== 'about' && fileId !== 'contact') {
+        if (fileId !== 'hero' && fileId !== 'about') {
             
             if (!this.animatedPages.has(fileId)) {
                 // Check if mobile
