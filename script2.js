@@ -257,6 +257,11 @@ class TerminalPortfolio {
         };
         
         this.init();
+        
+        // Update main content position on window resize
+        window.addEventListener('resize', () => {
+            this.updateMainContentPosition();
+        });
     }
     
     async init() {
@@ -272,6 +277,11 @@ class TerminalPortfolio {
         await this.switchLanguage(this.currentLang);
         
         this.loadContent('hero');
+        
+        // Set initial main content position
+        setTimeout(() => {
+            this.updateMainContentPosition();
+        }, 100);
     }
     
     setupMobileContent() {
@@ -383,6 +393,23 @@ class TerminalPortfolio {
                 this.switchLanguage(lang);
             });
         });
+    }
+    
+    updateMainContentPosition() {
+        const mainContent = document.querySelector('.main-content');
+        const terminalWindow = document.querySelector('.terminal-window');
+        
+        if (mainContent && terminalWindow) {
+            const isMobile = window.innerWidth <= 1024;
+            const isMinimized = terminalWindow.classList.contains('minimized');
+            
+            // Only apply bottom positioning on desktop when terminal is not minimized
+            if (!isMobile && !isMinimized) {
+                mainContent.classList.add('has-active-terminal');
+            } else {
+                mainContent.classList.remove('has-active-terminal');
+            }
+        }
     }
     
     setupDesktopAboutScrollLock() {
@@ -1170,6 +1197,7 @@ class TerminalPortfolio {
                     if (desktopFolders) {
                         desktopFolders.classList.add('visible');
                     }
+                    this.updateMainContentPosition();
                 }
             });
         }
@@ -1185,6 +1213,7 @@ class TerminalPortfolio {
                         if (desktopFolders) {
                             desktopFolders.classList.remove('visible');
                         }
+                        this.updateMainContentPosition();
                         
                         // Close all folder windows and content viewers
                         this.closeAllFolderWindows();
@@ -1210,6 +1239,7 @@ class TerminalPortfolio {
                     if (desktopFolders) {
                         desktopFolders.classList.remove('visible');
                     }
+                    this.updateMainContentPosition();
                     
                     // Close all folder windows and content viewers
                     this.closeAllFolderWindows();

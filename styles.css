@@ -97,7 +97,7 @@ body {
 
 /* Desktop: position at bottom when there's a non-minimized terminal window */
 @media (min-width: 1025px) {
-    .main-content:has(.terminal-window:not(.minimized)) {
+    .main-content.has-active-terminal {
         align-items: flex-end;
         padding-bottom: 60px;
     }

@@ -715,7 +715,7 @@ const EASTER_EGG_COMMANDS = {
             command: 'git status',
             type: 'success',
             messages: [
-                'current state: still recovering from the last exhibition',
+                'current state: staring at code not because it was wrong but it felt pointy',
                 'nothing to commit, working tree clean'
             ]
         }
@@ -849,7 +849,7 @@ const EASTER_EGG_COMMANDS = {
         data: {
             command: 'whoami',
             type: 'success',
-            message: 'Bekkie with a K :)'
+            message: 'Hee-Eun, but you can call me Bekkie K :)'
         }
     },
     'sudo su': {
