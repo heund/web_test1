@@ -2955,6 +2955,16 @@ ol.exhibition-list {
     visibility: hidden;
 }
 
+/* Mobile: CV elements in mobile-exhibition-header should be visible immediately */
+@media (max-width: 1024px) {
+    .mobile-exhibition-header .cv-year,
+    .mobile-exhibition-header .cv-location,
+    .mobile-content-container .cv-medium {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+}
+
 .content-body h1.fade-in-exhibition,
 .content-body h2.fade-in-exhibition,
 .content-body p.fade-in-exhibition,

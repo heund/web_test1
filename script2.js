@@ -883,8 +883,12 @@ class TerminalPortfolio {
         if (fileId !== 'hero' && fileId !== 'about' && fileId !== 'contact') {
             
             if (!this.animatedPages.has(fileId)) {
-                // First visit: animate with staggered timing
+                // Check if mobile
+                const isMobile = window.innerWidth <= 1024;
+                
+                // First visit: animate with staggered timing (faster on mobile)
                 let delay = 0;
+                const staggerDelay = isMobile ? 50 : 100; // Faster stagger on mobile
                 
                 // Animate h1 and h2 headings (0.1s delay)
                 const headings = document.querySelectorAll('h1, h2');
@@ -899,7 +903,7 @@ class TerminalPortfolio {
                     setTimeout(() => {
                         element.classList.add('fade-in-exhibition');
                         element.style.visibility = 'visible';
-                    }, delay + 200 + (index * 100));
+                    }, delay + 200 + (index * staggerDelay));
                 });
                 
                 // Animate images (0.4s + stagger)
@@ -907,22 +911,24 @@ class TerminalPortfolio {
                 images.forEach((element, index) => {
                     setTimeout(() => {
                         element.classList.add('fade-in-exhibition');
-                    }, delay + 400 + (index * 100));
+                    }, delay + 400 + (index * staggerDelay));
                 });
                 
                 // Animate CV entries (0.2s + stagger)
                 document.querySelectorAll('.cv-entry').forEach((element, index) => {
                     setTimeout(() => {
                         element.classList.add('fade-in-exhibition');
-                    }, delay + 200 + (index * 100));
+                    }, delay + 200 + (index * staggerDelay));
                 });
                 
-                // Animate CV metadata (year, location, medium) - same timing as text
-                document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach((element, index) => {
-                    setTimeout(() => {
-                        element.classList.add('fade-in-exhibition');
-                    }, delay + 200 + (index * 50));
-                });
+                // Animate CV metadata (year, location, medium) - desktop only
+                if (!isMobile) {
+                    document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('fade-in-exhibition');
+                        }, delay + 200 + (index * 50));
+                    });
+                }
                 
                 this.animatedPages.add(fileId);
             } else {
