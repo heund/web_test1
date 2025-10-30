@@ -917,12 +917,12 @@ class TerminalPortfolio {
                     if (sayHello) {
                         setTimeout(() => {
                             sayHello.classList.add('fade-in-contact');
-                        }, isKorean ? delay + 800 : delay + 1500);
+                        }, isKorean ? delay + 700 : delay + 1200);
                     }
                     
                     // Email and socials - normal timing after "say hello"
                     // Korean: shorter delay to match the faster "say hello" timing
-                    const emailDelay = isKorean ? delay + 2500 : delay + 3500;
+                    const emailDelay = isKorean ? delay + 2200 : delay + 2700;
                     document.querySelectorAll('.terminal-line-email, .terminal-line-muted').forEach((element, index) => {
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');

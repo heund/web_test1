@@ -6,10 +6,14 @@ class EasterEggAnimations {
     // Helper function to center element using JavaScript (Safari fix)
     static centerElement(element) {
         // Force Safari to recalculate viewport dimensions
+        // Use pixels instead of vh/vw, but keep transform for centering
         const centerY = window.innerHeight / 2;
         const centerX = window.innerWidth / 2;
         element.style.top = `${centerY}px`;
         element.style.left = `${centerX}px`;
+        // Ensure transform is set for proper centering
+        // The animation will override this, but it sets the initial position correctly
+        element.style.transform = 'translate(-50%, -50%)';
     }
     
     // Waving hand animation
