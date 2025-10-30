@@ -80,8 +80,21 @@ body {
     position: relative;
     z-index: 10;
     height: 100vh;
+    min-height: 100vh;
+    /* Safari flexbox compatibility */
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
     display: flex;
+    /* Vertical centering */
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
     align-items: center;
+    /* Horizontal centering */
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
     justify-content: center;
     padding: 20px;
     overflow: hidden;
@@ -90,6 +103,9 @@ body {
 /* Mobile: center vertically */
 @media (max-width: 1024px) {
     .main-content {
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
         align-items: center;
         padding-bottom: 20px;
     }
@@ -98,6 +114,9 @@ body {
 /* Desktop: position at bottom when there's a non-minimized terminal window */
 @media (min-width: 1025px) {
     .main-content.has-active-terminal {
+        -webkit-box-align: end;
+        -webkit-align-items: flex-end;
+        -ms-flex-align: end;
         align-items: flex-end;
         padding-bottom: 60px;
     }
@@ -110,6 +129,9 @@ html:-moz-full-screen .main-content,
 body:fullscreen .main-content,
 body:-webkit-full-screen .main-content,
 body:-moz-full-screen .main-content {
+    -webkit-box-align: center !important;
+    -webkit-align-items: center !important;
+    -ms-flex-align: center !important;
     align-items: center !important;
     padding-bottom: 20px !important;
 }
@@ -117,6 +139,9 @@ body:-moz-full-screen .main-content {
 /* Alternative approach: Use display-mode media query for fullscreen */
 @media (min-width: 1025px) and (display-mode: fullscreen) {
     .main-content {
+        -webkit-box-align: center !important;
+        -webkit-align-items: center !important;
+        -ms-flex-align: center !important;
         align-items: center !important;
         padding-bottom: 20px !important;
     }
@@ -125,6 +150,9 @@ body:-moz-full-screen .main-content {
 /* JavaScript-based fullscreen detection */
 @media (min-width: 1025px) {
     body.browser-fullscreen .main-content {
+        -webkit-box-align: center !important;
+        -webkit-align-items: center !important;
+        -ms-flex-align: center !important;
         align-items: center !important;
         padding-bottom: 20px !important;
     }
