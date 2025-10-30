@@ -3370,8 +3370,8 @@ ol.exhibition-list {
    ============================================ */
 .waving-hand-svg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     z-index: 10000;
     animation: waveHand 2s ease-in-out forwards;
     pointer-events: none;
@@ -3445,8 +3445,8 @@ ol.exhibition-list {
    ============================================ */
 .shaking-frown-svg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     z-index: 10000;
     animation: shakeFrown 2s ease-in-out forwards;
     pointer-events: none;
@@ -3535,8 +3535,8 @@ ol.exhibition-list {
    ============================================ */
 .fading-heart-svg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     z-index: 10000;
     animation: fadeHeart 3s ease-in-out forwards;
     pointer-events: none;
@@ -3576,8 +3576,8 @@ ol.exhibition-list {
    ============================================ */
 .rotating-funny-svg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     z-index: 10000;
     animation: rotateFunny 2s ease-in-out forwards;
     pointer-events: none;
@@ -3639,8 +3639,8 @@ ol.exhibition-list {
    ============================================ */
 .rotating-fire-svg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     z-index: 10000;
     animation: rotateFire 2s ease-in-out forwards;
     pointer-events: none;
@@ -3702,8 +3702,8 @@ ol.exhibition-list {
    ============================================ */
 .static-cat-svg {
     position: fixed;
-    top: 50%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     z-index: 10000;
     animation: staticCat 2s ease-in-out forwards;
     pointer-events: none;
