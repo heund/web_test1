@@ -4,11 +4,88 @@
     
     <div class="exhibition-content-wrapper">
         <div class="exhibition-text-column">
-            <p class="exhibition-text">A sonification methodology modelling adaptive negotiation in complex systems through sound. BDSS conceptualises processes as trajectories within dynamic attractor spaces characterised by fuzzy, overlapping boundaries rather than discrete states. Agent-based layers simulate competing pressures, generating sonic textures that embody systemic tension, adaptation, and feedback.</p>
+            <p class="exhibition-text">Behaviour-Driven Systemic Sonification (BDSS) is a data transformation methodology that operationalizes the Relational Cognitive System (RCS) framework within the domain of sonification. It applies RCS's core principles (relational emergence, negotiation-based coherence, recursive feedback, and temporal narrativity) to the problem of transforming data into sound. Where conventional sonification maps data values to sound parameters, BDSS models data as the behaviour of a negotiating system, treating datasets as distributed agents whose interactions produce audible outcomes.</p>
+            <br class="mobile-only-br">
+                        <br class="mobile-only-br">
+                        
+            <h2>Characteristics of Parameter Mapping</h2>
             
-            <p class="exhibition-text">Sound functions as perceptual evidence of negotiation between internal and external forces, articulating how stability and change emerge through continuous relational adjustment. By treating sonification as expression of systemic behaviour rather than data translation, BDSS enables critical engagement with hidden dynamics through embodied listening.</p>
+            <p class="exhibition-text">Conventional data sonification operates primarily through parameter mapping (Grond & Berger, 2011), which assigns data values to auditory parameters in one-to-one correspondence. While this approach offers simplicity and intuitive mapping, it faces significant limitations when addressing high-dimensional or complex datasets. Grond and Berger identify challenges in maintaining perceptual coherence across multiple simultaneous mappings.</p>
+            
+            <p class="exhibition-text">Parameter mapping transforms the current state of data but does not inherently capture the trajectory that led to that state, the relationships among variables, or the temporal evolution of change. Complex system dynamics flatten into static snapshots, and emergent behaviour becomes difficult to preserve.</p>
+            <br class="mobile-only-br">
+            
+            <h2>Relation to Model-Based Sonification (MBS)</h2>
+            
+            <p class="exhibition-text">Model-Based Sonification (MBS), proposed by Hermann and Ritter (1999, 2004), offers an alternative approach to parameter mapping. In MBS, data are mapped onto parameters of a virtual physical model that generates sound. Users explore or excite this model through interaction, and the resulting sound reflects both the dataset's inherent structure and the characteristics of user interaction.</p>
+            
+            <p class="exhibition-text">BDSS shares key insights with MBS. Both treat data as dynamic processes rather than static entities and interpret emergent patterns as meaningful. Where parameter mapping defines direct correspondences between data and sound, both MBS and BDSS construct systems that behave.</p>
+            
+            <p class="exhibition-text">However, what these systems model differs fundamentally. MBS models the data itself, constructing a virtual physical model (such as a mass-spring system or particle system) whose parameters directly represent the dataset. For example, a plant photosynthesis dataset might be modelled as a complete physical system where each variable corresponds to a specific physical property. Sound emerges from the physics simulation of this data model, and users actively explore it to perceive clusters or topological structures.</p>
+            
+            <p class="exhibition-text">BDSS models the relational behaviour within the data rather than the data itself. The same plant photosynthesis dataset is first transformed into a behavioural state space (vector coordinates, attractor zones) that represents possible system conditions. Autonomous agents are then assigned based on these conditions, each interpreting and responding to the state space independently. Sound emerges not from simulating the data but from the negotiation between agents as they respond to changing conditions. User input in MBS functions as an excitation signal that directly manipulates the model. In BDSS, user input operates as an environmental factor that influences the negotiation state without direct control over individual agents.</p>
+            
+            <p class="exhibition-text">MBS serves primarily as a tool for data exploration and analysis, designed to reveal geometric and topological features of datasets (Hermann & Ritter, 1999). BDSS focuses on modelling system-level behaviour: tension, negotiation, and coherence. Rather than representing the structure of the data, BDSS reveals how the system responds to stress, how agents negotiate equilibrium, and when thresholds are reached. It integrates concepts from agent-based modelling and dynamic systems theory, extending MBS's focus on data structure toward a framework centred on relational dynamics and emergent system behaviour.</p>
+            <br class="mobile-only-br">
+    
+    <h2>Core Concept: Data as State Space</h2>
+    
+    <p class="exhibition-text">BDSS models data as points within vector space. Each axis represents a variable, and the system's current condition expresses as position in that space. This point moves over time, and its trajectory reveals system behaviour.</p>
+    
+    <p class="exhibition-text">Within this space, attractor zones are defined. In dynamic systems theory (Riley, 2012), attractors represent stable states toward which systems tend to evolve. In BDSS, these attractors are not fixed categories. Through fuzzy logic, partial membership and transitions are permitted, allowing systems to occupy multiple attractors simultaneously. This overlapping creates negotiation fields.</p>
+            
+            <p class="exhibition-text">In the plant photosynthesis model, four attractor zones are defined: rest, recovery, stress, and crisis. As environmental conditions such as light, temperature, and moisture fluctuate, the system moves among these zones, sometimes residing within one, sometimes between several.</p>
+            <br class="mobile-only-br">
+    
+    <h2>Agent-Based Negotiation</h2>
+    
+    <p class="exhibition-text">BDSS models negotiation within data space through autonomous agents. Agent-based modelling demonstrates how complex collective behaviour emerges from interaction of simple local rules (Bonabeau, 2002). Each agent represents a distinct perspective on system state, and their interaction generates sound.</p>
+            
+            <p class="exhibition-text">Agents do not follow fixed rules. Instead, each maintains an attraction value, a continuously changing parameter representing its pull toward or repulsion from current system state. This value recalculates in real time according to environmental inputs, other agents' states, and overall system coherence.</p>
+            
+            <p class="exhibition-text">In the photosynthesis model, three agents operate in dialogue:</p>
+            <ul class="exhibition-list">
+                <li><strong>Agent A </strong>seeks balance, modelling the system's tendency to return toward stability and defining a base frequency. Yet this is not simple homeostasis; the agent can delay balance when systemic tension is needed.</li>
+                <li><strong>Agent B </strong>represents readiness, tracking how prepared the system is to adapt to change. It modulates harmonic intervals in response to stress and coherence.</li>
+                <li><strong>Agent C </strong>functions as memory, recalling significant past shifts and reintroducing or repeating frequencies from Agents A and B. This links current behaviour to historical states.</li>
+            </ul>
+            <br class="mobile-only-br">
+    
+    <h2>Global System Awareness</h2>
+    
+    <p class="exhibition-text">Beyond local negotiations, BDSS requires a mechanism to assess overall system state. Global System Awareness (GSA) serves as a high-level module that calculates system coherence in real time.</p>
+    
+    <p class="exhibition-text">GSA aggregates variable states, attractor memberships, and agent tension levels to produce a single coherence metric indicating how stable or aligned the system is. This metric modulates sonic parameters. For example, harmonic intervals vary according to coherence: consonant intervals under high coherence, moderate intervals at mid-range coherence, and dissonant intervals when coherence is low.</p>
+    
+    <p class="exhibition-text">This mapping is not pre-programmed sequence but is determined dynamically through system negotiation state. Sound is not a representation of system data but the emergent trace of negotiation itself.</p>
+    
+            <br class="mobile-only-br">
+            
+            <h2>Sound as Evidence of Negotiation</h2>
+            
+            <p class="exhibition-text">In BDSS, sound is not designed output. It is audible evidence of ongoing negotiation, a manifestation of continuous dialogue between environmental pressures and internal adaptation.</p>
+            
+            <p class="exhibition-text">This represents a fundamental shift in the philosophy of data sonification. Parameter mapping asks, "How can this data be represented through sound?" BDSS instead asks, "What sounds emerge when this system negotiates?"</p>
+            
+            <p class="exhibition-text">The approach preserves systemic complexity rather than reducing it. Parameter mapping compresses multivariate data into a small number of auditory parameters. BDSS renders the relations between variables, temporal trajectories, transitional states, and the tension of negotiation itself.</p>
+            <br class="mobile-only-br">
+            
+            <h2>References</h2>
+            
+            <p class="exhibition-text">Bonabeau, E. (2002). Agent-based modeling: Methods and techniques for simulating human systems. PNAS, 99(suppl 3), 7280-7287.</p>
+            
+            <p class="exhibition-text">Grond, F., & Berger, J. (2011). Parameter mapping sonification. In T. Hermann, A. Hunt, & J. G. Neuhoff (Eds.), The Sonification Handbook (pp. 363-397). Berlin: Logos Publishing House.</p>
+            
+            <p class="exhibition-text">Hermann, T., & Ritter, H. (1999). Listen to your data: Model-based sonification for data analysis. In G. E. Lasker (Ed.), Advances in Intelligent Computing and Multimedia Systems (pp. 189-194). International Institute for Advanced Studies in System Research and Cybernetics.</p>
+            
+            <p class="exhibition-text">Hermann, T., & Ritter, H. (2004). Model-based sonification revisited. In S. Barrass & P. Vickers (Eds.), Proceedings of the 10th International Conference on Auditory Display (ICAD 2004).</p>
+            
+            <p class="exhibition-text">Riley, M. A. (2012). Dynamics of cognition. Wiley Interdisciplinary Reviews: Cognitive Science, 3(6), 593-606.</p>
         </div>
     </div>
+
+    <h2>Selected Media</h2>
+
     
     <div class="process-images">
         <div class="image-item">
@@ -113,6 +190,8 @@
             <p class="exhibition-text">Riley, M. A. (2012). Dynamics of cognition. Wiley Interdisciplinary Reviews: Cognitive Science, 3(6), 593-606.</p>
         </div>
     </div>
+
+    <h2>실험 미디어</h2>
     
     <div class="process-images">
         <div class="image-item">
