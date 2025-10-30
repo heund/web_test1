@@ -81,10 +81,9 @@ body {
     z-index: 10;
     height: 100vh;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     padding: 20px;
-    padding-bottom: 60px;
     overflow: hidden;
 }
 
@@ -96,23 +95,23 @@ body {
     }
 }
 
-/* Desktop: position at bottom when not minimized */
+/* Desktop: position at bottom when there's a non-minimized terminal window */
 @media (min-width: 1025px) {
     .main-content:has(.terminal-window:not(.minimized)) {
         align-items: flex-end;
         padding-bottom: 60px;
     }
-    
-    /* Center main content when browser is in fullscreen mode (F11) on desktop */
-    html:fullscreen .main-content,
-    html:-webkit-full-screen .main-content,
-    html:-moz-full-screen .main-content,
-    body:fullscreen .main-content,
-    body:-webkit-full-screen .main-content,
-    body:-moz-full-screen .main-content {
-        align-items: center !important;
-        padding-bottom: 20px !important;
-    }
+}
+
+/* Center main content when browser is in fullscreen mode (F11) on desktop */
+html:fullscreen .main-content,
+html:-webkit-full-screen .main-content,
+html:-moz-full-screen .main-content,
+body:fullscreen .main-content,
+body:-webkit-full-screen .main-content,
+body:-moz-full-screen .main-content {
+    align-items: center !important;
+    padding-bottom: 20px !important;
 }
 
 /* Alternative approach: Use display-mode media query for fullscreen */
@@ -449,8 +448,23 @@ body {
     }
 }
 
+/* Letter spacing breathing animation for sticky text - GLOBAL */
+@keyframes breathingSpacing {
+    0%, 100% {
+        letter-spacing: 0.05em;
+    }
+    50% {
+        letter-spacing: 0.2em;
+    }
+}
+
 /* Mobile Styles - Complete Redesign */
 @media (max-width: 1024px) {
+    /* Hide desktop-only elements */
+    .desktop-only {
+        display: none !important;
+    }
+    
     /* NUCLEAR RESET - Hide everything desktop */
     * {
         box-sizing: border-box;
@@ -697,10 +711,12 @@ body {
     
     /* Make sure ALL content shows */
     .hero-intro,
+    .process-intro,
     .hero-content,
     .hero-question,
     .hero-description,
     #code-architecture-canvas,
+    #process-network-canvas,
     .code-line {
         display: block !important;
         visibility: visible !important;
@@ -708,14 +724,15 @@ body {
     }
     
     /* Ensure canvas renders */
-    #code-architecture-canvas {
+    #code-architecture-canvas,
+    #process-network-canvas {
         display: block !important;
         width: 100% !important;
         height: 100% !important;
     }
     
-    /* Add padding to all sections except hero and mobile-about with safe areas - doubled side padding */
-    .mobile-content-container > *:not(.hero-intro):not(.mobile-about-container) {
+    /* Add padding to all sections except hero, process and mobile-about with safe areas - doubled side padding */
+    .mobile-content-container > *:not(.hero-intro):not(.process-intro):not(.mobile-about-container) {
         padding: 20px calc(40px + env(safe-area-inset-right)) 20px calc(40px + env(safe-area-inset-left)) !important;
     }
     
@@ -736,8 +753,9 @@ body {
         min-height: 40vh !important;
     }
     
-    /* Hero canvas (animation) has no padding */
-    .hero-intro {
+    /* Hero and process canvas (animation) have no padding */
+    .hero-intro,
+    .process-intro {
         padding: 0 !important;
     }
     
@@ -913,16 +931,6 @@ body {
         display: flex;
         justify-content: flex-end; /* Align vertical text to the right */
         text-align: right;
-    }
-    
-    /* Letter spacing breathing animation for sticky text */
-    @keyframes breathingSpacing {
-        0%, 100% {
-            letter-spacing: 0.05em;
-        }
-        50% {
-            letter-spacing: 0.2em;
-        }
     }
     
     /* MOBILE STICKY TEXT - All styles in one place */
@@ -3694,4 +3702,248 @@ ol.exhibition-list {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0.85);
     }
+}
+
+/* Process Network Animation */
+.process-intro {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height for maximum size */
+    min-height: 80vh; /* Ensure minimum size */
+    background: var(--bg-content);
+    overflow: hidden;
+}
+
+#process-network-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    cursor: grab;
+}
+
+#process-network-canvas:active {
+    cursor: grabbing;
+}
+
+
+/* Mobile styles for process network */
+@media (max-width: 1024px) {
+    .process-intro {
+        height: 70vh; /* Larger on mobile too */
+        min-height: 60vh;
+        overflow: hidden;
+    }
+    
+    
+    /* Ensure process network shows on mobile */
+    #process-network-canvas {
+        display: block !important;
+        visibility: visible !important;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    
+    .process-intro {
+        padding: 0 !important;
+    }
+}
+
+/* Process scroll indicator */
+.process-scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0.6;
+    animation: bounce 2s infinite;
+}
+
+.process-scroll-indicator svg {
+    width: 32px;
+    height: 32px;
+    color: var(--text-primary);
+}
+
+/* Process sections */
+.process-sections {
+    background: var(--bg-content);
+    padding: 80px 0;
+}
+
+.process-section {
+    max-width: 800px;
+    margin: 0 auto 80px auto;
+    padding: 0 40px;
+}
+
+.process-section h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.process-section p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Mobile styles for process sections */
+@media (max-width: 1024px) {
+    .process-sections {
+        padding: 60px 0;
+    }
+    
+    .process-section {
+        margin: 0 auto 60px auto;
+        padding: 0 20px;
+    }
+    
+    .process-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .process-section p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    .process-scroll-indicator {
+        bottom: 20px;
+    }
+    
+    .process-scroll-indicator svg {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Desktop About Page - Exact same styles as mobile */
+.desktop-about-container {
+    position: relative;
+    width: 100%;
+    min-height: 200vh; /* Allow scrolling */
+}
+
+.desktop-about-sticky {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-content);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Clip text within bounds */
+}
+
+.desktop-about-sticky::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    pointer-events: none;
+    z-index: 5;
+}
+
+.desktop-about-sticky .about-terminal {
+    width: 100%;
+    height: 100%;
+    padding: 20px 30px 60px 30px; /* Same padding for all languages */
+    position: relative;
+    z-index: 10;
+    overflow: hidden; /* Also clip at terminal level */
+}
+
+.desktop-about-sticky .terminal-output {
+    overflow: hidden; /* Clip at output level */
+    max-height: calc(100vh - 120px); /* Constrain height to fit within viewport */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
+/* DESKTOP STICKY TEXT - Match mobile version exactly */
+.desktop-about-sticky .output-line {
+    writing-mode: vertical-rl !important;
+    text-orientation: upright !important;
+    white-space: normal !important;
+    word-break: break-all !important;
+    overflow-wrap: break-word !important;
+    color: var(--text-secondary) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: breathingSpacing 10s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+}
+
+/* Keep line marker horizontal */
+.desktop-about-sticky .line-marker {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+    display: inline-block;
+}
+
+.desktop-about-scroll-content {
+    position: relative;
+    z-index: 20;
+    background: transparent;
+    pointer-events: auto;
+}
+
+.desktop-about-spacer {
+    height: 20vh; /* Bring content up higher on the page */
+    background: transparent;
+}
+
+.desktop-about-text-section {
+    padding: 100px 60px 100px 60px !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+    backdrop-filter: blur(8px) !important;
+    margin: -60vh auto 0 auto !important;
+    max-width: 600px !important;
+}
+
+/* h2 title styling - must be more specific than .mobile-content-container h2 */
+.desktop-about-text-section h2 {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    margin-bottom: 32px !important;
+    color: var(--text-primary) !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+}
+
+/* Paragraphs use exhibition-text class - match contact page terminal-output-style */
+.desktop-about-text-section .exhibition-text {
+    opacity: 1 !important;
+    visibility: visible !important;
+    font-size: 13px !important;
+    line-height: 1.6 !important;
+    margin-bottom: 16px !important;
+    color: var(--text-primary) !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+}
+
+/* Korean text */
+:lang(ko) .desktop-about-text-section .exhibition-text {
+    font-family: 'Noto Sans KR', sans-serif !important;
+    line-height: 1.8 !important;
 }

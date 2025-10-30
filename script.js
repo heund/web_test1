@@ -134,13 +134,13 @@ class TerminalPortfolio {
                 }
             },
             
-            // PROCESS FOLDER
-            'process-research': {
-                breadcrumb: 'process/research.md',
+            // PROCESS FILE
+            'process': {
+                breadcrumb: 'process.md',
                 html: `
                     <div class="process-section">
                         <div class="process-header">
-                            <span class="line-marker">//</span> <span data-i18n="process.research.title">Research</span>
+                            <span class="line-marker">//</span> <span data-i18n="process.research.title">Process</span>
                         </div>
                         
                         <div class="typewriter-container">

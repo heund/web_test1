@@ -198,10 +198,17 @@ class TerminalPortfolio {
                 html: null
             },
             
-            // PROCESS FOLDER
-            'process-research': {
-                breadcrumb: 'process/research.md',
-                htmlFile: 'process/process-research.html',
+            // PROCESS FILE
+            'process': {
+                breadcrumb: 'process.md',
+                htmlFile: 'process.html',
+                html: null
+            },
+            
+            // DESKTOP ABOUT (MOBILE STYLE)
+            'desktop-about': {
+                breadcrumb: 'desktop-about.md',
+                htmlFile: 'desktop-about.html',
                 html: null
             },
             
@@ -378,6 +385,102 @@ class TerminalPortfolio {
         });
     }
     
+    setupDesktopAboutScrollLock() {
+        const contentBody = document.querySelector('.content-body');
+        if (!contentBody) return;
+        
+        let isAnimating = false;
+        let animationId = null;
+        
+        const smoothScrollTo = (targetPosition, duration = 1000) => {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            const startPosition = contentBody.scrollTop;
+            const distance = targetPosition - startPosition;
+            const startTime = performance.now();
+            
+            // Ultra-smooth easing function for luxurious parallax animation
+            const easeInOutQuart = (t) => {
+                return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2;
+            };
+            
+            const animate = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easeInOutQuart(progress);
+                
+                const currentPosition = startPosition + (distance * easedProgress);
+                contentBody.scrollTop = currentPosition;
+                
+                if (progress < 1) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    isAnimating = false;
+                    animationId = null;
+                }
+            };
+            
+            animationId = requestAnimationFrame(animate);
+        };
+        
+        let scrollTimeout;
+        const scrollHandler = () => {
+            if (isAnimating) return;
+            
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const textSection = document.querySelector('.desktop-about-text-section');
+                if (!textSection) return;
+                
+                const scrollTop = contentBody.scrollTop;
+                const windowHeight = window.innerHeight;
+                const textSectionRect = textSection.getBoundingClientRect();
+                const textSectionTop = scrollTop + textSectionRect.top;
+                const textSectionHeight = textSection.offsetHeight;
+                
+                // Calculate if we should snap to the text section
+                const snapThreshold = windowHeight * 2.0; // 200% of viewport height - triggers almost always
+                const textSectionCenter = textSectionTop - (windowHeight - textSectionHeight) / 2;
+                
+                // If we're close to the text section, snap to center it
+                if (Math.abs(scrollTop - textSectionCenter) < snapThreshold) {
+                    smoothScrollTo(textSectionCenter, 1200); // 1.2 second ultra-smooth animation
+                }
+            }, 100); // Reduced debounce for more responsive feel
+        };
+        
+        // Add scroll listener
+        contentBody.addEventListener('scroll', scrollHandler);
+        
+        // Trigger initial auto-scroll to center text section when page loads
+        setTimeout(() => {
+            const textSection = document.querySelector('.desktop-about-text-section');
+            if (textSection) {
+                const windowHeight = window.innerHeight;
+                const textSectionRect = textSection.getBoundingClientRect();
+                const textSectionTop = contentBody.scrollTop + textSectionRect.top;
+                const textSectionHeight = textSection.offsetHeight;
+                const textSectionCenter = textSectionTop - (windowHeight - textSectionHeight) / 2;
+                
+                smoothScrollTo(textSectionCenter, 1800); // Ultra-smooth initial scroll for elegant landing
+            }
+        }, 1200); // Wait 1.2 seconds after page load for better initial experience
+        
+        // Clean up on page change
+        const cleanup = () => {
+            contentBody.removeEventListener('scroll', scrollHandler);
+            clearTimeout(scrollTimeout);
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                isAnimating = false;
+            }
+        };
+        
+        // Store cleanup function for later use
+        this.desktopAboutScrollCleanup = cleanup;
+    }
+    
     async switchLanguage(lang) {
         this.currentLang = lang;
         
@@ -401,33 +504,10 @@ class TerminalPortfolio {
         await this.loadTranslations(lang);
         
         // STEP 4.5: Reload about section if currently viewing it (both desktop and mobile)
-        // Mobile needs reload too because sticky text is generated in loadContent()
+        // Both mobile and desktop need reload because sticky text is generated in loadContent()
         if (this.currentFile === 'about') {
-            const isMobile = window.innerWidth <= 1024;
-            
-            if (isMobile) {
-                // Mobile - reload to regenerate sticky text with correct language
-                this.loadContent('about');
-            } else {
-                // Desktop - reload with correct language template
-                const data = this.content['about'];
-                const htmlContent = data.getHTML ? data.getHTML() : data.html;
-                document.getElementById('content').innerHTML = htmlContent;
-                
-                // Reapply translations and setup
-                this.applyTranslations();
-                this.setupProfileSwitcher();
-                
-                // Reapply fade-in animations
-                setTimeout(() => {
-                    const outputLines = document.querySelectorAll('.output-line:not(.blank):not(.section-marker)');
-                    outputLines.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-about-text');
-                        }, index * 100);
-                    });
-                }, 200);
-            }
+            // Reload to regenerate sticky text with correct language
+            this.loadContent('about');
         }
         
         // STEP 5: Restart typewriter animations if on a process page
@@ -519,11 +599,17 @@ class TerminalPortfolio {
             }
         }
         
+        // Clean up desktop about scroll lock if switching away from about page
+        if (this.desktopAboutScrollCleanup && fileId !== 'about') {
+            this.desktopAboutScrollCleanup();
+            this.desktopAboutScrollCleanup = null;
+        }
+        
         // Get HTML content
         let htmlContent = contentData.getHTML ? contentData.getHTML() : contentData.html;
         
-        // Special handling for about.md on mobile - create parallax structure
-        if (isMobile && fileId === 'about') {
+        // Special handling for about.md on mobile and desktop - create parallax structure
+        if (fileId === 'about') {
             const scrollableContent = `
                 <p class="output-line"><span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></p>
                 <p class="output-line"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures</span></p>
@@ -544,34 +630,62 @@ class TerminalPortfolio {
             // Join all text pieces with spaces for scattered effect
             const scatteredText = textPieces.join(' ');
             
-            // Create mobile-only parallax structure
-            htmlContent = `
-                <div class="mobile-about-container">
-                    <!-- Sticky parallax overlay with scattered text -->
-                    <div class="mobile-about-sticky">
-                        <div class="about-terminal">
-                            <div class="terminal-prompt">
-                                <span class="prompt-symbol">></span>
-                                <span class="prompt-command">about_me.txt</span>
+            // Create parallax structure - use appropriate classes based on mobile vs desktop
+            if (!isMobile) {
+                // Desktop about structure
+                htmlContent = `
+                    <div class="desktop-about-container">
+                        <!-- Sticky parallax overlay with scattered text -->
+                        <div class="desktop-about-sticky">
+                            <div class="about-terminal">
+                                <div class="terminal-output">
+                                    <p class="output-line">${scatteredText}</p>
+                                </div>
                             </div>
-                            <div class="terminal-output">
-                                <p class="output-line">${scatteredText}</p>
+                        </div>
+                        
+                        <!-- Scrollable content area below -->
+                        <div class="desktop-about-scroll-content">
+                            <div class="desktop-about-spacer"></div>
+                            <div class="desktop-about-text-section">
+                                <p class="exhibition-text"><span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></p>
+                                <p class="exhibition-text"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
+                                <p class="exhibition-text"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
+                                <p class="exhibition-text"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
                             </div>
                         </div>
                     </div>
-                    
-                    <!-- Scrollable content area below -->
-                    <div class="mobile-about-scroll-content">
-                        <div class="mobile-about-spacer"></div>
-                        <div class="mobile-about-text-section">
-                            <h2><span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></h2>
-                            <p class="exhibition-text"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
-                            <p class="exhibition-text"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
-                            <p class="exhibition-text"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
+                `;
+            } else {
+                // Mobile about structure
+                htmlContent = `
+                    <div class="mobile-about-container">
+                        <!-- Sticky parallax overlay with scattered text -->
+                        <div class="mobile-about-sticky">
+                            <div class="about-terminal">
+                                <div class="terminal-prompt">
+                                    <span class="prompt-symbol">></span>
+                                    <span class="prompt-command">about_me.txt</span>
+                                </div>
+                                <div class="terminal-output">
+                                    <p class="output-line">${scatteredText}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Scrollable content area below -->
+                        <div class="mobile-about-scroll-content">
+                            <div class="mobile-about-spacer"></div>
+                            <div class="mobile-about-text-section">
+                                <h2><span data-en="Hee-Eun Kim / Systems Artist" data-kr="김희은 / 시스템 아티스트">Hee-Eun Kim / Systems Artist</span></h2>
+                                <p class="exhibition-text"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
+                                <p class="exhibition-text"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아이라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
+                                <p class="exhibition-text"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
+                `;
+            }
         }
         
         // Special handling for exhibition pages on mobile - reorder content
@@ -656,6 +770,8 @@ class TerminalPortfolio {
         
         // Load into appropriate container
         contentArea.innerHTML = htmlContent;
+        
+        
         this.currentFile = fileId;
         
         // Update breadcrumb on desktop
@@ -682,17 +798,46 @@ class TerminalPortfolio {
         // Apply translations
         this.applyTranslations();
         
-        // Initialize code-architecture animation if hero section
+        
+        // Initialize animations based on page
+        const contentBody = document.querySelector('.content-body');
         if (fileId === 'hero' && typeof initCodeArchitecture === 'function') {
             // Hide overflow on content-body to prevent scrollbars on hero page
-            const contentBody = document.querySelector('.content-body');
             if (contentBody) {
                 contentBody.style.overflow = 'hidden';
             }
             setTimeout(initCodeArchitecture, 100);
+        } else if (fileId === 'about' && !isMobile && typeof initCodeArchitecture === 'function') {
+            // Use hero animation for desktop about page but allow scrolling
+            if (contentBody) {
+                contentBody.style.overflow = 'auto';
+            }
+            setTimeout(initCodeArchitecture, 100);
+            
+            // Add scroll lock functionality for desktop about
+            this.setupDesktopAboutScrollLock();
+        } else if (fileId === 'process') {
+            if (typeof initProcessNetwork === 'function') {
+            // Hide overflow on content-body to prevent scrollbars on process page
+            if (contentBody) {
+                contentBody.style.overflow = 'hidden';
+            }
+            setTimeout(() => {
+                // Try multiple times with increasing delays if canvas not found
+                let attempts = 0;
+                const tryInit = () => {
+                    attempts++;
+                    if (document.getElementById('process-network-canvas')) {
+                        initProcessNetwork();
+                    } else if (attempts < 5) {
+                        setTimeout(tryInit, attempts * 100);
+                    }
+                };
+                tryInit();
+            }, 200);
+            }
         } else {
             // Reset overflow for other pages
-            const contentBody = document.querySelector('.content-body');
             if (contentBody) {
                 contentBody.style.overflow = '';
             }
@@ -811,7 +956,7 @@ class TerminalPortfolio {
             }, 0);
         }
         
-        // Show mobile scroll indicator on about page only
+        // Special handling for about page on mobile only
         if (isMobile && fileId === 'about') {
             const indicator = document.getElementById('mobile-scroll-indicator');
             const mobileContentContainer = document.getElementById('mobile-content');
