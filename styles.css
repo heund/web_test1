@@ -501,6 +501,11 @@ body:-moz-full-screen .main-content {
     body {
         margin: 0 !important;
         padding: 0 !important;
+        /* Safe area support for iOS */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
         overflow: hidden !important;
         background: #FFFFFF !important;
     }
@@ -543,7 +548,11 @@ body:-moz-full-screen .main-content {
         border-radius: 0 !important;
         position: sticky !important;
         top: 0 !important;
-        height: 40px;
+        /* Safe area support for iOS notch/dynamic island */
+        padding-top: 8px; /* Fallback for browsers without env() support */
+        padding-top: max(8px, env(safe-area-inset-top));
+        height: 40px; /* Fallback */
+        height: calc(40px + env(safe-area-inset-top));
         flex-shrink: 0;
         z-index: 1000 !important;
     }
@@ -589,7 +598,8 @@ body:-moz-full-screen .main-content {
     .mobile-nav-overlay {
         display: block !important;
         position: fixed !important;
-        top: 40px !important;
+        top: 40px !important; /* Fallback */
+        top: calc(40px + env(safe-area-inset-top)) !important;
         left: 0 !important;
         right: 0 !important;
         width: 100% !important;
@@ -689,7 +699,8 @@ body:-moz-full-screen .main-content {
     /* Mobile scroll indicator */
     .mobile-scroll-indicator {
         position: fixed;
-        bottom: 60px;
+        bottom: 60px; /* Fallback */
+        bottom: max(60px, calc(60px + env(safe-area-inset-bottom)));
         left: 50%;
         transform: translateX(-50%);
         z-index: 100;
@@ -739,12 +750,10 @@ body:-moz-full-screen .main-content {
     
     /* Make sure ALL content shows */
     .hero-intro,
-    .process-intro,
     .hero-content,
     .hero-question,
     .hero-description,
     #code-architecture-canvas,
-    #process-network-canvas,
     .code-line {
         display: block !important;
         visibility: visible !important;
@@ -752,15 +761,14 @@ body:-moz-full-screen .main-content {
     }
     
     /* Ensure canvas renders */
-    #code-architecture-canvas,
-    #process-network-canvas {
+    #code-architecture-canvas {
         display: block !important;
         width: 100% !important;
         height: 100% !important;
     }
     
-    /* Add padding to all sections except hero, process and mobile-about with safe areas - doubled side padding */
-    .mobile-content-container > *:not(.hero-intro):not(.process-intro):not(.mobile-about-container) {
+    /* Add padding to all sections except hero and mobile-about with safe areas - doubled side padding */
+    .mobile-content-container > *:not(.hero-intro):not(.mobile-about-container) {
         padding: 20px calc(40px + env(safe-area-inset-right)) 20px calc(40px + env(safe-area-inset-left)) !important;
     }
     
@@ -781,9 +789,8 @@ body:-moz-full-screen .main-content {
         min-height: 40vh !important;
     }
     
-    /* Hero and process canvas (animation) have no padding */
-    .hero-intro,
-    .process-intro {
+    /* Hero canvas (animation) has no padding */
+    .hero-intro {
         padding: 0 !important;
     }
     
@@ -896,9 +903,7 @@ body:-moz-full-screen .main-content {
         margin-bottom: 100px !important;
     }
     
-    .mobile-content-container .process-images {
-        margin-top: 100px !important;
-    }
+    /* Old mobile process-images - REMOVED */
     
     /* Tighter line spacing for about.md on mobile */
     .mobile-content-container .output-line {
@@ -1020,10 +1025,13 @@ body:-moz-full-screen .main-content {
         font-family: var(--font-mono) !important;
     }
     
-    /* Korean text */
+    /* Korean text - match desktop styling */
     :lang(ko) .mobile-about-text-section .exhibition-text {
         font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 15px !important; /* Slightly larger than desktop 14px for mobile */
+        letter-spacing: 0.02em !important;
         line-height: 1.8 !important;
+        word-break: keep-all !important;
     }
     
     /* Mobile exhibition layout - tight spacing */
@@ -1041,10 +1049,11 @@ body:-moz-full-screen .main-content {
         letter-spacing: 0.01em;
     }
     
-    /* Korean h1 for mobile exhibitions */
+    /* Korean h1 for mobile exhibitions - match desktop styling */
     :lang(ko) .mobile-exhibition-header h1 {
         font-family: 'Noto Serif KR', serif !important;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.02em !important;
+        font-weight: 400 !important; /* Match desktop weight */
     }
     
     /* Remove extra spacing for Korean quotation marks */
@@ -1080,13 +1089,13 @@ body:-moz-full-screen .main-content {
         display: block;
     }
     
-    /* Korean exhibition text for mobile */
+    /* Korean exhibition text for mobile - match desktop styling */
     :lang(ko) .mobile-exhibition-description .exhibition-text {
         font-family: 'Noto Sans KR', sans-serif !important;
-        font-size: 15px !important;
-        letter-spacing: 0.02em;
+        font-size: 15px !important; /* Slightly larger than desktop 14px for mobile readability */
+        letter-spacing: 0.02em !important;
         line-height: 1.8 !important;
-        word-break: keep-all;
+        word-break: keep-all !important;
     }
     
     /* English exhibition text for mobile */
@@ -1257,7 +1266,7 @@ body:-moz-full-screen .main-content {
     /* Reduce spacing between sections - override inline styles */
     .mobile-content-container h2,
     .mobile-content-container .section-header,
-    .mobile-content-container .process-header {
+    .mobile-content-container .section-header {
         margin-top: 16px !important;
         margin-bottom: 12px !important;
     }
@@ -2510,18 +2519,7 @@ h3 {
     font-weight: 600;
 }
 
-/* Korean process sections - use Noto Sans KR */
-:lang(ko) .process-section {
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-:lang(ko) .process-text {
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-:lang(ko) .process-header {
-    font-family: 'Noto Sans KR', sans-serif;
-}
+/* Old Korean process sections - REMOVED (replaced by newer styles) */
 
 /* Korean CV entries - use Noto Sans KR */
 :lang(ko) .cv-year,
@@ -2531,6 +2529,25 @@ h3 {
 :lang(ko) .cv-medium {
     font-family: 'Noto Sans KR', sans-serif;
 }
+
+/* Korean process sections - desktop and mobile */
+:lang(ko) .process-section p {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+}
+
+/* Korean h3 titles - match resonance loop styling */
+:lang(ko) .process-section h3,
+:lang(ko) .audio-section h3,
+:lang(ko) h3 {
+    font-family: 'Noto Serif KR', serif !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.02em !important;
+}
+
+/* Duplicate Korean h3 titles - REMOVED (covered by :lang(ko) selectors above) */
 
 /* Language container visibility */
 .lang-en,
@@ -2860,32 +2877,12 @@ ol.exhibition-list {
     font-family: var(--font-mono);
 }
 
-/* ============================================
-   PROCESS SECTIONS
-   ============================================ */
-.process-section {
-    font-family: var(--font-mono);
-    max-width: 700px;
-}
-
-.process-header {
-    font-size: 15px;
-    color: var(--text-primary);
-    margin-bottom: 20px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-}
-
-.process-header .line-marker {
-    color: var(--accent-primary);
-    margin-right: 8px;
-    font-weight: 700;
-}
-
-.typewriter-container {
+/* Terminal output style for contact section */
+.terminal-output-style {
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     line-height: 1.6;
-    color: var(--text-secondary);
+    padding: 20px 0;
     margin-bottom: 32px;
 }
 
@@ -2990,16 +2987,13 @@ ol.exhibition-list {
     }
 }
 
-.process-images {
-    margin-top: 24px;
-}
+/* Old process-images - REMOVED */
 
 .image-item {
     margin-bottom: 16px;
     opacity: 0;
 }
 
-.image-item.fade-in-process-image,
 .image-item.fade-in-exhibition-image {
     opacity: 0;
     animation: fadeInExhibitionImage 0.6s ease-out forwards;
@@ -3298,6 +3292,25 @@ ol.exhibition-list {
     background: rgba(255, 255, 255, 0.2);
 }
 
+/* Lightbox Caption */
+.lightbox-caption {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.4;
+    max-width: 80%;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
@@ -3337,8 +3350,7 @@ ol.exhibition-list {
         font-size: 1.5rem;
     }
     
-    .research-columns,
-    .process-circle-text {
+    .research-columns {
         grid-template-columns: 1fr;
     }
 }
@@ -3732,75 +3744,113 @@ ol.exhibition-list {
     }
 }
 
-/* Process Network Animation */
-.process-intro {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Full viewport height for maximum size */
-    min-height: 80vh; /* Ensure minimum size */
-    background: var(--bg-content);
-    overflow: hidden;
-}
+/* Process Network Animation - REMOVED */
 
-#process-network-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    cursor: grab;
-}
+/* Process network canvas - REMOVED */
 
-#process-network-canvas:active {
-    cursor: grabbing;
-}
+/* Process network canvas active state - REMOVED */
 
-
-/* Mobile styles for process network */
-@media (max-width: 1024px) {
-    .process-intro {
-        height: 70vh; /* Larger on mobile too */
-        min-height: 60vh;
+/* Mobile styles for process network - REMOVED */
+    
+    
+    /* Process network mobile rules - REMOVED */
+    
+    /* Mobile Image Carousel - Completely separate from desktop */
+    .mobile-image-carousel {
+        position: relative;
+        width: 100%;
+        margin: 20px 0;
         overflow: hidden;
     }
     
+    .mobile-carousel-track {
+        display: flex;
+        transition: transform 0.3s ease;
+    }
     
-    /* Ensure process network shows on mobile */
-    #process-network-canvas {
+    .mobile-carousel-slide {
+        width: 100%;
+        flex-shrink: 0;
+        position: relative;
+    }
+    
+    .mobile-carousel-slide img {
+        width: 100%;
+        height: 200px; /* Fixed height for image */
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+    }
+    
+    /* Mobile Carousel Caption - below image, no background */
+    .mobile-carousel-caption {
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-muted);
+        line-height: 1.4;
+        padding: 8px 0;
+        margin: 0;
+    }
+    
+    /* Korean caption font */
+    :lang(ko) .mobile-carousel-caption {
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+    
+    /* Mobile Carousel Dots - below caption */
+    .mobile-carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 0;
+        margin: 0;
+    }
+    
+    .mobile-carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(82, 82, 82, 0.4); /* --text-secondary with opacity */
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .mobile-carousel-dot.active {
+        background: var(--text-secondary); /* Full opacity for active */
+    }
+    
+    /* Korean process sections - mobile specific */
+    :lang(ko) .process-section p {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+        letter-spacing: 0.02em !important;
+        margin-bottom: 16px !important;
+    }
+    
+    /* Korean h2 titles - mobile specific */
+    :lang(ko) .process-section h2,
+    :lang(ko) h2 {
+        font-family: 'Noto Serif KR', serif !important;
+        font-weight: 400 !important;
+        letter-spacing: -0.02em !important;
+    }
+    
+    /* Hide desktop carousel on mobile */
+    .research-carousel {
+        display: none !important;
+    }
+    
+    /* Show mobile carousel on mobile */
+    .mobile-image-carousel {
         display: block !important;
-        visibility: visible !important;
-        width: 100% !important;
-        height: 100% !important;
     }
-    
-    .process-intro {
-        padding: 0 !important;
-    }
-}
-
-/* Process scroll indicator */
-.process-scroll-indicator {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    pointer-events: none;
-    opacity: 0.6;
-    animation: bounce 2s infinite;
-}
-
-.process-scroll-indicator svg {
-    width: 32px;
-    height: 32px;
-    color: var(--text-primary);
-}
 
 /* Process sections */
 .process-sections {
     background: var(--bg-content);
-    padding: 80px 0;
+    padding: 32px 0;
 }
 
 .process-section {
@@ -3810,11 +3860,12 @@ ol.exhibition-list {
 }
 
 .process-section h2 {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 500;
+    font-family: 'Noto Serif', serif;
+    margin-top: 40px;
     margin-bottom: 24px;
     color: var(--text-primary);
-    font-family: 'IBM Plex Mono', monospace;
 }
 
 .process-section p {
@@ -3845,14 +3896,7 @@ ol.exhibition-list {
         line-height: 1.6;
     }
     
-    .process-scroll-indicator {
-        bottom: 20px;
-    }
-    
-    .process-scroll-indicator svg {
-        width: 28px;
-        height: 28px;
-    }
+    /* Old process scroll indicator - REMOVED */
 }
 
 /* Desktop About Page - Exact same styles as mobile */
@@ -3944,10 +3988,11 @@ ol.exhibition-list {
 
 .desktop-about-text-section {
     padding: 100px 60px 100px 60px !important;
-    background: rgba(255, 255, 255, 0.3) !important;
+    background: rgba(250, 250, 249, 0.3) !important; /* Use --bg-content color (#FAFAF9) with transparency */
     backdrop-filter: blur(8px) !important;
-    margin: -60vh auto 0 auto !important;
-    max-width: 600px !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+    max-width: 800px !important; /* Restore narrower width */
 }
 
 /* h2 title styling - must be more specific than .mobile-content-container h2 */
@@ -3974,4 +4019,241 @@ ol.exhibition-list {
 :lang(ko) .desktop-about-text-section .exhibition-text {
     font-family: 'Noto Sans KR', sans-serif !important;
     line-height: 1.8 !important;
+}
+
+/* Desktop process pages - match about page font sizes */
+@media (min-width: 1025px) {
+    /* Override content-body base font size for desktop */
+    .content-body {
+        font-size: 13px !important;
+    }
+    
+    .content-body .exhibition-text {
+        font-size: 13px !important;
+        line-height: 1.7 !important;
+        font-family: var(--font-mono) !important;
+        letter-spacing: 0.01em !important;
+        word-spacing: 0.05em !important;
+    }
+    
+    /* Korean text for desktop process pages */
+    :lang(ko) .content-body .exhibition-text {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 14px !important;
+        letter-spacing: 0.02em !important;
+        line-height: 1.8 !important;
+        word-break: keep-all !important;
+    }
+    
+    /* All paragraphs in content-body should be small */
+    .content-body p {
+        font-size: 13px !important;
+        line-height: 1.7 !important;
+        font-family: var(--font-mono) !important;
+    }
+    
+    /* Korean paragraphs */
+    :lang(ko) .content-body p {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 14px !important;
+        line-height: 1.8 !important;
+    }
+    
+    /* Desktop process page headings - match exhibition h2 styling */
+    .content-body h2 {
+        font-size: 1.75rem !important; /* Match exhibition h2 */
+        font-weight: 500 !important; /* Match exhibition h2 */
+        font-family: 'Noto Serif', serif !important; /* Match exhibition h2 */
+        margin-top: 40px !important;
+        margin-bottom: 16px !important;
+        color: var(--text-primary) !important;
+        letter-spacing: -0.01em !important;
+    }
+    
+    /* Korean h2 titles use default Korean font */
+    :lang(ko) .content-body h2 {
+        font-family: 'Noto Serif KR', serif !important;
+    }
+    
+    /* Research Image Carousel - Desktop version with mobile-style layout */
+    .research-carousel {
+        position: relative;
+        width: 100%;
+        margin: 20px 0;
+        overflow: hidden;
+        display: flex !important;
+        justify-content: center;
+    }
+    
+    .research-carousel-track {
+        display: flex;
+        transition: transform 0.3s ease;
+        width: 100%;
+    }
+    
+    .research-carousel::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    /* Hide mobile carousel on desktop by default */
+    .mobile-image-carousel {
+        display: none !important;
+    }
+    
+    /* Ensure desktop carousel shows on desktop */
+    .research-carousel {
+        display: flex !important;
+    }
+    
+    .research-carousel::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .research-carousel::-webkit-scrollbar-thumb {
+        background: var(--text-secondary);
+        border-radius: 3px;
+    }
+    
+    .carousel-image {
+        flex-shrink: 0;
+        width: 150px !important;
+        height: 225px !important;
+        cursor: pointer;
+        border-radius: 4px;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin: 0 auto;
+        display: block;
+        position: relative;
+    }
+    
+    .carousel-image:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .carousel-image img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    /* Force desktop carousel images to fill container, override mobile carousel height */
+    .research-carousel .carousel-image img {
+        height: 100% !important;
+        width: 100% !important;
+    }
+    
+    /* Desktop Carousel Dots - same style as audio carousel */
+    .research-carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 0 8px 0;
+        margin: 0;
+    }
+    
+    .research-carousel-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(82, 82, 82, 0.4);
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .research-carousel-dot.active {
+        background: var(--text-secondary);
+    }
+    
+    /* Desktop carousel captions removed - captions only in lightbox */
+    
+    
+    /* Audio Section */
+    .audio-section {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid var(--text-muted);
+    }
+    
+    .audio-section h3 {
+        font-family: var(--font-mono);
+        font-size: 16px;
+        color: var(--text-primary);
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
+    
+    /* Audio Carousel */
+    .audio-carousel {
+        position: relative;
+        width: 100%;
+        margin: 20px 0;
+        overflow: hidden;
+    }
+    
+    .audio-carousel-track {
+        display: flex;
+        transition: transform 0.3s ease;
+    }
+    
+    .audio-carousel-slide {
+        width: 100%;
+        flex-shrink: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .audio-player {
+        width: 100%;
+        max-width: 400px;
+        height: 40px;
+    }
+    
+    .audio-carousel-caption {
+        text-align: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--text-muted);
+        line-height: 1.4;
+    }
+    
+    /* Korean audio caption font */
+    :lang(ko) .audio-carousel-caption {
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+    
+    /* Audio Carousel Dots */
+    .audio-carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        padding: 16px 0 8px 0;
+        margin: 0;
+    }
+    
+    .audio-carousel-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(82, 82, 82, 0.4);
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .audio-carousel-dot.active {
+        background: var(--text-secondary);
+    }
+}
+
+/* Desktop-specific: Make mobile carousel dots same size as audio dots */
+@media (min-width: 1025px) {
+    .mobile-carousel-dot {
+        width: 12px !important;
+        height: 12px !important;
+    }
 }

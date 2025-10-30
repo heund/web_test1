@@ -537,11 +537,7 @@ class TerminalPortfolio {
             this.loadContent('about');
         }
         
-        // STEP 5: Restart typewriter animations if on a process page
-        const currentFileId = this.currentFile;
-        if (currentFileId && currentFileId.startsWith('process-') && typeof initProcessNodes === 'function') {
-            setTimeout(() => initProcessNodes(currentFileId), 300);
-        }
+        // STEP 5: Process page animations removed - no typewriter animations
         
         // STEP 6: Update code-architecture animation if it exists and has a selected node
         if (window.codeArchAnimation && window.codeArchAnimation.selectedNode) {
@@ -798,6 +794,26 @@ class TerminalPortfolio {
         // Load into appropriate container
         contentArea.innerHTML = htmlContent;
         
+        // Initialize mobile carousels and audio carousels if this is the process page
+        if (fileId === 'process') {
+            setTimeout(() => {
+                const mobileCarousels = document.querySelectorAll('[data-mobile-carousel]');
+                mobileCarousels.forEach(carousel => {
+                    const carouselId = carousel.getAttribute('data-mobile-carousel');
+                    if (window.initializeMobileCarousel) {
+                        window.initializeMobileCarousel(carouselId);
+                    }
+                });
+                
+                const audioCarousels = document.querySelectorAll('[data-audio-carousel]');
+                audioCarousels.forEach(carousel => {
+                    const carouselId = carousel.getAttribute('data-audio-carousel');
+                    if (window.initializeAudioCarousel) {
+                        window.initializeAudioCarousel(carouselId);
+                    }
+                });
+            }, 100);
+        }
         
         this.currentFile = fileId;
         
@@ -844,24 +860,9 @@ class TerminalPortfolio {
             // Add scroll lock functionality for desktop about
             this.setupDesktopAboutScrollLock();
         } else if (fileId === 'process') {
-            if (typeof initProcessNetwork === 'function') {
-            // Hide overflow on content-body to prevent scrollbars on process page
+            // No animations for process page
             if (contentBody) {
-                contentBody.style.overflow = 'hidden';
-            }
-            setTimeout(() => {
-                // Try multiple times with increasing delays if canvas not found
-                let attempts = 0;
-                const tryInit = () => {
-                    attempts++;
-                    if (document.getElementById('process-network-canvas')) {
-                        initProcessNetwork();
-                    } else if (attempts < 5) {
-                        setTimeout(tryInit, attempts * 100);
-                    }
-                };
-                tryInit();
-            }, 200);
+                contentBody.style.overflow = 'auto'; // Allow normal scrolling
             }
         } else {
             // Reset overflow for other pages
@@ -880,17 +881,14 @@ class TerminalPortfolio {
             });
         }, 10);
         
-        // Exhibition/Research/Process animations - only on first visit
-        if (fileId.startsWith('exhibition') || fileId.startsWith('research') || fileId.startsWith('process')) {
+        // Exhibition/Research animations - only on first visit (process animations removed)
+        if (fileId.startsWith('exhibition') || fileId.startsWith('research')) {
             if (!this.animatedPages.has(fileId)) {
                 // First visit: animate
                 document.querySelectorAll('.exhibition-text').forEach(element => {
                     element.classList.add('fade-in-exhibition');
                     element.style.opacity = '1';
                     element.style.visibility = 'visible';
-                    if (fileId.startsWith('process')) {
-                        element.style.marginBottom = '32px';
-                    }
                 });
                 document.querySelectorAll('.grid-image').forEach(element => {
                     element.classList.add('fade-in-exhibition-image');

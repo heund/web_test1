@@ -354,6 +354,7 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             </svg>
         </span>
         <img class="lightbox-content" id="lightbox-img" onclick="event.stopPropagation()">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
     
     <script src="code-architecture.js"></script>
@@ -363,13 +364,14 @@ Maybe the future of AI isn't about making machines more human, but about creatin
     <script src="easter-eggs-animations.js"></script>
     <script src="easter-eggs.js"></script>
     <!-- Main Script -->
-    <script src="script2.js?v=28"></script>
+    <script src="script2.js?v=29"></script>
     <script src="process-nodes.js"></script>
     <script src="video-player.js"></script>
     <script>
         // Lightbox state
         let currentImageIndex = 0;
         let currentImages = [];
+        let currentCaptions = [];
         
         // Lightbox functions
         function openLightbox(src) {
@@ -378,14 +380,66 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             const desktopContainer = document.getElementById('content');
             const container = window.innerWidth <= 1024 ? mobileContainer : desktopContainer;
             
+            let allImages = [];
+            let captions = [];
+            
             if (container) {
-                const allImages = Array.from(container.querySelectorAll('.image-item img, .cv-flyer, .grid-image'));
+                // Find the clicked image element
+                const clickedImg = Array.from(container.querySelectorAll('img')).find(img => img.src.includes(src.split('/').pop()));
+                
+                if (clickedImg) {
+                    // Check if it's from a carousel
+                    const carouselContainer = clickedImg.closest('.research-carousel, .mobile-image-carousel');
+                    
+                    if (carouselContainer) {
+                        // Get only images from the same carousel
+                        const carouselImages = Array.from(carouselContainer.querySelectorAll('.carousel-image img, .mobile-carousel-slide img'));
+                        
+                        carouselImages.forEach(img => {
+                            allImages.push(img);
+                            
+                            // Try to get caption from mobile carousel first
+                            const mobileSlide = img.closest('.mobile-carousel-slide');
+                            const desktopCarouselImage = img.closest('.carousel-image');
+                            
+                            if (mobileSlide) {
+                                const caption = mobileSlide.querySelector('.mobile-carousel-caption');
+                                captions.push(caption ? caption.textContent : img.alt || '');
+                            } else if (desktopCarouselImage) {
+                                const caption = desktopCarouselImage.getAttribute('data-caption');
+                                captions.push(caption || img.alt || '');
+                            } else {
+                                // Use alt text as fallback
+                                captions.push(img.alt || '');
+                            }
+                        });
+                    } else {
+                        // Not from a carousel, get all non-carousel images
+                        const imageElements = Array.from(container.querySelectorAll('.image-item img, .cv-flyer, .grid-image'));
+                        
+                        imageElements.forEach(img => {
+                            allImages.push(img);
+                            captions.push(img.alt || '');
+                        });
+                    }
+                }
+                
                 currentImages = allImages.map(img => img.src);
+                currentCaptions = captions;
                 currentImageIndex = currentImages.indexOf(src);
             }
             
             document.getElementById('lightbox').classList.add('active');
             document.getElementById('lightbox-img').src = src;
+            
+            // Update caption
+            const captionElement = document.getElementById('lightbox-caption');
+            if (captionElement && currentCaptions && currentCaptions[currentImageIndex]) {
+                captionElement.textContent = currentCaptions[currentImageIndex];
+                captionElement.style.display = 'block';
+            } else {
+                captionElement.style.display = 'none';
+            }
         }
         
         function navigateLightbox(direction) {
@@ -401,7 +455,254 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             }
             
             document.getElementById('lightbox-img').src = currentImages[currentImageIndex];
+            
+            // Update caption
+            const captionElement = document.getElementById('lightbox-caption');
+            if (captionElement && currentCaptions && currentCaptions[currentImageIndex]) {
+                captionElement.textContent = currentCaptions[currentImageIndex];
+                captionElement.style.display = 'block';
+            } else {
+                captionElement.style.display = 'none';
+            }
         }
+        
+        // Mobile carousel with dots and touch support
+        let mobileCarouselPositions = {};
+        
+        // Audio carousel positions
+        let audioCarouselPositions = {};
+        
+        // Make function globally available
+        window.initializeMobileCarousel = function initializeMobileCarousel(carouselId) {
+            const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            const slides = carousel.querySelectorAll('.mobile-carousel-slide');
+            const dotsContainer = carousel.querySelector('.mobile-carousel-dots');
+            
+            if (!slides.length || !dotsContainer) return;
+            
+            // Create dots
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slides.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'mobile-carousel-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToMobileSlide(carouselId, i);
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Initialize position
+            mobileCarouselPositions[carouselId] = 0;
+            
+            // Add touch support
+            addTouchSupport(carouselId);
+        }
+        
+        function goToMobileSlide(carouselId, slideIndex) {
+            const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"] .mobile-carousel-track`);
+            const dots = document.querySelectorAll(`[data-mobile-carousel="${carouselId}"] .mobile-carousel-dot`);
+            
+            if (!carousel || !dots.length) return;
+            
+            // Update position
+            mobileCarouselPositions[carouselId] = slideIndex;
+            
+            // Apply transform
+            const translateX = -slideIndex * 100;
+            carousel.style.transform = `translateX(${translateX}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+        }
+        
+        function navigateMobileCarousel(carouselId, direction) {
+            const slides = document.querySelectorAll(`[data-mobile-carousel="${carouselId}"] .mobile-carousel-slide`);
+            if (!slides.length) return;
+            
+            // Initialize if not exists
+            if (!(carouselId in mobileCarouselPositions)) {
+                mobileCarouselPositions[carouselId] = 0;
+            }
+            
+            // Calculate new position
+            let newPosition = mobileCarouselPositions[carouselId] + direction;
+            
+            // Loop around
+            if (newPosition < 0) {
+                newPosition = slides.length - 1;
+            } else if (newPosition >= slides.length) {
+                newPosition = 0;
+            }
+            
+            goToMobileSlide(carouselId, newPosition);
+        }
+        
+        function addTouchSupport(carouselId) {
+            const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            let startX = 0;
+            let isDragging = false;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            });
+            
+            carousel.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault(); // Prevent scrolling
+            });
+            
+            carousel.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                
+                const endX = e.changedTouches[0].clientX;
+                const diffX = startX - endX;
+                
+                // Swipe threshold
+                if (Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        // Swipe left - next slide
+                        navigateMobileCarousel(carouselId, 1);
+                    } else {
+                        // Swipe right - previous slide
+                        navigateMobileCarousel(carouselId, -1);
+                    }
+                }
+            });
+        }
+        
+        // Audio carousel functions
+        window.initializeAudioCarousel = function initializeAudioCarousel(carouselId) {
+            const carousel = document.querySelector(`[data-audio-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            const slides = carousel.querySelectorAll('.audio-carousel-slide');
+            const dotsContainer = carousel.querySelector('.audio-carousel-dots');
+            
+            if (!slides.length || !dotsContainer) return;
+            
+            // Create dots
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slides.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'audio-carousel-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToAudioSlide(carouselId, i);
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Initialize position
+            audioCarouselPositions[carouselId] = 0;
+            
+            // Add touch support
+            addAudioTouchSupport(carouselId);
+        }
+        
+        function goToAudioSlide(carouselId, slideIndex) {
+            const carousel = document.querySelector(`[data-audio-carousel="${carouselId}"] .audio-carousel-track`);
+            const dots = document.querySelectorAll(`[data-audio-carousel="${carouselId}"] .audio-carousel-dot`);
+            const slides = document.querySelectorAll(`[data-audio-carousel="${carouselId}"] .audio-carousel-slide`);
+            
+            if (!carousel || !dots.length) return;
+            
+            // Pause all audio in this carousel
+            slides.forEach(slide => {
+                const audio = slide.querySelector('audio');
+                if (audio) audio.pause();
+            });
+            
+            // Update position
+            audioCarouselPositions[carouselId] = slideIndex;
+            
+            // Apply transform
+            const translateX = -slideIndex * 100;
+            carousel.style.transform = `translateX(${translateX}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+        }
+        
+        function navigateAudioCarousel(carouselId, direction) {
+            const slides = document.querySelectorAll(`[data-audio-carousel="${carouselId}"] .audio-carousel-slide`);
+            if (!slides.length) return;
+            
+            // Initialize if not exists
+            if (!(carouselId in audioCarouselPositions)) {
+                audioCarouselPositions[carouselId] = 0;
+            }
+            
+            // Calculate new position
+            let newPosition = audioCarouselPositions[carouselId] + direction;
+            
+            // Loop around
+            if (newPosition < 0) {
+                newPosition = slides.length - 1;
+            } else if (newPosition >= slides.length) {
+                newPosition = 0;
+            }
+            
+            goToAudioSlide(carouselId, newPosition);
+        }
+        
+        function addAudioTouchSupport(carouselId) {
+            const carousel = document.querySelector(`[data-audio-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            let startX = 0;
+            let isDragging = false;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            });
+            
+            carousel.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+            });
+            
+            carousel.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                
+                const endX = e.changedTouches[0].clientX;
+                const diffX = startX - endX;
+                
+                // Swipe threshold
+                if (Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        // Swipe left - next slide
+                        navigateAudioCarousel(carouselId, 1);
+                    } else {
+                        // Swipe right - previous slide
+                        navigateAudioCarousel(carouselId, -1);
+                    }
+                }
+            });
+        }
+        
+        // Initialize mobile carousels on page load (for static pages)
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileCarousels = document.querySelectorAll('[data-mobile-carousel]');
+            mobileCarousels.forEach(carousel => {
+                const carouselId = carousel.getAttribute('data-mobile-carousel');
+                window.initializeMobileCarousel(carouselId);
+            });
+            
+            const audioCarousels = document.querySelectorAll('[data-audio-carousel]');
+            audioCarousels.forEach(carousel => {
+                const carouselId = carousel.getAttribute('data-audio-carousel');
+                window.initializeAudioCarousel(carouselId);
+            });
+        });
         
         function closeLightbox() {
             const lightbox = document.getElementById('lightbox');
