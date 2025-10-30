@@ -388,30 +388,33 @@ Maybe the future of AI isn't about making machines more human, but about creatin
                 const clickedImg = Array.from(container.querySelectorAll('img')).find(img => img.src.includes(src.split('/').pop()));
                 
                 if (clickedImg) {
-                    // Check if it's from a carousel
-                    const carouselContainer = clickedImg.closest('.research-carousel, .mobile-image-carousel');
+                    // Check if it's from a desktop or mobile carousel
+                    const desktopCarousel = clickedImg.closest('.process-carousel');
+                    const mobileCarousel = clickedImg.closest('.mobile-process-carousel');
                     
-                    if (carouselContainer) {
-                        // Get only images from the same carousel
-                        const carouselImages = Array.from(carouselContainer.querySelectorAll('.carousel-image img, .mobile-carousel-slide img'));
+                    if (desktopCarousel) {
+                        // Desktop carousel
+                        const carouselImages = Array.from(desktopCarousel.querySelectorAll('.carousel-slide img'));
                         
                         carouselImages.forEach(img => {
                             allImages.push(img);
                             
-                            // Try to get caption from mobile carousel first
-                            const mobileSlide = img.closest('.mobile-carousel-slide');
-                            const desktopCarouselImage = img.closest('.carousel-image');
-                            
-                            if (mobileSlide) {
-                                const caption = mobileSlide.querySelector('.mobile-carousel-caption');
-                                captions.push(caption ? caption.textContent : img.alt || '');
-                            } else if (desktopCarouselImage) {
-                                const caption = desktopCarouselImage.getAttribute('data-caption');
+                            // Get caption from data-caption attribute
+                            const slide = img.closest('.carousel-slide');
+                            if (slide) {
+                                const caption = slide.getAttribute('data-caption');
                                 captions.push(caption || img.alt || '');
                             } else {
-                                // Use alt text as fallback
                                 captions.push(img.alt || '');
                             }
+                        });
+                    } else if (mobileCarousel) {
+                        // Mobile carousel
+                        const carouselImages = Array.from(mobileCarousel.querySelectorAll('.mobile-carousel-slide img'));
+                        
+                        carouselImages.forEach(img => {
+                            allImages.push(img);
+                            captions.push(img.alt || '');
                         });
                     } else {
                         // Not from a carousel, get all non-carousel images
@@ -426,18 +429,33 @@ Maybe the future of AI isn't about making machines more human, but about creatin
                 
                 currentImages = allImages.map(img => img.src);
                 currentCaptions = captions;
-                currentImageIndex = currentImages.indexOf(src);
+                
+                // Find index by matching the filename (handle URL encoding)
+                const srcFilename = src.split('/').pop();
+                const encodedSrcFilename = encodeURIComponent(srcFilename);
+                
+                currentImageIndex = currentImages.findIndex(imgSrc => {
+                    const imgFilename = imgSrc.split('/').pop();
+                    // Try both encoded and decoded matching
+                    return imgFilename === srcFilename || 
+                           imgFilename === encodedSrcFilename ||
+                           decodeURIComponent(imgFilename) === srcFilename;
+                });
+                
+                // Fallback to 0 if not found
+                if (currentImageIndex === -1) currentImageIndex = 0;
             }
             
             document.getElementById('lightbox').classList.add('active');
             document.getElementById('lightbox-img').src = src;
             
-            // Update caption
+            // Update caption - ALWAYS show caption for current image
             const captionElement = document.getElementById('lightbox-caption');
             if (captionElement && currentCaptions && currentCaptions[currentImageIndex]) {
                 captionElement.textContent = currentCaptions[currentImageIndex];
                 captionElement.style.display = 'block';
-            } else {
+            } else if (captionElement) {
+                captionElement.textContent = '';
                 captionElement.style.display = 'none';
             }
         }
@@ -454,26 +472,164 @@ Maybe the future of AI isn't about making machines more human, but about creatin
                 currentImageIndex = 0;
             }
             
-            document.getElementById('lightbox-img').src = currentImages[currentImageIndex];
+            // Update image
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = currentImages[currentImageIndex];
             
-            // Update caption
+            // Update caption - ALWAYS update caption when navigating
             const captionElement = document.getElementById('lightbox-caption');
-            if (captionElement && currentCaptions && currentCaptions[currentImageIndex]) {
-                captionElement.textContent = currentCaptions[currentImageIndex];
-                captionElement.style.display = 'block';
-            } else {
-                captionElement.style.display = 'none';
+            if (captionElement) {
+                if (currentCaptions && currentCaptions[currentImageIndex]) {
+                    captionElement.textContent = currentCaptions[currentImageIndex];
+                    captionElement.style.display = 'block';
+                } else {
+                    captionElement.textContent = '';
+                    captionElement.style.display = 'none';
+                }
             }
         }
         
-        // Mobile carousel with dots and touch support
-        let mobileCarouselPositions = {};
-        
-        // Audio carousel positions
+        // Unified carousel system
+        let carouselPositions = {};
         let audioCarouselPositions = {};
         
-        // Make function globally available
-        window.initializeMobileCarousel = function initializeMobileCarousel(carouselId) {
+        // Initialize all process carousels
+        window.initializeProcessCarousels = function() {
+            // Initialize desktop carousels
+            const carousels = document.querySelectorAll('.process-carousel');
+            carousels.forEach(carousel => {
+                const carouselId = carousel.getAttribute('data-carousel');
+                if (carouselId) {
+                    initializeCarousel(carouselId);
+                }
+            });
+            
+            // Initialize mobile carousels
+            const mobileCarousels = document.querySelectorAll('.mobile-process-carousel');
+            mobileCarousels.forEach(carousel => {
+                const carouselId = carousel.getAttribute('data-mobile-carousel');
+                if (carouselId) {
+                    initializeMobileCarousel(carouselId);
+                }
+            });
+        }
+        
+        function initializeCarousel(carouselId) {
+            const carousel = document.querySelector(`[data-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dotsContainer = carousel.querySelector('.carousel-dots');
+            
+            if (!slides.length || !dotsContainer) return;
+            
+            // Create dots
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < slides.length; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'carousel-dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(carouselId, i);
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Initialize position
+            carouselPositions[carouselId] = 0;
+            
+            // Add touch support for mobile
+            addCarouselTouchSupport(carouselId);
+            
+            // Show first slide
+            goToSlide(carouselId, 0);
+        }
+        
+        function goToSlide(carouselId, slideIndex) {
+            const carousel = document.querySelector(`[data-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const dots = carousel.querySelectorAll('.carousel-dot');
+            const track = carousel.querySelector('.carousel-track');
+            
+            if (!slides.length || !dots.length) return;
+            
+            // Update position
+            carouselPositions[carouselId] = slideIndex;
+            
+            // Mobile: Use transform (swipe behavior)
+            if (window.innerWidth <= 1024) {
+                const translateX = -slideIndex * 100;
+                track.style.transform = `translateX(${translateX}%)`;
+            } else {
+                // Desktop: Show/hide slides (one at a time)
+                slides.forEach((slide, index) => {
+                    const shouldShow = index === slideIndex;
+                    slide.style.display = shouldShow ? 'block' : 'none';
+                });
+            }
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+            
+            // Update caption (desktop only)
+            if (window.innerWidth > 1024) {
+                const captionElement = carousel.querySelector('.carousel-caption');
+                if (captionElement) {
+                    const currentSlide = slides[slideIndex];
+                    const caption = currentSlide.getAttribute('data-caption') || currentSlide.querySelector('img')?.alt || '';
+                    captionElement.textContent = caption;
+                }
+            }
+        }
+        
+        function addCarouselTouchSupport(carouselId) {
+            const carousel = document.querySelector(`[data-carousel="${carouselId}"]`);
+            if (!carousel) return;
+            
+            let startX = 0;
+            let isDragging = false;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                isDragging = true;
+            });
+            
+            carousel.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                // Only prevent default if the event is cancelable
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            carousel.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                
+                const endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                const threshold = 50;
+                
+                if (Math.abs(diff) > threshold) {
+                    const slides = carousel.querySelectorAll('.carousel-slide');
+                    const currentPos = carouselPositions[carouselId] || 0;
+                    let newPos = currentPos;
+                    
+                    if (diff > 0 && currentPos < slides.length - 1) {
+                        newPos = currentPos + 1; // Swipe left - next
+                    } else if (diff < 0 && currentPos > 0) {
+                        newPos = currentPos - 1; // Swipe right - previous
+                    }
+                    
+                    goToSlide(carouselId, newPos);
+                }
+            });
+        }
+        
+        // Mobile Carousel Initialization - Separate System
+        function initializeMobileCarousel(carouselId) {
             const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"]`);
             if (!carousel) return;
             
@@ -493,24 +649,31 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             }
             
             // Initialize position
-            mobileCarouselPositions[carouselId] = 0;
+            carouselPositions[carouselId] = 0;
             
             // Add touch support
-            addTouchSupport(carouselId);
+            addMobileTouchSupport(carouselId);
+            
+            // Show first slide
+            goToMobileSlide(carouselId, 0);
         }
         
         function goToMobileSlide(carouselId, slideIndex) {
-            const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"] .mobile-carousel-track`);
-            const dots = document.querySelectorAll(`[data-mobile-carousel="${carouselId}"] .mobile-carousel-dot`);
+            const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"]`);
+            if (!carousel) return;
             
-            if (!carousel || !dots.length) return;
+            const slides = carousel.querySelectorAll('.mobile-carousel-slide');
+            const dots = carousel.querySelectorAll('.mobile-carousel-dot');
+            const track = carousel.querySelector('.mobile-carousel-track');
+            
+            if (!slides.length || !dots.length) return;
             
             // Update position
-            mobileCarouselPositions[carouselId] = slideIndex;
+            carouselPositions[carouselId] = slideIndex;
             
-            // Apply transform
+            // Use transform to slide
             const translateX = -slideIndex * 100;
-            carousel.style.transform = `translateX(${translateX}%)`;
+            track.style.transform = `translateX(${translateX}%)`;
             
             // Update dots
             dots.forEach((dot, index) => {
@@ -518,29 +681,7 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             });
         }
         
-        function navigateMobileCarousel(carouselId, direction) {
-            const slides = document.querySelectorAll(`[data-mobile-carousel="${carouselId}"] .mobile-carousel-slide`);
-            if (!slides.length) return;
-            
-            // Initialize if not exists
-            if (!(carouselId in mobileCarouselPositions)) {
-                mobileCarouselPositions[carouselId] = 0;
-            }
-            
-            // Calculate new position
-            let newPosition = mobileCarouselPositions[carouselId] + direction;
-            
-            // Loop around
-            if (newPosition < 0) {
-                newPosition = slides.length - 1;
-            } else if (newPosition >= slides.length) {
-                newPosition = 0;
-            }
-            
-            goToMobileSlide(carouselId, newPosition);
-        }
-        
-        function addTouchSupport(carouselId) {
+        function addMobileTouchSupport(carouselId) {
             const carousel = document.querySelector(`[data-mobile-carousel="${carouselId}"]`);
             if (!carousel) return;
             
@@ -554,25 +695,31 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             
             carousel.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
-                e.preventDefault(); // Prevent scrolling
-            });
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
             
             carousel.addEventListener('touchend', (e) => {
                 if (!isDragging) return;
                 isDragging = false;
                 
                 const endX = e.changedTouches[0].clientX;
-                const diffX = startX - endX;
+                const diff = startX - endX;
+                const threshold = 50;
                 
-                // Swipe threshold
-                if (Math.abs(diffX) > 50) {
-                    if (diffX > 0) {
-                        // Swipe left - next slide
-                        navigateMobileCarousel(carouselId, 1);
-                    } else {
-                        // Swipe right - previous slide
-                        navigateMobileCarousel(carouselId, -1);
+                if (Math.abs(diff) > threshold) {
+                    const slides = carousel.querySelectorAll('.mobile-carousel-slide');
+                    const currentPos = carouselPositions[carouselId] || 0;
+                    let newPos = currentPos;
+                    
+                    if (diff > 0 && currentPos < slides.length - 1) {
+                        newPos = currentPos + 1; // Swipe left - next
+                    } else if (diff < 0 && currentPos > 0) {
+                        newPos = currentPos - 1; // Swipe right - previous
                     }
+                    
+                    goToMobileSlide(carouselId, newPos);
                 }
             });
         }

@@ -803,7 +803,7 @@ body:-moz-full-screen .main-content {
     
     /* Fix typography for mobile - match research/exhibition sections (14px) */
     .about-section p,
-    .mobile-content-container p:not(.cv-year):not(.cv-location):not(.cv-medium):not(.exhibition-text):not(.hero-intro p) {
+    .mobile-content-container p:not(.cv-year):not(.cv-location):not(.cv-medium):not(.exhibition-text):not(.hero-intro p):not(.process-section p) {
         font-size: 14px !important;
         line-height: 1.6 !important;
         margin-bottom: 16px !important;
@@ -2530,12 +2530,15 @@ h3 {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* Korean process sections - desktop and mobile */
-:lang(ko) .process-section p {
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
-    line-height: 1.6;
-    letter-spacing: 0.02em;
+/* Korean process sections - desktop only */
+@media (min-width: 1025px) {
+    :lang(ko) .process-section p {
+        font-family: 'Noto Sans KR', sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+        margin-bottom: 50px;
+    }
 }
 
 /* Korean h3 titles - match resonance loop styling */
@@ -2618,11 +2621,15 @@ body[data-lang="kr"] .lang-kr {
     margin-top: 0;
 }
 
-/* Mobile: stack columns */
-@media (max-width: 768px) {
+/* Mobile: hide two-column wrapper completely */
+@media (max-width: 1024px) {
     .exhibition-content-wrapper {
-        grid-template-columns: 1fr;
-        gap: 20px;
+        display: block;
+    }
+    
+    .exhibition-text-column,
+    .exhibition-image-column {
+        display: contents;
     }
 }
 
@@ -2923,30 +2930,38 @@ ol.exhibition-list {
     51%, 100% { opacity: 0; }
 }
 
-/* Fade-in for research pages (no typewriter) */
+/* Fade-in for research pages (no typewriter) - match exhibition animation */
 .typewriter-text.fade-in-research {
     visibility: visible;
     opacity: 0;
-    animation: fadeInResearch 0.6s ease-in forwards;
+    animation: fadeInExhibition 0.8s ease-out forwards;
 }
 
-@keyframes fadeInResearch {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Fade-in for exhibition pages */
+/* Fade-in for exhibition and research pages - all elements start hidden */
+.content-body h1,
+.content-body h2,
+.content-body p,
+.lang-en h1,
+.lang-en h2,
+.lang-kr h1,
+.lang-kr h2,
 .exhibition-text,
-.cv-entry {
+.cv-entry,
+.cv-year,
+.cv-location,
+.cv-medium,
+.cv-title {
     opacity: 0;
+    visibility: hidden;
 }
 
+.content-body h1.fade-in-exhibition,
+.content-body h2.fade-in-exhibition,
+.content-body p.fade-in-exhibition,
+.lang-en h1.fade-in-exhibition,
+.lang-en h2.fade-in-exhibition,
+.lang-kr h1.fade-in-exhibition,
+.lang-kr h2.fade-in-exhibition,
 .exhibition-text.fade-in-exhibition,
 .cv-entry.fade-in-exhibition {
     opacity: 0;
@@ -2954,49 +2969,34 @@ ol.exhibition-list {
 }
 
 @keyframes fadeInExhibition {
-    from {
+    0% {
         opacity: 0;
+        visibility: hidden;
         transform: translateY(15px);
     }
-    to {
+    1% {
+        visibility: visible;
+    }
+    100% {
         opacity: 1;
+        visibility: visible;
         transform: translateY(0);
     }
 }
 
-/* Fade-in for exhibition images */
+/* Fade-in for exhibition images - use same class as text */
 .image-grid .grid-image,
-.cv-flyer {
-    opacity: 0;
-}
-
-.image-grid .grid-image.fade-in-exhibition-image,
-.cv-flyer.fade-in-exhibition-image {
-    opacity: 0;
-    animation: fadeInExhibitionImage 0.6s ease-out forwards;
-}
-
-@keyframes fadeInExhibitionImage {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Old process-images - REMOVED */
-
+.cv-flyer,
 .image-item {
-    margin-bottom: 16px;
     opacity: 0;
+    margin-bottom: 16px;
 }
 
-.image-item.fade-in-exhibition-image {
+.image-grid .grid-image.fade-in-exhibition,
+.cv-flyer.fade-in-exhibition,
+.image-item.fade-in-exhibition {
     opacity: 0;
-    animation: fadeInExhibitionImage 0.6s ease-out forwards;
+    animation: fadeInExhibition 0.8s ease-out forwards;
 }
 
 @keyframes fadeIn {
@@ -3743,129 +3743,27 @@ ol.exhibition-list {
         transform: translate(-50%, -50%) scale(0.85);
     }
 }
+    
+    /* OLD MOBILE CAROUSEL RULES REMOVED - Now properly inside media query */
 
-/* Process Network Animation - REMOVED */
-
-/* Process network canvas - REMOVED */
-
-/* Process network canvas active state - REMOVED */
-
-/* Mobile styles for process network - REMOVED */
-    
-    
-    /* Process network mobile rules - REMOVED */
-    
-    /* Mobile Image Carousel - Completely separate from desktop */
-    .mobile-image-carousel {
-        position: relative;
-        width: 100%;
-        margin: 20px 0;
-        overflow: hidden;
-    }
-    
-    .mobile-carousel-track {
-        display: flex;
-        transition: transform 0.3s ease;
-    }
-    
-    .mobile-carousel-slide {
-        width: 100%;
-        flex-shrink: 0;
-        position: relative;
-    }
-    
-    .mobile-carousel-slide img {
-        width: 100%;
-        height: 200px; /* Fixed height for image */
-        object-fit: cover;
-        border-radius: 8px;
-        display: block;
-    }
-    
-    /* Mobile Carousel Caption - below image, no background */
-    .mobile-carousel-caption {
-        text-align: center;
-        font-family: var(--font-mono);
-        font-size: 11px;
-        color: var(--text-muted);
-        line-height: 1.4;
-        padding: 8px 0;
-        margin: 0;
-    }
-    
-    /* Korean caption font */
-    :lang(ko) .mobile-carousel-caption {
-        font-family: 'Noto Sans KR', sans-serif;
-    }
-    
-    /* Mobile Carousel Dots - below caption */
-    .mobile-carousel-dots {
-        display: flex;
-        justify-content: center;
-        gap: 8px;
-        padding: 8px 0;
-        margin: 0;
-    }
-    
-    .mobile-carousel-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: rgba(82, 82, 82, 0.4); /* --text-secondary with opacity */
-        cursor: pointer;
-        transition: background 0.2s ease;
-    }
-    
-    .mobile-carousel-dot.active {
-        background: var(--text-secondary); /* Full opacity for active */
-    }
-    
-    /* Korean process sections - mobile specific */
-    :lang(ko) .process-section p {
-        font-family: 'Noto Sans KR', sans-serif !important;
-        font-size: 15px !important;
-        line-height: 1.8 !important;
-        letter-spacing: 0.02em !important;
-        margin-bottom: 16px !important;
-    }
-    
-    /* Korean h2 titles - mobile specific */
-    :lang(ko) .process-section h2,
-    :lang(ko) h2 {
-        font-family: 'Noto Serif KR', serif !important;
-        font-weight: 400 !important;
-        letter-spacing: -0.02em !important;
-    }
-    
-    /* Hide desktop carousel on mobile */
-    .research-carousel {
-        display: none !important;
-    }
-    
-    /* Show mobile carousel on mobile */
-    .mobile-image-carousel {
-        display: block !important;
-    }
-
-/* Process sections */
+/* Process sections - Base Desktop Styles */
 .process-sections {
     background: var(--bg-content);
-    padding: 32px 0;
+    padding: 0;
 }
 
 .process-section {
-    max-width: 800px;
-    margin: 0 auto 80px auto;
-    padding: 0 40px;
+    max-width: none;
+    margin: 0 0 100px 0;
+    padding: 0;
 }
 
-.process-section h2 {
-    font-size: 1.75rem;
-    font-weight: 500;
-    font-family: 'Noto Serif', serif;
-    margin-top: 40px;
-    margin-bottom: 24px;
-    color: var(--text-primary);
+.process-section:first-child {
+    padding-top: 0;
+}
+
+.process-section:first-child {
+    margin-top: 0;
 }
 
 .process-section p {
@@ -3873,17 +3771,18 @@ ol.exhibition-list {
     line-height: 1.7;
     color: var(--text-primary);
     font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 50px;
 }
 
 /* Mobile styles for process sections */
 @media (max-width: 1024px) {
     .process-sections {
-        padding: 60px 0;
+        padding: 0;
     }
     
     .process-section {
         margin: 0 auto 60px auto;
-        padding: 0 20px;
+        padding: 0;
     }
     
     .process-section h2 {
@@ -3892,11 +3791,92 @@ ol.exhibition-list {
     }
     
     .process-section p {
-        font-size: 1rem;
-        line-height: 1.6;
+        font-size: 14px;
+        line-height: 1.7;
+        font-family: var(--font-mono);
+        font-weight: 400;
+        margin-bottom: 16px;
+        letter-spacing: 0.01em;
     }
     
-    /* Old process scroll indicator - REMOVED */
+    /* Process section elements start hidden for fade-in animation */
+    .process-section h1,
+    .process-section p,
+    .mobile-process-carousel {
+        opacity: 0;
+    }
+    
+    /* Fade-in class added by JavaScript */
+    .process-section h1.fade-in-exhibition,
+    .process-section p.fade-in-exhibition,
+    .mobile-process-carousel.fade-in-exhibition {
+        animation: fadeInExhibition 0.8s ease-out forwards;
+    }
+    
+    /* Hide desktop carousel on mobile */
+    .process-carousel {
+        display: none !important;
+    }
+    
+    /* Mobile Carousel - Separate System */
+    .mobile-process-carousel {
+        position: relative;
+        width: 100%;
+        margin: 24px 0;
+        overflow: hidden;
+    }
+    
+    .mobile-process-carousel .mobile-carousel-track {
+        display: flex;
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-process-carousel .mobile-carousel-slide {
+        width: 100%;
+        flex-shrink: 0;
+    }
+    
+    .mobile-process-carousel .mobile-carousel-slide img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+    }
+    
+    .mobile-process-carousel .mobile-carousel-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 0;
+        margin: 0;
+    }
+    
+    .mobile-process-carousel .mobile-carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: rgba(82, 82, 82, 0.4);
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .mobile-process-carousel .mobile-carousel-dot.active {
+        background-color: #525252;
+    }
+    
+    /* Korean process sections - mobile specific - must override .mobile-content-container p */
+    .mobile-content-container:lang(ko) .process-section p,
+    :lang(ko) .mobile-content-container .process-section p,
+    :lang(ko) .process-section p {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+        letter-spacing: 0.02em !important;
+        margin-bottom: 16px !important;
+        word-break: keep-all !important;
+    }
 }
 
 /* Desktop About Page - Exact same styles as mobile */
@@ -4075,101 +4055,103 @@ ol.exhibition-list {
         font-family: 'Noto Serif KR', serif !important;
     }
     
-    /* Research Image Carousel - Desktop version with mobile-style layout */
-    .research-carousel {
-        position: relative;
-        width: 100%;
-        margin: 20px 0;
-        overflow: hidden;
-        display: flex !important;
-        justify-content: center;
-    }
-    
-    .research-carousel-track {
-        display: flex;
-        transition: transform 0.3s ease;
-        width: 100%;
-    }
-    
-    .research-carousel::-webkit-scrollbar {
-        height: 6px;
-    }
-    
-    /* Hide mobile carousel on desktop by default */
-    .mobile-image-carousel {
+    /* ============================================
+       DESKTOP-ONLY CAROUSEL (Base styles removed - will be desktop-specific)
+       ============================================ */
+
+/* Desktop Process Carousels - DESKTOP ONLY - Complete Self-Contained */
+@media (min-width: 1025px) {
+    /* Hide mobile carousel on desktop */
+    .mobile-process-carousel {
         display: none !important;
     }
     
-    /* Ensure desktop carousel shows on desktop */
-    .research-carousel {
-        display: flex !important;
+    /* Process section elements start hidden for fade-in animation */
+    .process-section h1,
+    .process-section p,
+    .process-carousel {
+        opacity: 0;
     }
     
-    .research-carousel::-webkit-scrollbar-track {
-        background: transparent;
+    /* Fade-in class added by JavaScript */
+    .process-section h1.fade-in-exhibition,
+    .process-section p.fade-in-exhibition,
+    .process-carousel.fade-in-exhibition {
+        animation: fadeInExhibition 0.8s ease-out forwards;
     }
     
-    .research-carousel::-webkit-scrollbar-thumb {
-        background: var(--text-secondary);
-        border-radius: 3px;
-    }
-    
-    .carousel-image {
-        flex-shrink: 0;
-        width: 150px !important;
-        height: 225px !important;
-        cursor: pointer;
-        border-radius: 4px;
-        overflow: hidden;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        margin: 0 auto;
+    .process-carousel {
         display: block;
         position: relative;
+        width: 480px;
+        margin: 24px 0;
     }
     
-    .carousel-image:hover {
+    .process-carousel .carousel-track {
+        display: flex;
+        width: 480px;
+        height: 320px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .process-carousel .carousel-slide {
+        display: none;
+        width: 480px;
+        height: 320px;
+        margin: 0;
+        cursor: pointer;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .process-carousel .carousel-slide:hover {
         transform: scale(1.02);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
     
-    .carousel-image img {
-        width: 100% !important;
-        height: 100% !important;
+    .process-carousel .carousel-slide img {
+        width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: center;
+        display: block;
     }
     
-    /* Force desktop carousel images to fill container, override mobile carousel height */
-    .research-carousel .carousel-image img {
-        height: 100% !important;
-        width: 100% !important;
+    .process-carousel .carousel-slide:first-child {
+        display: block;
     }
     
-    /* Desktop Carousel Dots - same style as audio carousel */
-    .research-carousel-dots {
+    /* Desktop dots */
+    .process-carousel .carousel-dots {
         display: flex;
         justify-content: center;
-        gap: 8px;
-        padding: 16px 0 8px 0;
-        margin: 0;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
+        margin: 20px 0 0 0;
     }
     
-    .research-carousel-dot {
-        width: 12px;
-        height: 12px;
+    .process-carousel .carousel-dot {
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
-        background: rgba(82, 82, 82, 0.4);
+        background-color: rgba(82, 82, 82, 0.12);
         cursor: pointer;
-        transition: background 0.2s ease;
+        transition: all 0.2s ease;
     }
     
-    .research-carousel-dot.active {
-        background: var(--text-secondary);
+    .process-carousel .carousel-dot:hover {
+        background-color: rgba(82, 82, 82, 0.25);
     }
     
-    /* Desktop carousel captions removed - captions only in lightbox */
-    
-    
+    .process-carousel .carousel-dot.active {
+        background-color: rgba(82, 82, 82, 0.5);
+        transform: scale(1.2);
+    }
+}
+
     /* Audio Section */
     .audio-section {
         margin-top: 40px;
@@ -4250,10 +4232,4 @@ ol.exhibition-list {
     }
 }
 
-/* Desktop-specific: Make mobile carousel dots same size as audio dots */
-@media (min-width: 1025px) {
-    .mobile-carousel-dot {
-        width: 12px !important;
-        height: 12px !important;
-    }
-}
+/* OLD MOBILE CAROUSEL DOT RULES REMOVED */

@@ -794,17 +794,15 @@ class TerminalPortfolio {
         // Load into appropriate container
         contentArea.innerHTML = htmlContent;
         
-        // Initialize mobile carousels and audio carousels if this is the process page
+        // Initialize carousels if this is the process page
         if (fileId === 'process') {
             setTimeout(() => {
-                const mobileCarousels = document.querySelectorAll('[data-mobile-carousel]');
-                mobileCarousels.forEach(carousel => {
-                    const carouselId = carousel.getAttribute('data-mobile-carousel');
-                    if (window.initializeMobileCarousel) {
-                        window.initializeMobileCarousel(carouselId);
-                    }
-                });
+                // Initialize new clean process carousels
+                if (window.initializeProcessCarousels) {
+                    window.initializeProcessCarousels();
+                }
                 
+                // Initialize audio carousels
                 const audioCarousels = document.querySelectorAll('[data-audio-carousel]');
                 audioCarousels.forEach(carousel => {
                     const carouselId = carousel.getAttribute('data-audio-carousel');
@@ -881,40 +879,60 @@ class TerminalPortfolio {
             });
         }, 10);
         
-        // Exhibition/Research animations - only on first visit (process animations removed)
-        if (fileId.startsWith('exhibition') || fileId.startsWith('research')) {
+        // Global fade-in animation for all content pages (except hero and about)
+        if (fileId !== 'hero' && fileId !== 'about' && fileId !== 'contact') {
+            
             if (!this.animatedPages.has(fileId)) {
-                // First visit: animate
-                document.querySelectorAll('.exhibition-text').forEach(element => {
-                    element.classList.add('fade-in-exhibition');
-                    element.style.opacity = '1';
-                    element.style.visibility = 'visible';
+                // First visit: animate with staggered timing
+                let delay = 0;
+                
+                // Animate h1 and h2 headings (0.1s delay)
+                const headings = document.querySelectorAll('h1, h2');
+                headings.forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('fade-in-exhibition');
+                    }, delay + 100);
                 });
-                document.querySelectorAll('.grid-image').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
+                
+                // Animate paragraphs and text (0.2s + stagger)
+                document.querySelectorAll('.exhibition-text, p, .process-section p').forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('fade-in-exhibition');
+                        element.style.visibility = 'visible';
+                    }, delay + 200 + (index * 100));
                 });
-                document.querySelectorAll('.image-item').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
+                
+                // Animate images (0.4s + stagger)
+                const images = document.querySelectorAll('.grid-image, .image-item, .cv-flyer, .process-carousel, .mobile-process-carousel');
+                images.forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('fade-in-exhibition');
+                    }, delay + 400 + (index * 100));
                 });
-                document.querySelectorAll('.cv-entry').forEach(element => {
-                    element.classList.add('fade-in-exhibition');
+                
+                // Animate CV entries (0.2s + stagger)
+                document.querySelectorAll('.cv-entry').forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('fade-in-exhibition');
+                    }, delay + 200 + (index * 100));
                 });
-                document.querySelectorAll('.cv-flyer').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
+                
+                // Animate CV metadata (year, location, medium) - same timing as text
+                document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('fade-in-exhibition');
+                    }, delay + 200 + (index * 50));
                 });
-                document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach(element => {
-                    element.style.opacity = '1';
-                    element.style.visibility = 'visible';
-                });
+                
                 this.animatedPages.add(fileId);
             } else {
                 // Revisit: add classes immediately without animation
-                document.querySelectorAll('.exhibition-text, .cv-entry').forEach(element => {
+                document.querySelectorAll('h1, h2, .exhibition-text, .cv-entry, p, .process-section p').forEach(element => {
                     element.classList.add('fade-in-exhibition');
                     element.style.opacity = '1';
                 });
-                document.querySelectorAll('.grid-image, .image-item, .cv-flyer').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
+                document.querySelectorAll('.grid-image, .image-item, .cv-flyer, .process-carousel, .mobile-process-carousel').forEach(element => {
+                    element.classList.add('fade-in-exhibition');
                     element.style.opacity = '1';
                 });
                 document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach(element => {

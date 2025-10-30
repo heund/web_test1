@@ -634,13 +634,6 @@ class TerminalPortfolio {
                             element.classList.add('fade-in-about-text');
                         }, index * 200);
                     });
-                    
-                    const gridImages = document.querySelectorAll('.image-grid .grid-image');
-                    gridImages.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition-image');
-                        }, index * 200);
-                    });
                 }, 300);
             }
             // Mobile: do nothing - language switch handled by data-en/data-kr attributes
@@ -1457,23 +1450,12 @@ class TerminalPortfolio {
                             element.classList.add('fade-in-about-text');
                         }, index * 200);
                     });
-                    
-                    // Fade in grid images
-                    const gridImages = document.querySelectorAll('.image-grid .grid-image');
-                    gridImages.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition-image');
-                        }, index * 200);
-                    });
                 }, 300);
                 this.animatedPages.add(fileId);
             } else {
                 // Revisit: add classes immediately without animation
                 document.querySelectorAll('.output-line:not(.blank):not(.section-marker)').forEach(element => {
                     element.classList.add('fade-in-about-text');
-                });
-                document.querySelectorAll('.image-grid .grid-image').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
                 });
             }
         }
@@ -1495,120 +1477,7 @@ class TerminalPortfolio {
             }, 200);
         }
         
-        // Research pages: apply fade-in effect to text paragraphs
-        if (fileId.startsWith('research-')) {
-            if (!this.animatedPages.has(fileId)) {
-                // First visit: animate
-                setTimeout(() => {
-                    const exhibitionTexts = document.querySelectorAll('.exhibition-text');
-                    exhibitionTexts.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition');
-                        }, index * 150);
-                    });
-                    
-                    // Fade in images in process-images for research pages
-                    const processImages = document.querySelectorAll('.process-images .image-item');
-                    processImages.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition-image');
-                        }, index * 100);
-                    });
-                }, 200);
-                this.animatedPages.add(fileId);
-            } else {
-                // Revisit: add classes immediately without animation
-                document.querySelectorAll('.exhibition-text').forEach(element => {
-                    element.classList.add('fade-in-exhibition');
-                });
-                document.querySelectorAll('.process-images .image-item').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
-                });
-            }
-        }
-        
-        // Exhibition pages: apply fade-in effect to text paragraphs and images
-        if (fileId.startsWith('exhibition')) {
-            if (!this.animatedPages.has(fileId)) {
-                // First visit: animate text immediately, images independently
-                
-                // Start text animations immediately (no initial delay)
-                setTimeout(() => {
-                    // For individual exhibition pages: fade in exhibition-text paragraphs
-                    const exhibitionTexts = document.querySelectorAll('.exhibition-text');
-                    exhibitionTexts.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition');
-                        }, index * 150); // Reduced from 250ms to 150ms
-                    });
-                    
-                    // For exhibitions-overview: fade in cv-entry items
-                    const cvEntries = document.querySelectorAll('.cv-entry');
-                    cvEntries.forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition');
-                        }, index * 100); // Reduced from 150ms to 100ms
-                    });
-                }, 50); // Reduced from 200ms to 50ms
-                
-                // Images fade in independently as they load
-                const gridImages = document.querySelectorAll('.image-grid .grid-image');
-                gridImages.forEach((element, index) => {
-                    const img = element.tagName === 'IMG' ? element : element.querySelector('img');
-                    if (img) {
-                        if (img.complete) {
-                            // Image already loaded
-                            setTimeout(() => {
-                                element.classList.add('fade-in-exhibition-image');
-                            }, index * 100); // Faster stagger
-                        } else {
-                            // Wait for image to load
-                            img.addEventListener('load', () => {
-                                element.classList.add('fade-in-exhibition-image');
-                            });
-                        }
-                    } else {
-                        // No image, fade in immediately
-                        element.classList.add('fade-in-exhibition-image');
-                    }
-                });
-                
-                // Fade in cv-flyer images
-                const flyerImages = document.querySelectorAll('.cv-flyer');
-                flyerImages.forEach((element, index) => {
-                    const img = element.tagName === 'IMG' ? element : element.querySelector('img');
-                    if (img) {
-                        if (img.complete) {
-                            setTimeout(() => {
-                                element.classList.add('fade-in-exhibition-image');
-                            }, index * 80);
-                        } else {
-                            img.addEventListener('load', () => {
-                                element.classList.add('fade-in-exhibition-image');
-                            });
-                        }
-                    } else {
-                        element.classList.add('fade-in-exhibition-image');
-                    }
-                });
-                
-                this.animatedPages.add(fileId);
-            } else {
-                // Revisit: add classes immediately without animation
-                document.querySelectorAll('.exhibition-text').forEach(element => {
-                    element.classList.add('fade-in-exhibition');
-                });
-                document.querySelectorAll('.cv-entry').forEach(element => {
-                    element.classList.add('fade-in-exhibition');
-                });
-                document.querySelectorAll('.image-grid .grid-image').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
-                });
-                document.querySelectorAll('.cv-flyer').forEach(element => {
-                    element.classList.add('fade-in-exhibition-image');
-                });
-            }
-        }
+        // All page animations now handled by global handler in script2.js
         
         // Show mobile scroll indicator on about page only
         if (isMobile && fileId === 'about') {
