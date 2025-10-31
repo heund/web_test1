@@ -985,14 +985,14 @@ class TerminalPortfolio {
                     }, delay + 200 + (index * staggerDelay));
                 });
                 
-                // Animate CV metadata (year, location, medium) - desktop only
-                if (!isMobile) {
-                    document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach((element, index) => {
-                        setTimeout(() => {
-                            element.classList.add('fade-in-exhibition');
-                        }, delay + 200 + (index * 50));
-                    });
-                }
+                // Animate CV metadata (year, location, medium) - both desktop and mobile
+                document.querySelectorAll('.cv-year, .cv-title, .cv-location, .cv-medium').forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('fade-in-exhibition');
+                        element.style.opacity = '1';
+                        element.style.visibility = 'visible';
+                    }, delay + 200 + (index * 50));
+                });
                 
                 this.animatedPages.add(fileId);
             } else {
