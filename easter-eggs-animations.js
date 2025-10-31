@@ -5,15 +5,37 @@ class EasterEggAnimations {
     
     // Helper function to center element using JavaScript (Safari fix)
     static centerElement(element) {
-        // Force Safari to recalculate viewport dimensions
-        // Use pixels instead of vh/vw, but keep transform for centering
-        const centerY = window.innerHeight / 2;
-        const centerX = window.innerWidth / 2;
-        element.style.top = `${centerY}px`;
-        element.style.left = `${centerX}px`;
-        // Ensure transform is set for proper centering
-        // The animation will override this, but it sets the initial position correctly
+        // Set initial position immediately
+        element.style.position = 'fixed';
+        element.style.top = '50%';
+        element.style.left = '50%';
         element.style.transform = 'translate(-50%, -50%)';
+        element.style.transformOrigin = 'center center';
+        
+        // Use requestAnimationFrame to recalculate after Safari's layout
+        requestAnimationFrame(() => {
+            // Get the actual rendered position
+            const rect = element.getBoundingClientRect();
+            const viewportHeight = window.innerHeight;
+            const viewportWidth = window.innerWidth;
+            
+            // Calculate offset from true center
+            const elementCenterY = rect.top + (rect.height / 2);
+            const elementCenterX = rect.left + (rect.width / 2);
+            const trueCenterY = viewportHeight / 2;
+            const trueCenterX = viewportWidth / 2;
+            
+            // Adjust position if not centered
+            const offsetY = trueCenterY - elementCenterY;
+            const offsetX = trueCenterX - elementCenterX;
+            
+            if (Math.abs(offsetY) > 1 || Math.abs(offsetX) > 1) {
+                const currentTop = parseFloat(element.style.top) || (viewportHeight / 2);
+                const currentLeft = parseFloat(element.style.left) || (viewportWidth / 2);
+                element.style.top = `${currentTop + offsetY}px`;
+                element.style.left = `${currentLeft + offsetX}px`;
+            }
+        });
     }
     
     // Waving hand animation
