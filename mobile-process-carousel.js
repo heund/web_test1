@@ -86,11 +86,63 @@ class MobileProcessCarousel {
         
         this.isActive = true;
         
+        // Add swipe support for section navigation
+        this.addSwipeSupport();
+        
         // Initialize the image carousels within each section
         setTimeout(() => {
             this.initializeSectionCarousels();
             this.initializeFadeIn();
         }, 100);
+    }
+    
+    addSwipeSupport() {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let touchStartElement = null;
+        
+        this.container.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            touchStartElement = e.target;
+        }, { passive: true });
+        
+        this.container.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            
+            // Check if swipe started on an image carousel
+            const isOnCarousel = touchStartElement && (
+                touchStartElement.closest('.mobile-process-carousel') ||
+                touchStartElement.closest('.mobile-carousel-track') ||
+                touchStartElement.closest('.mobile-carousel-slide')
+            );
+            
+            // Don't trigger section navigation if swipe started on image carousel
+            if (isOnCarousel) {
+                return;
+            }
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Only trigger horizontal swipe if it's more horizontal than vertical
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    // Swipe right - go to previous section
+                    if (this.currentIndex > 0) {
+                        this.navigate(-1);
+                    }
+                } else {
+                    // Swipe left - go to next section
+                    if (this.currentIndex < this.track.children.length - 1) {
+                        this.navigate(1);
+                    }
+                }
+            }
+        }, { passive: true });
     }
     
     initializeFadeIn() {
@@ -232,6 +284,32 @@ class MobileProcessCarousel {
                     dot.classList.toggle('active', i === currentSlide);
                 });
             };
+            
+            // Add swipe support for image carousel
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            carousel.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                const deltaX = touchEndX - touchStartX;
+                
+                // Swipe threshold
+                if (Math.abs(deltaX) > 50) {
+                    if (deltaX > 0 && currentSlide > 0) {
+                        // Swipe right - previous image
+                        currentSlide--;
+                        updateCarousel();
+                    } else if (deltaX < 0 && currentSlide < slides.length - 1) {
+                        // Swipe left - next image
+                        currentSlide++;
+                        updateCarousel();
+                    }
+                }
+            }, { passive: true });
             
             updateCarousel();
         });

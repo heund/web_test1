@@ -374,6 +374,65 @@ Maybe the future of AI isn't about making machines more human, but about creatin
         let currentImages = [];
         let currentCaptions = [];
         
+        // Calculate safe zone for lightbox on mobile
+        function calculateLightboxSafeZone() {
+            if (window.innerWidth > 1024) return null; // Desktop - no constraints
+            
+            const safeZone = {
+                top: 0,
+                bottom: 0,
+                left: 0,
+                right: 0
+            };
+            
+            // Check for mobile nav icons at top
+            const mobileNav = document.querySelector('.mobile-nav');
+            if (mobileNav) {
+                const navRect = mobileNav.getBoundingClientRect();
+                safeZone.top = navRect.bottom + 20; // 20px padding
+            }
+            
+            // Check for bottom navigation
+            const bottomNav = document.querySelector('.mobile-bottom-nav, .mobile-footer');
+            if (bottomNav) {
+                const navRect = bottomNav.getBoundingClientRect();
+                safeZone.bottom = window.innerHeight - navRect.top + 20; // 20px padding
+            }
+            
+            // Check for any fixed navigation arrows
+            const navArrows = document.querySelectorAll('.mobile-process-nav');
+            navArrows.forEach(arrow => {
+                const rect = arrow.getBoundingClientRect();
+                if (rect.left < 100) {
+                    safeZone.left = Math.max(safeZone.left, rect.right + 20);
+                }
+                if (rect.right > window.innerWidth - 100) {
+                    safeZone.right = Math.max(safeZone.right, window.innerWidth - rect.left + 20);
+                }
+            });
+            
+            return safeZone;
+        }
+        
+        // Apply safe zone constraints to lightbox image
+        function applyLightboxSafeZone() {
+            const lightboxImg = document.getElementById('lightbox-img');
+            if (!lightboxImg || window.innerWidth > 1024) return;
+            
+            const safeZone = calculateLightboxSafeZone();
+            if (!safeZone) return;
+            
+            // Calculate available space
+            const availableHeight = window.innerHeight - safeZone.top - safeZone.bottom;
+            const availableWidth = window.innerWidth - safeZone.left - safeZone.right;
+            
+            // Apply constraints
+            lightboxImg.style.maxHeight = `${availableHeight}px`;
+            lightboxImg.style.maxWidth = `${availableWidth}px`;
+            lightboxImg.style.marginTop = `${safeZone.top}px`;
+            lightboxImg.style.marginBottom = `${safeZone.bottom}px`;
+        }
+        
         // Lightbox functions
         function openLightbox(src) {
             // Get all images in the current section
@@ -450,6 +509,11 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             document.getElementById('lightbox').classList.add('active');
             document.getElementById('lightbox-img').src = src;
             
+            // Apply safe zone constraints on mobile
+            setTimeout(() => {
+                applyLightboxSafeZone();
+            }, 50); // Small delay to ensure image is loaded
+            
             // Update caption - ALWAYS show caption for current image
             const captionElement = document.getElementById('lightbox-caption');
             if (captionElement && currentCaptions && currentCaptions[currentImageIndex]) {
@@ -476,6 +540,11 @@ Maybe the future of AI isn't about making machines more human, but about creatin
             // Update image
             const lightboxImg = document.getElementById('lightbox-img');
             lightboxImg.src = currentImages[currentImageIndex];
+            
+            // Apply safe zone constraints on mobile
+            setTimeout(() => {
+                applyLightboxSafeZone();
+            }, 50);
             
             // Update caption - ALWAYS update caption when navigating
             const captionElement = document.getElementById('lightbox-caption');
