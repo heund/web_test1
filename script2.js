@@ -784,6 +784,10 @@ class TerminalPortfolio {
             const enResonanceCarousel = enContainer ? enContainer.querySelector('.mobile-resonance-carousel') : null;
             const krResonanceCarousel = krContainer ? krContainer.querySelector('.mobile-resonance-carousel') : null;
             
+            // Check if this is embodied-algorithms page to include carousel
+            const enEmbodiedCarousel = enContainer ? enContainer.querySelector('.mobile-embodied-carousel') : null;
+            const krEmbodiedCarousel = krContainer ? krContainer.querySelector('.mobile-embodied-carousel') : null;
+            
             let carouselHTML = '';
             if (fileId === 'exhibition-resonance') {
                 if (enResonanceCarousel && krResonanceCarousel) {
@@ -793,6 +797,15 @@ class TerminalPortfolio {
                     `;
                 } else if (enResonanceCarousel) {
                     carouselHTML = `<div class="lang-en">${enResonanceCarousel.outerHTML}</div>`;
+                }
+            } else if (fileId === 'exhibition-embodied') {
+                if (enEmbodiedCarousel && krEmbodiedCarousel) {
+                    carouselHTML = `
+                        <div class="lang-en">${enEmbodiedCarousel.outerHTML}</div>
+                        <div class="lang-kr">${krEmbodiedCarousel.outerHTML}</div>
+                    `;
+                } else if (enEmbodiedCarousel) {
+                    carouselHTML = `<div class="lang-en">${enEmbodiedCarousel.outerHTML}</div>`;
                 }
             }
             
@@ -866,6 +879,15 @@ class TerminalPortfolio {
                 setTimeout(() => {
                     if (window.initMobileResonanceCarousel) {
                         window.initMobileResonanceCarousel();
+                    }
+                }, 100);
+            }
+            
+            // Initialize mobile embodied carousel if on embodied-algorithms page and mobile
+            if (fileId === 'exhibition-embodied' && isMobileDevice) {
+                setTimeout(() => {
+                    if (window.initMobileEmbodiedCarousel) {
+                        window.initMobileEmbodiedCarousel();
                     }
                 }, 100);
             }
@@ -1809,7 +1831,7 @@ window.initMobileResonanceCarousel = function() {
                 slides[currentSlide].scrollTop = 0;
             }
             
-            // Also scroll the carousel container to show the dots at the top
+            // Scroll carousel into view with some space at top
             carousel.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         
@@ -1875,6 +1897,93 @@ window.initMobileResonanceCarousel = function() {
         }
         
         // Initial update
+        updateCarousel();
+    });
+};
+
+// Mobile Embodied Algorithms Carousel - Copy resonance carousel logic
+window.initMobileEmbodiedCarousel = function() {
+    const carousels = document.querySelectorAll('.mobile-embodied-carousel');
+    
+    if (carousels.length === 0) return;
+    
+    carousels.forEach(carousel => {
+        const track = carousel.querySelector('.mobile-embodied-track');
+        const dots = carousel.querySelectorAll('.mobile-embodied-dot');
+        let currentSlide = 0;
+        
+        function updateCarousel() {
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            
+            const slides = carousel.querySelectorAll('.mobile-embodied-slide');
+            if (slides[currentSlide]) {
+                slides[currentSlide].scrollTop = 0;
+            }
+            
+            // Scroll carousel into view with some space at top
+            carousel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+        
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let swipeDirection = null;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            swipeDirection = null;
+        });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (swipeDirection === null) {
+                const deltaX = Math.abs(e.changedTouches[0].screenX - touchStartX);
+                const deltaY = Math.abs(e.changedTouches[0].screenY - touchStartY);
+                
+                if (deltaX > deltaY && deltaX > 10) {
+                    swipeDirection = 'horizontal';
+                } else if (deltaY > deltaX && deltaY > 10) {
+                    swipeDirection = 'vertical';
+                }
+            }
+        });
+        
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (swipeDirection !== 'horizontal') return;
+            
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentSlide < dots.length - 1) {
+                    currentSlide++;
+                    updateCarousel();
+                } else if (diff < 0 && currentSlide > 0) {
+                    currentSlide--;
+                    updateCarousel();
+                }
+            }
+        }
+        
         updateCarousel();
     });
 };

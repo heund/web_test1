@@ -3938,6 +3938,7 @@ ol.exhibition-list {
         width: 100%;
         margin: 24px 0;
         overflow: hidden;
+        scroll-margin-top: 20px;
     }
     
     .mobile-process-carousel .mobile-carousel-track {
@@ -3986,7 +3987,13 @@ ol.exhibition-list {
     .lang-en .mobile-resonance-carousel ~ .mobile-exhibition-description,
     .lang-en .mobile-resonance-carousel ~ .exhibition-content-wrapper,
     .lang-kr .mobile-resonance-carousel ~ .mobile-exhibition-description,
-    .lang-kr .mobile-resonance-carousel ~ .exhibition-content-wrapper {
+    .lang-kr .mobile-resonance-carousel ~ .exhibition-content-wrapper,
+    .mobile-embodied-carousel ~ .mobile-exhibition-description,
+    .mobile-embodied-carousel ~ .exhibition-content-wrapper,
+    .lang-en .mobile-embodied-carousel ~ .mobile-exhibition-description,
+    .lang-en .mobile-embodied-carousel ~ .exhibition-content-wrapper,
+    .lang-kr .mobile-embodied-carousel ~ .mobile-exhibition-description,
+    .lang-kr .mobile-embodied-carousel ~ .exhibition-content-wrapper {
         display: none !important;
     }
     
@@ -4005,10 +4012,10 @@ ol.exhibition-list {
     .mobile-resonance-carousel .mobile-resonance-slide {
         min-width: 100%;
         flex-shrink: 0;
-        padding: 0 6px;
+        padding: 0 6px 40px 6px;
         box-sizing: border-box;
         overflow-y: auto;
-        max-height: 70vh;
+        max-height: 90vh;
         /* Hide scrollbar but keep scrolling functionality */
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
@@ -4016,6 +4023,11 @@ ol.exhibition-list {
     
     .mobile-resonance-carousel .mobile-resonance-slide::-webkit-scrollbar {
         display: none; /* Chrome, Safari, Opera */
+    }
+    
+    /* Add safety margin to last element in each slide */
+    .mobile-resonance-carousel .mobile-resonance-slide > *:last-child {
+        margin-bottom: 40px !important;
     }
     
     .mobile-resonance-carousel .mobile-resonance-slide h2 {
@@ -4072,6 +4084,94 @@ ol.exhibition-list {
     }
     
     .mobile-resonance-carousel .mobile-resonance-dot.active {
+        background-color: #525252;
+    }
+    
+    /* Mobile Embodied Algorithms Carousel - Copy resonance carousel structure */
+    .mobile-embodied-carousel {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 24px 0;
+        overflow: hidden;
+        scroll-margin-top: 20px;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-track {
+        display: flex;
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-slide {
+        min-width: 100%;
+        flex-shrink: 0;
+        padding: 0 6px 40px 6px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        max-height: 90vh;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-slide::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Add safety margin to last element in each slide */
+    .mobile-embodied-carousel .mobile-embodied-slide > *:last-child {
+        margin-bottom: 40px !important;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-slide h2 {
+        font-size: 16px;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+    }
+    
+    .mobile-embodied-carousel .exhibition-text {
+        margin: 0 0 16px 0 !important;
+        font-size: 14px !important;
+        line-height: 1.8 !important;
+        font-family: var(--font-sans) !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.01em !important;
+    }
+    
+    :lang(ko) .mobile-embodied-carousel .exhibition-text {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 15px !important;
+        letter-spacing: 0.02em !important;
+        line-height: 1.8 !important;
+        word-break: keep-all !important;
+    }
+    
+    :lang(en) .mobile-embodied-carousel .exhibition-text {
+        font-family: var(--font-sans) !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.01em !important;
+        line-height: 1.8 !important;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 0 0 20px 0;
+        margin: 0;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #d4d4d4;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .mobile-embodied-carousel .mobile-embodied-dot.active {
         background-color: #525252;
     }
     
