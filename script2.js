@@ -541,6 +541,22 @@ class TerminalPortfolio {
             this.loadContent('about');
         }
         
+        // STEP 4.6: Animate new language content if on exhibition/research pages
+        if (this.currentFile !== 'hero' && this.currentFile !== 'about' && this.animatedPages.has(this.currentFile)) {
+            const currentLangClass = lang === 'kr' ? '.lang-kr' : '.lang-en';
+            const langContainer = document.querySelector(currentLangClass);
+            
+            if (langContainer) {
+                // Immediately show all elements in the new language without animation
+                const elements = langContainer.querySelectorAll('h1, h2, .exhibition-text, p, .cv-entry, .cv-year, .cv-title, .cv-location, .cv-medium');
+                elements.forEach(element => {
+                    element.classList.add('fade-in-exhibition');
+                    element.style.opacity = '1';
+                    element.style.visibility = 'visible';
+                });
+            }
+        }
+        
         // STEP 5: Process page animations removed - no typewriter animations
         
         // STEP 6: Update code-architecture animation if it exists and has a selected node
@@ -964,6 +980,7 @@ class TerminalPortfolio {
         
         // Global fade-in animation for all content pages (except hero and about)
         if (fileId !== 'hero' && fileId !== 'about') {
+            console.log('[DEBUG FADE] Page:', fileId, 'First visit:', !this.animatedPages.has(fileId));
             
             if (!this.animatedPages.has(fileId)) {
                 // Check if mobile
@@ -973,6 +990,7 @@ class TerminalPortfolio {
                 // First visit: animate with staggered timing (faster on mobile)
                 let delay = 0;
                 const staggerDelay = isMobile ? 50 : 100; // Faster stagger on mobile
+                console.log('[DEBUG FADE] isMobile:', isMobile, 'isContact:', isContactPage);
                 
                 // Special handling for contact page
                 if (isContactPage) {
@@ -1006,7 +1024,7 @@ class TerminalPortfolio {
                     });
                 } else {
                     // Normal animation for other pages
-                    // Animate h1 and h2 headings (0.1s delay)
+                    // Animate headings (h1, h2) - 0.1s delay
                     const headings = document.querySelectorAll('h1, h2');
                     headings.forEach((element, index) => {
                         setTimeout(() => {
@@ -1015,12 +1033,31 @@ class TerminalPortfolio {
                     });
                     
                     // Animate paragraphs and text (0.2s + stagger)
-                    // Exclude .exhibition-text from p selector to avoid duplicates
-                    document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p').forEach((element, index) => {
+                    // Only select from visible language section (except process page which has content outside lang container)
+                    const isProcessPage = fileId === 'process';
+                    const currentLangClass = this.currentLang === 'kr' ? '.lang-kr' : '.lang-en';
+                    const langContainer = !isProcessPage ? document.querySelector(currentLangClass) : null;
+                    
+                    let paragraphs;
+                    if (isMobile) {
+                        // On mobile: include carousel content, exclude desktop accordion
+                        paragraphs = langContainer ? 
+                            langContainer.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p') :
+                            document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p');
+                    } else {
+                        // On desktop: exclude mobile carousel content
+                        paragraphs = langContainer ? 
+                            langContainer.querySelectorAll('.exhibition-text:not(.mobile-resonance-carousel *):not(.mobile-embodied-carousel *), p:not(.exhibition-text):not(.mobile-resonance-carousel *):not(.mobile-embodied-carousel *), .process-section p') :
+                            document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p');
+                    }
+                    
+                    console.log('[DEBUG FADE] Found', paragraphs.length, 'paragraphs. langContainer:', !!langContainer, 'fileId:', fileId);
+                    paragraphs.forEach((element, index) => {
+                        const animDelay = delay + 200 + (index * staggerDelay);
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');
                             element.style.visibility = 'visible';
-                        }, delay + 200 + (index * staggerDelay));
+                        }, animDelay);
                     });
                 }
                 

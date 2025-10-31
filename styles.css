@@ -4377,7 +4377,11 @@ ol.exhibition-list {
     backdrop-filter: blur(8px) !important;
     border-radius: 8px !important;
     margin: 0 auto !important;
-    max-width: 800px !important; /* Restore narrower width */
+    max-width: 700px !important;
+}
+
+.lang-en .desktop-about-text-section {
+    max-width: 680px !important;
 }
 
 /* h2 title styling - must be more specific than .mobile-content-container h2 */
