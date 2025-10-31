@@ -963,7 +963,7 @@ body:-moz-full-screen .main-content {
     
     /* Korean-specific: Reduce left padding by 1px to prevent text cut-off */
     :lang(ko) .mobile-about-sticky .about-terminal {
-        padding-left: 29px;
+        padding-left: 31px;
     }
     
     .mobile-about-sticky .terminal-output {
