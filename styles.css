@@ -3438,8 +3438,10 @@ ol.exhibition-list {
    EASTER EGG: WAVING HAND
    ============================================ */
 .waving-hand-svg {
+    position: fixed;
     z-index: 9999;
     pointer-events: none;
+    transform: translate(-50%, -50%);
     animation: waveAndFadeOut 2s ease forwards;
     opacity: 0;
 }
@@ -3453,53 +3455,53 @@ ol.exhibition-list {
 @keyframes waveAndFadeOut {
     0% {
         opacity: 0;
-        transform: scale(0.5);
+        transform: translate(-50%, -50%) scale(0.5);
     }
     10% {
         opacity: 1;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
     20% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(-15deg);
     }
     30% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(15deg);
     }
     40% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(-15deg);
     }
     50% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(15deg);
     }
     60% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(-15deg);
     }
     70% {
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
     }
     75% {
         opacity: 1;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     80% {
         opacity: 0.9;
-        transform: scale(0.98);
+        transform: translate(-50%, -50%) scale(0.98);
     }
     85% {
         opacity: 0.7;
-        transform: scale(0.95);
+        transform: translate(-50%, -50%) scale(0.95);
     }
     90% {
         opacity: 0.5;
-        transform: scale(0.92);
+        transform: translate(-50%, -50%) scale(0.92);
     }
     95% {
         opacity: 0.2;
-        transform: scale(0.88);
+        transform: translate(-50%, -50%) scale(0.88);
     }
     100% {
         opacity: 0;
-        transform: scale(0.85);
+        transform: translate(-50%, -50%) scale(0.85);
     }
 }
 
@@ -3507,8 +3509,10 @@ ol.exhibition-list {
    EASTER EGG: SWEAR REACTION (SHAKING FROWN)
    ============================================ */
 .shaking-frown-svg {
+    position: fixed;
     z-index: 9999;
     pointer-events: none;
+    transform: translate(-50%, -50%);
     animation: shakeAndFadeOut 2s ease forwards;
     opacity: 0;
 }
@@ -3522,68 +3526,65 @@ ol.exhibition-list {
 @keyframes shakeAndFadeOut {
     0% {
         opacity: 0;
-        transform: scale(0.5);
+        transform: translate(-50%, -50%) scale(0.5);
     }
     10% {
         opacity: 1;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     15% {
-        transform: translateX(-10px);
+        transform: translate(calc(-50% - 10px), -50%);
     }
     20% {
-        transform: translateX(10px);
+        transform: translate(calc(-50% + 10px), -50%);
     }
     25% {
-        transform: translateX(-10px);
+        transform: translate(calc(-50% - 10px), -50%);
     }
     30% {
-        transform: translateX(10px);
+        transform: translate(calc(-50% + 10px), -50%);
     }
     35% {
-        transform: translateX(-10px);
+        transform: translate(calc(-50% - 10px), -50%);
     }
     40% {
-        transform: translateX(10px);
+        transform: translate(calc(-50% + 10px), -50%);
     }
     45% {
-        transform: translateX(-10px);
+        transform: translate(calc(-50% - 10px), -50%);
     }
     50% {
-        transform: translateX(10px);
+        transform: translate(calc(-50% + 10px), -50%);
     }
     55% {
-        transform: translateX(-10px);
+        transform: translate(calc(-50% - 10px), -50%);
     }
     60% {
-        transform: translateX(10px);
+        transform: translate(calc(-50% + 10px), -50%);
     }
-    65% {
-        transform: translateX(0);
-    }
-    75% {
+    65%, 75% {
         opacity: 1;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     80% {
         opacity: 0.9;
-        transform: scale(0.98);
+        transform: translate(-50%, -50%) scale(0.98);
     }
     85% {
         opacity: 0.7;
-        transform: scale(0.95);
+        transform: translate(-50%, -50%) scale(0.95);
     }
     90% {
         opacity: 0.5;
-        transform: scale(0.92);
+        transform: translate(-50%, -50%) scale(0.92);
     }
     95% {
         opacity: 0.2;
-        transform: scale(0.88);
+        transform: translate(-50%, -50%) scale(0.88);
     }
     100% {
         opacity: 0;
-        transform: scale(0.85);
+        transform: translate(-50%, -50%) scale(0.85);
     }
 }
 
@@ -3591,8 +3592,10 @@ ol.exhibition-list {
    EASTER EGG: HEART (FADING)
    ============================================ */
 .fading-heart-svg {
+    position: fixed;
     z-index: 9999;
     pointer-events: none;
+    transform: translate(-50%, -50%);
     animation: slowFadeInOut 3s ease forwards;
     opacity: 0;
 }
@@ -3606,19 +3609,15 @@ ol.exhibition-list {
 @keyframes slowFadeInOut {
     0% {
         opacity: 0;
-        transform: scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8);
     }
-    20% {
+    20%, 80% {
         opacity: 1;
-        transform: scale(1);
-    }
-    80% {
-        opacity: 1;
-        transform: scale(1);
+        transform: translate(-50%, -50%) scale(1);
     }
     100% {
         opacity: 0;
-        transform: scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8);
     }
 }
 
@@ -3626,8 +3625,10 @@ ol.exhibition-list {
    EASTER EGG: FUNNY FACE (ROTATING)
    ============================================ */
 .rotating-funny-svg {
+    position: fixed;
     z-index: 9999;
     pointer-events: none;
+    transform: translate(-50%, -50%);
     animation: rotateAndFadeOut 2s ease forwards;
     opacity: 0;
 }
@@ -3641,41 +3642,38 @@ ol.exhibition-list {
 @keyframes rotateAndFadeOut {
     0% {
         opacity: 0;
-        transform: rotate(-20deg) scale(0.8);
+        transform: translate(-50%, -50%) rotate(-20deg) scale(0.8);
     }
     10% {
         opacity: 1;
-        transform: rotate(-20deg) scale(1);
+        transform: translate(-50%, -50%) rotate(-20deg) scale(1);
     }
     20% {
-        transform: rotate(20deg) scale(1);
+        transform: translate(-50%, -50%) rotate(20deg) scale(1);
     }
     30% {
-        transform: rotate(-20deg) scale(1);
+        transform: translate(-50%, -50%) rotate(-20deg) scale(1);
     }
     40% {
-        transform: rotate(20deg) scale(1);
+        transform: translate(-50%, -50%) rotate(20deg) scale(1);
     }
     50% {
-        transform: rotate(-20deg) scale(1);
+        transform: translate(-50%, -50%) rotate(-20deg) scale(1);
     }
     60% {
-        transform: rotate(20deg) scale(1);
+        transform: translate(-50%, -50%) rotate(20deg) scale(1);
     }
-    70% {
-        transform: rotate(0deg) scale(1);
-    }
-    80% {
+    70%, 80% {
         opacity: 1;
-        transform: rotate(0deg) scale(1);
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
     }
     90% {
         opacity: 0.5;
-        transform: rotate(0deg) scale(0.9);
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
     }
     100% {
         opacity: 0;
-        transform: rotate(0deg) scale(0.8);
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.8);
     }
 }
 
@@ -3683,9 +3681,11 @@ ol.exhibition-list {
    EASTER EGG: FIRE (ROTATING)
    ============================================ */
 .rotating-fire-svg {
+    position: fixed;
     z-index: 9999;
     pointer-events: none;
-    animation: rotateAndFadeOut 2s ease forwards;
+    transform: translate(-50%, -50%);
+    animation: simpleFadeInOut 2s ease forwards;
     opacity: 0;
 }
 
@@ -3695,44 +3695,60 @@ ol.exhibition-list {
     filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.08));
 }
 
-@keyframes rotateAndFadeOut {
+@keyframes simpleFadeInOut {
     0% {
         opacity: 0;
-        transform: rotate(-20deg) scale(0.8);
-    }
-    10% {
-        opacity: 1;
-        transform: rotate(-20deg) scale(1);
+        transform: translate(-50%, -50%) scale(0.8);
     }
     20% {
-        transform: rotate(20deg) scale(1);
-    }
-    30% {
-        transform: rotate(-20deg) scale(1);
-    }
-    40% {
-        transform: rotate(20deg) scale(1);
-    }
-    50% {
-        transform: rotate(-20deg) scale(1);
-    }
-    60% {
-        transform: rotate(20deg) scale(1);
-    }
-    70% {
-        transform: rotate(0deg) scale(1);
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
     80% {
         opacity: 1;
-        transform: rotate(0deg) scale(1);
-    }
-    90% {
-        opacity: 0.5;
-        transform: rotate(0deg) scale(0.9);
+        transform: translate(-50%, -50%) scale(1);
     }
     100% {
         opacity: 0;
-        transform: rotate(0deg) scale(0.8);
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+}
+
+@keyframes rotateAndFadeOut {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(-20deg) scale(0.8);
+    }
+    10% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(-20deg) scale(1);
+    }
+    20% {
+        transform: translate(-50%, -50%) rotate(20deg) scale(1);
+    }
+    30% {
+        transform: translate(-50%, -50%) rotate(-20deg) scale(1);
+    }
+    40% {
+        transform: translate(-50%, -50%) rotate(20deg) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotate(-20deg) scale(1);
+    }
+    60% {
+        transform: translate(-50%, -50%) rotate(20deg) scale(1);
+    }
+    70%, 80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+    }
+    90% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) rotate(0deg) scale(0.8);
     }
 }
 
@@ -3740,9 +3756,11 @@ ol.exhibition-list {
    EASTER EGG: CAT (STATIC)
    ============================================ */
 .static-cat-svg {
+    position: fixed;
     z-index: 9999;
     pointer-events: none;
-    animation: staticFadeInOut 2s ease forwards;
+    transform: translate(-50%, -50%);
+    animation: staticCat 2s ease forwards;
     opacity: 0;
 }
 

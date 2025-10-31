@@ -200,11 +200,6 @@ const EASTER_EGG_COMMANDS = {
         handler: 'showSwearReaction',
         description: 'Disapprove'
     },
-    'bastard': {
-        type: 'animation',
-        handler: 'showSwearReaction',
-        description: 'Disapprove'
-    },
     'crap': {
         type: 'animation',
         handler: 'showSwearReaction',
@@ -560,6 +555,38 @@ const EASTER_EGG_COMMANDS = {
         type: 'animation',
         handler: 'showFunny',
         description: 'Awesome (Korean)'
+    },
+    
+    // Fire reactions
+    'lit': {
+        type: 'animation',
+        handler: 'showFire',
+        description: 'Fire reaction'
+    },
+    'fire': {
+        type: 'animation',
+        handler: 'showFire',
+        description: 'Fire reaction'
+    },
+    'this is fire': {
+        type: 'animation',
+        handler: 'showFire',
+        description: 'Fire reaction'
+    },
+    'this is lit': {
+        type: 'animation',
+        handler: 'showFire',
+        description: 'Fire reaction'
+    },
+    'lit af': {
+        type: 'animation',
+        handler: 'showFire',
+        description: 'Fire reaction'
+    },
+    'lit as': {
+        type: 'animation',
+        handler: 'showFire',
+        description: 'Fire reaction'
     },
      
     // Developer code snippets with terminal overlay
