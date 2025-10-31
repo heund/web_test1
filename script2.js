@@ -962,7 +962,8 @@ class TerminalPortfolio {
                     });
                     
                     // Animate paragraphs and text (0.2s + stagger)
-                    document.querySelectorAll('.exhibition-text, p, .process-section p').forEach((element, index) => {
+                    // Exclude .exhibition-text from p selector to avoid duplicates
+                    document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p').forEach((element, index) => {
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');
                             element.style.visibility = 'visible';
