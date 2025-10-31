@@ -81,6 +81,10 @@ class MobileProcessCarousel {
         if (mobileContent) {
             mobileContent.innerHTML = '';
             mobileContent.appendChild(this.container);
+            
+            // Reset scroll position to top on initial load
+            mobileContent.scrollTop = 0;
+            
             console.log('[Mobile Process Carousel] Appended carousel to mobile content');
         }
         
