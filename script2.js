@@ -902,12 +902,12 @@ class TerminalPortfolio {
                 if (isContactPage) {
                     const isKorean = this.currentLang === 'kr';
                     
-                    // Animate regular terminal lines with ambient fade (slower, 1.2s)
+                    // Animate regular terminal lines with ambient fade (0.8s)
                     document.querySelectorAll('.terminal-line').forEach((element, index) => {
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');
                             element.style.visibility = 'visible';
-                            element.style.animation = 'fadeInAmbient 1.2s ease-in-out forwards';
+                            element.style.animation = 'fadeInAmbient 0.8s ease-in-out forwards';
                         }, delay + 300 + (index * 400));
                     });
                     

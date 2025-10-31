@@ -994,11 +994,15 @@ body:-moz-full-screen .main-content {
         z-index: 20;
         background: transparent;
         pointer-events: auto;
+        scroll-snap-type: y mandatory;
+        overflow-y: scroll;
+        height: 100vh;
     }
     
     .mobile-about-spacer {
         height: 10vh; /* Space before content appears */
         background: transparent;
+        scroll-snap-align: start;
     }
     
     .mobile-about-text-section {
@@ -1006,6 +1010,8 @@ body:-moz-full-screen .main-content {
         background: rgba(255, 255, 255, 0.3) !important;
         backdrop-filter: blur(5px) !important;
         -webkit-backdrop-filter: blur(5px) !important;
+        scroll-snap-align: start;
+        min-height: 100vh;
     }
     
     /* h2 title styling - must be more specific than .mobile-content-container h2 */
