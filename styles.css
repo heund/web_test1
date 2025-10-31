@@ -2218,6 +2218,8 @@ h3 {
     color: var(--text-muted);
     margin: 0 0 8px 0;
     font-weight: 500;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .cv-title {
@@ -2227,8 +2229,8 @@ h3 {
     margin: 0 0 8px 0;
     font-weight: 500;
     line-height: 1.6;
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .cv-title-link {
@@ -2242,6 +2244,8 @@ h3 {
     font-style: italic;
     margin: 8px 0 32px 0;
     line-height: 1.6;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .cv-location {
@@ -2250,8 +2254,8 @@ h3 {
     color: var(--text-muted);
     margin: 0 0 12px 0;
     line-height: 1.5;
-    opacity: 1 !important;
-    visibility: visible !important;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .cv-description {
