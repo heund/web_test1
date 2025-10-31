@@ -13,7 +13,6 @@ class MobileProcessCarousel {
         // Only run on mobile
         if (window.innerWidth > 1024) return;
         
-        console.log('[Mobile Process Carousel] Initializing horizontal section carousel');
         
         // Load the main process.html content
         try {
@@ -26,7 +25,6 @@ class MobileProcessCarousel {
             
             // Get all process sections
             const sections = doc.querySelectorAll('.process-section');
-            console.log('[Mobile Process Carousel] Found sections:', sections.length);
             
             if (sections.length === 0) {
                 console.error('[Mobile Process Carousel] No sections found in process.html');
@@ -42,7 +40,6 @@ class MobileProcessCarousel {
     }
 
     createCarouselStructure(sections) {
-        console.log('[Mobile Process Carousel] Creating carousel structure');
         
         // Remove existing carousel if any
         const existing = document.querySelector('.mobile-process-sections-container');
@@ -68,7 +65,6 @@ class MobileProcessCarousel {
             }
             slide.innerHTML = section.outerHTML;
             this.track.appendChild(slide);
-            console.log(`[Mobile Process Carousel] Added section ${index}`);
         });
         
         this.container.appendChild(this.track);
@@ -85,7 +81,6 @@ class MobileProcessCarousel {
             // Reset scroll position to top on initial load
             mobileContent.scrollTop = 0;
             
-            console.log('[Mobile Process Carousel] Appended carousel to mobile content');
         }
         
         this.isActive = true;
@@ -106,11 +101,30 @@ class MobileProcessCarousel {
         let touchStartY = 0;
         let touchEndY = 0;
         let touchStartElement = null;
+        let swipeDirection = null; // 'horizontal', 'vertical', or null
+        let hasMoved = false;
         
         this.container.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
             touchStartY = e.changedTouches[0].screenY;
             touchStartElement = e.target;
+            swipeDirection = null;
+            hasMoved = false;
+        }, { passive: true });
+        
+        this.container.addEventListener('touchmove', (e) => {
+            if (!hasMoved) {
+                const currentX = e.changedTouches[0].screenX;
+                const currentY = e.changedTouches[0].screenY;
+                const deltaX = Math.abs(currentX - touchStartX);
+                const deltaY = Math.abs(currentY - touchStartY);
+                
+                // Determine swipe direction based on initial movement (threshold: 10px)
+                if (deltaX > 10 || deltaY > 10) {
+                    hasMoved = true;
+                    swipeDirection = deltaX > deltaY ? 'horizontal' : 'vertical';
+                }
+            }
         }, { passive: true });
         
         this.container.addEventListener('touchend', (e) => {
@@ -132,8 +146,9 @@ class MobileProcessCarousel {
             const deltaX = touchEndX - touchStartX;
             const deltaY = touchEndY - touchStartY;
             
-            // Only trigger horizontal swipe if it's more horizontal than vertical
-            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+            // Only trigger horizontal navigation if the swipe was determined to be horizontal
+            // and the movement is significant enough
+            if (swipeDirection === 'horizontal' && Math.abs(deltaX) > 50) {
                 if (deltaX > 0) {
                     // Swipe right - go to previous section
                     if (this.currentIndex > 0) {
@@ -146,11 +161,11 @@ class MobileProcessCarousel {
                     }
                 }
             }
+            // If swipeDirection is 'vertical', do nothing - allow normal vertical scroll
         }, { passive: true });
     }
     
     initializeFadeIn() {
-        console.log('[Mobile Process Carousel] Initializing fade-in animations');
         
         // Animate all sections initially (only once)
         const allSlides = this.track.querySelectorAll('.mobile-process-section-slide');
@@ -184,7 +199,6 @@ class MobileProcessCarousel {
             });
         });
         
-        console.log('[Mobile Process Carousel] Fade-in animations initialized');
     }
 
     createNavigation() {
@@ -248,11 +262,9 @@ class MobileProcessCarousel {
     }
 
     initializeSectionCarousels() {
-        console.log('[Mobile Process Carousel] Initializing image carousels within sections');
         
         // Find all mobile-process-carousel elements
         const carousels = this.container.querySelectorAll('.mobile-process-carousel');
-        console.log('[Mobile Process Carousel] Found image carousels:', carousels.length);
         
         carousels.forEach((carousel, index) => {
             const track = carousel.querySelector('.mobile-carousel-track');
@@ -264,7 +276,6 @@ class MobileProcessCarousel {
                 return;
             }
             
-            console.log(`[Mobile Process Carousel] Initializing image carousel ${index} with ${slides.length} slides`);
             
             let currentSlide = 0;
             
@@ -317,8 +328,6 @@ class MobileProcessCarousel {
             
             updateCarousel();
         });
-        
-        console.log('[Mobile Process Carousel] Image carousels initialized');
     }
     
     cleanup() {

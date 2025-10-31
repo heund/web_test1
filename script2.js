@@ -943,14 +943,13 @@ class TerminalPortfolio {
                         }, isKorean ? delay + 700 : delay + 1200);
                     }
                     
-                    // Email and socials - normal timing after "say hello"
-                    // Korean: shorter delay to match the faster "say hello" timing
-                    const emailDelay = isKorean ? delay + 2200 : delay + 2700;
+                    // Email and socials - reduced delay for faster reveal
+                    const emailDelay = isKorean ? delay + 1200 : delay + 1500;
                     document.querySelectorAll('.terminal-line-email, .terminal-line-muted').forEach((element, index) => {
                         setTimeout(() => {
                             element.classList.add('fade-in-exhibition');
                             element.style.visibility = 'visible';
-                        }, emailDelay + (index * 300));
+                        }, emailDelay + (index * 200));
                     });
                 } else {
                     // Normal animation for other pages
