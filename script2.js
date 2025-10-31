@@ -795,26 +795,49 @@ class TerminalPortfolio {
             `;
         }
         
-        // Load into appropriate container
-        contentArea.innerHTML = htmlContent;
+        // Check if mobile and process page
+        const isMobileDevice = window.innerWidth <= 1024;
         
-        // Initialize carousels if this is the process page
-        if (fileId === 'process') {
+        // Initialize mobile horizontal section carousel for process page
+        if (isMobileDevice && fileId === 'process') {
+            // Cleanup any existing carousel
+            if (window.cleanupMobileProcessCarousel) {
+                window.cleanupMobileProcessCarousel();
+            }
+            
+            // Initialize horizontal section carousel (which loads process.html sections)
             setTimeout(() => {
-                // Initialize new clean process carousels
-                if (window.initializeProcessCarousels) {
-                    window.initializeProcessCarousels();
+                if (window.initMobileProcessCarousel) {
+                    window.initMobileProcessCarousel();
                 }
-                
-                // Initialize audio carousels
-                const audioCarousels = document.querySelectorAll('[data-audio-carousel]');
-                audioCarousels.forEach(carousel => {
-                    const carouselId = carousel.getAttribute('data-audio-carousel');
-                    if (window.initializeAudioCarousel) {
-                        window.initializeAudioCarousel(carouselId);
-                    }
-                });
             }, 100);
+        } else {
+            // Cleanup carousel if switching away from process on mobile
+            if (isMobileDevice && window.cleanupMobileProcessCarousel) {
+                window.cleanupMobileProcessCarousel();
+            }
+            
+            // Load into appropriate container (non-process or desktop)
+            contentArea.innerHTML = htmlContent;
+            
+            // Initialize carousels if this is the process page on desktop
+            if (fileId === 'process') {
+                setTimeout(() => {
+                    // Initialize new clean process carousels
+                    if (window.initializeProcessCarousels) {
+                        window.initializeProcessCarousels();
+                    }
+                    
+                    // Initialize audio carousels
+                    const audioCarousels = document.querySelectorAll('[data-audio-carousel]');
+                    audioCarousels.forEach(carousel => {
+                        const carouselId = carousel.getAttribute('data-audio-carousel');
+                        if (window.initializeAudioCarousel) {
+                            window.initializeAudioCarousel(carouselId);
+                        }
+                    });
+                }, 100);
+            }
         }
         
         this.currentFile = fileId;
