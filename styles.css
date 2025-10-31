@@ -931,7 +931,7 @@ body:-moz-full-screen .main-content {
         top: 0;
         left: 0;
         width: 100%;
-        height: 100vh;
+        min-height: 100vh; /* Changed from height to min-height */
         z-index: 10;
         pointer-events: none;
         transition: opacity 0.3s ease;
@@ -999,9 +999,9 @@ body:-moz-full-screen .main-content {
         z-index: 20;
         background: transparent;
         pointer-events: auto;
-        scroll-snap-type: y mandatory;
-        overflow-y: scroll;
-        height: 100vh;
+        /* Remove scroll - let main container handle it */
+        overflow: visible;
+        height: auto;
     }
     
     .mobile-about-spacer {
@@ -1016,7 +1016,13 @@ body:-moz-full-screen .main-content {
         backdrop-filter: blur(5px) !important;
         -webkit-backdrop-filter: blur(5px) !important;
         scroll-snap-align: start;
-        min-height: 100vh;
+        /* Remove min-height constraint and disable internal scroll */
+        min-height: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        /* Ensure content expands naturally without being cut off */
+        display: block !important;
     }
     
     /* h2 title styling - must be more specific than .mobile-content-container h2 */
