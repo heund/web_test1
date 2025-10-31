@@ -845,10 +845,11 @@ body:-moz-full-screen .main-content {
         margin: 0 !important;
     }
     
-    /* Fix headings */
+    /* Fix headings - match exhibition header margins */
     .mobile-content-container h1 {
-        font-size: 20px !important;
+        font-size: 26px !important;
         line-height: 1.4 !important;
+        margin-top: 20px !important;
         margin-bottom: 12px !important;
         word-wrap: break-word !important;
     }
@@ -1009,11 +1010,16 @@ body:-moz-full-screen .main-content {
     
     /* h2 title styling - must be more specific than .mobile-content-container h2 */
     .mobile-content-container .mobile-about-text-section h2 {
-        font-size: 20px !important;
+        font-size: 22px !important;
         font-weight: 600 !important;
         margin-bottom: 32px !important;
         margin-top: 0 !important;
         color: var(--text-primary) !important;
+    }
+    
+    /* About section h1 - exclude from exhibition header margin style */
+    .mobile-content-container .mobile-about-text-section h1 {
+        margin-top: 0 !important;
     }
     
     /* Paragraphs use exhibition-text class - match RCS section styles */
@@ -1030,7 +1036,7 @@ body:-moz-full-screen .main-content {
     /* Korean text - match desktop styling */
     :lang(ko) .mobile-about-text-section .exhibition-text {
         font-family: 'Noto Sans KR', sans-serif !important;
-        font-size: 15px !important; /* Slightly larger than desktop 14px for mobile */
+        font-size: 15px !important;
         letter-spacing: 0.02em !important;
         line-height: 1.8 !important;
         word-break: keep-all !important;
@@ -1044,16 +1050,18 @@ body:-moz-full-screen .main-content {
     
     .mobile-exhibition-header h1 {
         margin: 0 0 4px 0 !important;
-        font-size: 28px !important;
+        font-size: 26px !important;
         font-weight: 400 !important;
         font-family: 'Noto Serif', serif !important;
-        line-height: 1.2;
+        line-height: 1.4 !important;
         letter-spacing: 0.01em;
     }
     
     /* Korean h1 for mobile exhibitions - match desktop styling */
     :lang(ko) .mobile-exhibition-header h1 {
+        font-size: 26px !important;
         font-family: 'Noto Serif KR', serif !important;
+        line-height: 1.4 !important;
         letter-spacing: -0.02em !important;
         font-weight: 400 !important; /* Match desktop weight */
     }
@@ -1084,17 +1092,17 @@ body:-moz-full-screen .main-content {
     
     .mobile-exhibition-description .exhibition-text {
         margin: 0 0 16px 0 !important;
-        font-size: 15px !important;
+        font-size: 14px !important;
         line-height: 1.8 !important;
         font-family: 'Noto Sans', sans-serif !important;
-        letter-spacing: 0.02em;
-        display: block;
+        letter-spacing: 0.02em !important;
+        word-break: break-word;
     }
     
     /* Korean exhibition text for mobile - match desktop styling */
     :lang(ko) .mobile-exhibition-description .exhibition-text {
         font-family: 'Noto Sans KR', sans-serif !important;
-        font-size: 15px !important; /* Slightly larger than desktop 14px for mobile readability */
+        font-size: 15px !important;
         letter-spacing: 0.02em !important;
         line-height: 1.8 !important;
         word-break: keep-all !important;
@@ -1103,7 +1111,7 @@ body:-moz-full-screen .main-content {
     /* English exhibition text for mobile */
     :lang(en) .mobile-exhibition-description .exhibition-text {
         font-family: var(--font-sans) !important;
-        font-size: 15px !important;
+        font-size: 14px !important;
         font-weight: 400 !important;
         letter-spacing: 0.02em;
         line-height: 1.8 !important;
@@ -1162,6 +1170,21 @@ body:-moz-full-screen .main-content {
     .mobile-content-container h2 {
         font-weight: 600 !important;
         font-size: 22px !important;
+    }
+    
+    /* Korean h1 titles on mobile - 26px */
+    :lang(ko) .mobile-content-container h1 {
+        font-size: 26px !important;
+        font-family: 'Noto Serif KR', serif !important;
+    }
+    
+    /* Korean h2 titles on mobile - 22px across all sections, bold like research */
+    :lang(ko) .mobile-content-container h2,
+    :lang(ko) .mobile-about-text-section h2,
+    :lang(ko) h2 {
+        font-size: 22px !important;
+        font-weight: 600 !important;
+        font-family: 'Noto Serif KR', serif !important;
     }
     
     /* Mobile-specific: Extra spacing before 내면 독백 생성 section on resonance loop page */
@@ -2243,7 +2266,7 @@ h3 {
 
 .research-column li {
     margin-bottom: 8px;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 /* Process Items */
@@ -2638,7 +2661,7 @@ body[data-lang="kr"] .lang-kr {
 /* Exhibition text */
 .exhibition-text {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-primary);
     line-height: 1.7;
     margin-bottom: 16px;
@@ -2649,7 +2672,7 @@ body[data-lang="kr"] .lang-kr {
 
 .lang-kr .exhibition-text {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: 0.02em;
     line-height: 1.8;
     word-break: keep-all;
@@ -2657,7 +2680,7 @@ body[data-lang="kr"] .lang-kr {
 
 .exhibition-subtitle {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-primary);
     margin: 16px 0 12px 0;
     font-weight: 500;
@@ -2672,7 +2695,7 @@ body[data-lang="kr"] .lang-kr {
 /* Flowchart styling - simple horizontal flow */
 .flowchart {
     font-family: var(--font-mono);
-    font-size: 13px;
+    font-size: 14px;
     color: var(--text-secondary);
     line-height: 2;
     margin: 20px 0;
@@ -2840,14 +2863,14 @@ ol.exhibition-list {
 
 :lang(ko) .exhibition-list {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: 0.02em;
     line-height: 1.8;
 }
 
 .lang-kr .exhibition-list {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 14px;
+    font-size: 15px;
     letter-spacing: 0.02em;
     line-height: 1.8;
 }
@@ -3383,7 +3406,7 @@ ol.exhibition-list {
     
     .content-body h1,
     .mobile-content-container h1 {
-        font-size: 1.75rem;
+        font-size: 26px !important;
         font-family: 'Noto Serif KR', 'Crimson Pro', serif !important;
     }
     
