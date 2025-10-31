@@ -961,6 +961,11 @@ body:-moz-full-screen .main-content {
         overflow: hidden; /* Also clip at terminal level */
     }
     
+    /* Korean-specific: Reduce left padding by 1px to prevent text cut-off */
+    :lang(ko) .mobile-about-sticky .about-terminal {
+        padding-left: 29px;
+    }
+    
     .mobile-about-sticky .terminal-output {
         overflow: hidden; /* Clip at output level */
         max-height: calc(100vh - 120px); /* Constrain height to fit within viewport */
