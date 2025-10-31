@@ -3986,20 +3986,22 @@ ol.exhibition-list {
         background-color: #525252;
     }
     
-    /* Hide original text when carousel is present - use adjacent sibling */
-    .mobile-resonance-carousel ~ .mobile-exhibition-description,
-    .mobile-resonance-carousel ~ .exhibition-content-wrapper,
-    .lang-en .mobile-resonance-carousel ~ .mobile-exhibition-description,
-    .lang-en .mobile-resonance-carousel ~ .exhibition-content-wrapper,
-    .lang-kr .mobile-resonance-carousel ~ .mobile-exhibition-description,
-    .lang-kr .mobile-resonance-carousel ~ .exhibition-content-wrapper,
-    .mobile-embodied-carousel ~ .mobile-exhibition-description,
-    .mobile-embodied-carousel ~ .exhibition-content-wrapper,
-    .lang-en .mobile-embodied-carousel ~ .mobile-exhibition-description,
-    .lang-en .mobile-embodied-carousel ~ .exhibition-content-wrapper,
-    .lang-kr .mobile-embodied-carousel ~ .mobile-exhibition-description,
-    .lang-kr .mobile-embodied-carousel ~ .exhibition-content-wrapper {
-        display: none !important;
+    /* Hide original text when carousel is present - ONLY ON MOBILE */
+    @media (max-width: 1024px) {
+        .mobile-resonance-carousel ~ .mobile-exhibition-description,
+        .mobile-resonance-carousel ~ .exhibition-content-wrapper,
+        .lang-en .mobile-resonance-carousel ~ .mobile-exhibition-description,
+        .lang-en .mobile-resonance-carousel ~ .exhibition-content-wrapper,
+        .lang-kr .mobile-resonance-carousel ~ .mobile-exhibition-description,
+        .lang-kr .mobile-resonance-carousel ~ .exhibition-content-wrapper,
+        .mobile-embodied-carousel ~ .mobile-exhibition-description,
+        .mobile-embodied-carousel ~ .exhibition-content-wrapper,
+        .lang-en .mobile-embodied-carousel ~ .mobile-exhibition-description,
+        .lang-en .mobile-embodied-carousel ~ .exhibition-content-wrapper,
+        .lang-kr .mobile-embodied-carousel ~ .mobile-exhibition-description,
+        .lang-kr .mobile-embodied-carousel ~ .exhibition-content-wrapper {
+            display: none !important;
+        }
     }
     
     /* Also hide if carousel is in parent */
@@ -4092,7 +4094,7 @@ ol.exhibition-list {
         background-color: #525252;
     }
     
-    /* Mobile Embodied Algorithms Carousel - Copy resonance carousel structure */
+    /* Mobile Embodied Algorithms Carousel */
     .mobile-embodied-carousel {
         display: block;
         position: relative;
@@ -4122,7 +4124,6 @@ ol.exhibition-list {
         display: none;
     }
     
-    /* Add safety margin to last element in each slide */
     .mobile-embodied-carousel .mobile-embodied-slide > *:last-child {
         margin-bottom: 80px !important;
     }
@@ -4467,7 +4468,8 @@ ol.exhibition-list {
 @media (min-width: 1025px) {
     /* Hide mobile carousels on desktop */
     .mobile-process-carousel,
-    .mobile-resonance-carousel {
+    .mobile-resonance-carousel,
+    .mobile-embodied-carousel {
         display: none !important;
     }
     
