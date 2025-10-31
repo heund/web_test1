@@ -1050,15 +1050,31 @@ class TerminalPortfolio {
             }
             
             // Reset scroll after content loads on mobile
+            // Immediate reset
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            const mobileContentContainer = document.querySelector('.mobile-content-container');
+            if (mobileContentContainer) {
+                mobileContentContainer.scrollTop = 0;
+            }
+            
+            // Additional resets to ensure it sticks (especially for exhibitions-overview)
             setTimeout(() => {
                 window.scrollTo(0, 0);
                 document.documentElement.scrollTop = 0;
                 document.body.scrollTop = 0;
-                const mobileContentContainer = document.querySelector('.mobile-content-container');
                 if (mobileContentContainer) {
                     mobileContentContainer.scrollTop = 0;
                 }
             }, 0);
+            
+            setTimeout(() => {
+                window.scrollTo(0, 0);
+                if (mobileContentContainer) {
+                    mobileContentContainer.scrollTop = 0;
+                }
+            }, 100);
         } else {
             // Reset scroll after content loads on desktop
             setTimeout(() => {
