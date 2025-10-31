@@ -111,6 +111,83 @@
     <!-- Two-column grid layout starts here -->
     <div class="exhibition-content-wrapper">
         <div class="exhibition-text-column">
+            <p class="exhibition-text">Embodied Algorithms explores the relationship between human intuition and machine logic through the lens of industrial steel production. The work was created in collaboration with <strong>Kwon Young-kook</strong>, a <strong>Korea Master Craftsman</strong> at <strong>POSCO</strong>, one of the world's leading steel manufacturers. Based in Pohang, a major industrial city on South Korea's eastern coast, POSCO's hot rolling plants operate continuously to produce steel coils that form the backbone of global manufacturing.</p>
+            
+            <p class="exhibition-text">In the <strong>hot rolling process</strong>, heated steel slabs are pressed through a series of rollers to form thin sheets. Each stage demands precise coordination of rolling force, temperature, speed and gap distance. These parameters are tightly interdependent, creating a dynamic system that must be balanced in real time. Inside the control room, Master Kwon leads a team that monitors these shifting variables. He reads not just the numbers but the relationships between them, sensing instability before it appears and intervening through both calculation and embodied intuition. In this space, control becomes negotiation. Fluctuations are not errors but signals from the system itself, openings for interpretation and response.</p>
+            
+            <p class="exhibition-text" style="margin-bottom: 80px;">The work interprets this process as a relational field rather than a mechanical operation. It translates the dynamics of steel rolling into an interactive audiovisual environment where audiences engage the system through touch, sound and movement, entering into the complexity rather than observing from outside. The installation unfolds in four phases: beginning with control, then examining structure, exploring depth and ultimately reaching interaction beyond control. This progression reveals that precision often emerges through dialogue rather than domination.</p>
+        <br class="mobile-only-br">
+
+    <div class="collapsible-section">
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">Technical Structure: Relational System<span class="toggle-icon">▼</span></h2>
+        <div class="section-content">
+    
+    <p class="exhibition-text">The interactive framework of Embodied Algorithms is built as a <strong>relational system</strong>, an architecture that privileges interaction over component-level functionality. In conventional design, systems are composed of discrete modules whose functions combine to form a working whole. In contrast, a relational system emphasises feedback, influence, and interdependence between parts. Behaviour arises not from individual properties but from the evolving dynamics of their relationships.</p>
+    
+    <p class="exhibition-text">This approach draws from <strong>second-order cybernetics</strong>, a branch of systems theory that emerged in the 1970s to study how observers and systems co-construct meaning through feedback. Rather than viewing the observer as external to the system, second-order cybernetics treats observation itself as an act that changes what is observed. Interaction is therefore understood as mutual transformation: when a participant intervenes, the system's state shifts, and that change in turn influences the participant's next action. The result is a closed-loop structure that continuously reconfigures itself through use.</p>
+    
+    <p class="exhibition-text" style="margin-bottom: 32px;">Embodied Algorithms applies this relational logic to a <strong>multi-variable industrial process</strong>, treating it as a dynamic field rather than a fixed sequence of values. The project functions as an experimental testbed for examining how interaction can make visible the relational dynamics often hidden within optimised industrial systems. Its aim is not technical completion but to foreground negotiation as a way of understanding.</p>
+    
+    <h3 class="exhibition-subheading">Multimodal Design</h3>
+    
+    <p class="exhibition-text">The system operates from a <strong>data simulation</strong> built on principles from industrial process control and hot-rolling engineering research. It models the interdependent variables of rolling force, temperature, speed and gap distance, using normalised ranges and windowed updates to reproduce the continuous negotiation of balance within a dynamic system. This simulation serves as the shared foundation for all interactive components.</p>
+
+    <p class="exhibition-text">The installation consists of four interfaces, each interpreting this live simulation through a distinct modality:</p>
+    
+    <ul class="exhibition-list">
+        <li><strong>Cont.Rolling Interface</strong>: A Web Audio API driven environment where adjusting simulated process variables produces immediate changes in sound and visual response.</li>
+        <li><strong>Archived Algorithms</strong>: A five-layer physical visualisation representing calibration, efficiency, deformation, stress and thermal dispersion. Audiences explore structural depth by lifting and comparing translucent layers.</li>
+        <li><strong>Data Explorer</strong>: An AR.js-based interface that reveals hidden sonic and spatial dimensions within each visualisation, transforming static imagery into living data structures.</li>
+        <li><strong>Responsive Algorithms</strong>: A multi-agent environment where gesture-based input subtly influences agent trajectories without overriding their autonomy.</li>
+    </ul>
+    
+    <p class="exhibition-text" style="margin-bottom: 32px;">Together, these interfaces articulate a distributed system where complexity is not reduced to a single form but expressed through multiple, interdependent perspectives. Audiences move between these views to understand how structural, temporal and behavioural patterns co-exist, experiencing the system not as a set of outputs but as a continuously negotiated field.</p>
+    
+    <h3 class="exhibition-subheading">Data Simulation Architecture</h3>
+    
+    <p class="exhibition-text">The project employs a research-driven simulation grounded in hot-rolling literature and industrial process-control methods rather than relying on proprietary plant data. Hot rolling operates through variables that continuously influence one another, forming patterns of tension and reconciliation. The simulation models these interdependent relationships using established control equations, focusing on how balance shifts over time.</p>
+    
+    <p class="exhibition-text">Six core variables (rolling force, gap, total reduction, temperature, speed and pass reduction) are normalised between zero and one and shaped through moving-average windows to generate continuous state transitions. The objective is to express the dynamics of balance and drift within a responsive system. By remaining independent of proprietary data, the work foregrounds instability, intervention and recalibration as essential aspects of process understanding.</p>
+    
+    <p class="exhibition-text">A Python-based engine generates the simulation in real time, distributing the data along two pathways:</p>
+    
+    <ul class="exhibition-list">
+        <li>Analytical and visual interfaces for layered observation</li>
+        <li>OSC transmission into <strong>Responsive Algorithms</strong> for real-time interaction</li>
+    </ul>
+
+    <p class="exhibition-text" style="margin-bottom: 32px;">This division allows audiences to compare structural representation with behavioural response, revealing how systemic balance emerges through continuous feedback.</p>
+
+    <h3 class="exhibition-subheading">Behaviour-Driven Systemic Sonification (BDSS)</h3>
+    
+    <p class="exhibition-text">BDSS interprets process variables as evolving behavioural patterns rather than static values. Inside TouchDesigner, three agents inhabit an XYZ coordinate field. Their positions and tension values shift continuously according to incoming data. These values are converted to MIDI signals that drive three synthesiser voices, producing layered harmonic textures.</p>
+    
+    <p class="exhibition-text">Instead of translating single values to single sounds, BDSS renders the negotiation between variables. Sound becomes an interface for sensing balance, drift, and pushback. Gesture input is captured through webcam hand tracking, influencing agent trajectories as a subtle field rather than direct control.</p>
+    
+    <p class="exhibition-text" style="margin-bottom: 32px;">At certain moments, motion, harmony, and gesture align. These emergent events feel perceptually coherent even though they arise from probabilistic behaviour. The work uses sound to stage the sensation of intervention within a living system.</p>
+        </div>
+    </div>
+    
+    <div class="collapsible-section">
+        <h2 class="collapsible-title" onclick="window.toggleSection(this)">What the Relational System Proposes<span class="toggle-icon">▼</span></h2>
+        <div class="section-content">
+    <h3 class="exhibition-subheading">From Components to Relationships</h3>
+    
+    <p class="exhibition-text">To think relationally is to understand systems not as mechanical assemblies but as configurations of interaction. What defines a system is not the solidity of its parts but the exchanges, dependencies and transformations that occur between them.</p>
+    
+    <p class="exhibition-text">In this sense, Embodied Algorithms asks a simple but radical question: what if precision itself is relational? Within the installation, every response belongs to a chain of feedback. A gesture alters the algorithm, the algorithm adjusts the sound, and the changed sound reshapes perception. Meaning arises through circulation rather than any isolated component.</p>
+        
+    <p class="exhibition-text" style="margin-bottom: 32px;">The audience is not an external observer but a participant whose actions transform the system's behaviour. Observation becomes participation, and participation becomes reflection. This reflects the principles of second-order cybernetics, a field that examines how cognition and understanding emerge through reciprocal interaction between observer and system.</p>
+    
+    <h3 class="exhibition-subheading">Data, Truth, and the Ethics of Representation</h3>
+    
+    <p class="exhibition-text">The decision to work with simulation rather than real industrial data arises from a deeper concern about how data operates within systems of representation. In most data-driven works, information is treated either as an objective record to be faithfully translated or as raw material for aesthetic play. Both approaches overlook that data is already interpretive, shaped by specific methods, measurements and contexts.</p>
+    
+    <p class="exhibition-text">In Embodied Algorithms, data is understood not as a record of truth but as a relational construct. Each variable exists through its connection to others, and its meaning emerges through patterns of coherence, drift and recalibration. The simulation models this interdependence, focusing on the structure of relationships rather than precise replication. BDSS extends the same logic into sound, allowing processes of tension, balance and negotiation to unfold as audible behaviour over time.</p>
+    
+    <p class="exhibition-text" style="margin-bottom: 80px;">Rather than displaying data, the work performs it. Gesture, sound and system behaviour form a shared feedback field, where every action alters the conditions of what follows. Representation becomes secondary to relation. What is revealed is not data itself but the structure of its becoming, a space where precision, uncertainty and interpretation coexist.</p>
+        </div>
+    </div>
         </div>
         
         <div class="exhibition-image-column">
@@ -174,7 +251,7 @@
             
             <!-- Slide 2: Technical Structure -->
             <div class="mobile-embodied-slide">
-                <h2>기술적 구조:<br>관계형 시스템</h2>
+                <h2>기술적 구조:<br class="mobile-only-br">관계형 시스템</h2>
     
     <p class="exhibition-text">관계형 시스템(relational system)은 시스템의 개별 요소가 아닌 요소 간 관계를 중심으로 설계된 구조다. 일반적인 시스템 설계가 컴포넌트의 기능을 정의하고 조합하는 방식이라면, 관계형 시스템은 컴포넌트 간 상호작용과 피드백을 우선시한다. 시스템의 행동은 개별 부품의 속성이 아니라 관계의 역학에서 창발한다.</p>
     

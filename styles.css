@@ -2256,12 +2256,17 @@ h3 {
 
 /* Desktop exhibition pages: smaller, italic caption styling */
 @media (min-width: 1025px) {
-    .content-body .cv-medium,
-    :lang(ko) .content-body .cv-medium {
+    .content-body .cv-medium {
         font-size: 10px !important;
         font-style: italic !important;
         line-height: 1.4 !important;
-        font-family: var(--font-mono) !important;
+    }
+    
+    :lang(ko) .content-body .cv-medium {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 10px !important;
+        font-style: italic !important;
+        line-height: 1.4 !important;
     }
     
     /* Desktop English: Use sans-serif font for main text (not mono) */
@@ -4012,7 +4017,7 @@ ol.exhibition-list {
     .mobile-resonance-carousel .mobile-resonance-slide {
         min-width: 100%;
         flex-shrink: 0;
-        padding: 0 6px 40px 6px;
+        padding: 0 6px 80px 6px;
         box-sizing: border-box;
         overflow-y: auto;
         max-height: 90vh;
@@ -4027,7 +4032,7 @@ ol.exhibition-list {
     
     /* Add safety margin to last element in each slide */
     .mobile-resonance-carousel .mobile-resonance-slide > *:last-child {
-        margin-bottom: 40px !important;
+        margin-bottom: 80px !important;
     }
     
     .mobile-resonance-carousel .mobile-resonance-slide h2 {
@@ -4105,7 +4110,7 @@ ol.exhibition-list {
     .mobile-embodied-carousel .mobile-embodied-slide {
         min-width: 100%;
         flex-shrink: 0;
-        padding: 0 6px 40px 6px;
+        padding: 0 6px 80px 6px;
         box-sizing: border-box;
         overflow-y: auto;
         max-height: 90vh;
@@ -4119,7 +4124,7 @@ ol.exhibition-list {
     
     /* Add safety margin to last element in each slide */
     .mobile-embodied-carousel .mobile-embodied-slide > *:last-child {
-        margin-bottom: 40px !important;
+        margin-bottom: 80px !important;
     }
     
     .mobile-embodied-carousel .mobile-embodied-slide h2 {
