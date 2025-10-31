@@ -3,15 +3,17 @@
 
 class EasterEggAnimations {
     
-    // Helper function to center element using JavaScript (Safari fix)
+    // Helper function to center element using JavaScript (Safari/Opera fix)
     static centerElement(element) {
-        // Use pixel-based positioning calculated from viewport dimensions
-        // Don't set transform here - let CSS animations handle it
-        const centerY = window.innerHeight / 2;
-        const centerX = window.innerWidth / 2;
-        
-        element.style.top = `${centerY}px`;
-        element.style.left = `${centerX}px`;
+        // Small delay to ensure viewport is stable (Safari/Opera need this on first load)
+        setTimeout(() => {
+            // Use clientHeight/clientWidth for accurate viewport (excludes browser UI)
+            const centerY = document.documentElement.clientHeight / 2;
+            const centerX = document.documentElement.clientWidth / 2;
+            
+            element.style.top = `${centerY}px`;
+            element.style.left = `${centerX}px`;
+        }, 10);
     }
     
     // Waving hand animation
