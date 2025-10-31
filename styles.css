@@ -3987,7 +3987,7 @@ ol.exhibition-list {
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
         /* Opacity transition for inactive sections */
-        opacity: 0.3;
+        opacity: 0.1;
         transition: opacity 0.4s ease;
     }
     
