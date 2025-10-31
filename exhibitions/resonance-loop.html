@@ -12,6 +12,158 @@
     
     <p class="cv-medium" style="margin-bottom: 40px;">Affective translation software, Short Film, LED display</p>
     
+    <!-- Mobile Text Carousel (Mobile Only) -->
+    <div class="mobile-resonance-carousel">
+        <!-- Carousel Navigation Dots -->
+        <div class="mobile-resonance-dots">
+            <span class="mobile-resonance-dot active" data-slide="0"></span>
+            <span class="mobile-resonance-dot" data-slide="1"></span>
+            <span class="mobile-resonance-dot" data-slide="2"></span>
+        </div>
+        
+        <div class="mobile-resonance-track">
+            <!-- Slide 1: Main Text -->
+            <div class="mobile-resonance-slide">
+                <p class="exhibition-text">Resonance Loop explores what happens when external observation of the self becomes internal dialogue. Standing silently before a camera, the artist is subject to a custom system that reads microexpressions in real time, translating them into inner monologue fragments synthesized in the artist's own voice. Through headphones, the artist hears these system generated "thoughts" and reacts. These reactions become new facial data, generating new monologue. The loop continues.</p>
+                
+                <p class="exhibition-text">This creates an impossible circuit: a living subject reduced to 468 facial landmark coordinates, transformed into language, then as synthesized voice. A fundamental gap exists between what the algorithm captures as expression and what it presumes as interiority. Yet the system translates this into definitive narrative.</p>
+                            
+                <p class="exhibition-text">The work doesn't try to step outside the problem of using technology to critique technology. It makes that contradiction the structure itself. The system operates through processes familiar from surveillance facial recognition, emotion detection interfaces, and affective computing applications. But here, the artist is both the subject and the observer. Audiences watch the artist being watched, witnessing how algorithms translate lived experience into data, then back into representation. In this act of watching, they become implicated in the same mechanisms of observation the work examines. <strong>When are we observers and when are we participants in systems of capture?</strong></p>
+            </div>
+            
+            <!-- Slide 2: System Architecture -->
+            <div class="mobile-resonance-slide">
+                <h2>System Architecture</h2>
+                <h3 class="exhibition-subheading">Recursive Loop Structure</h3>
+                <div class="flowchart">
+                    <div class="flowchart-circle">
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <span class="flow-step">facial expression</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">468 landmarks</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">XYZ meta-coordinates</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">custom ML model</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">narrative phase classification</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">dual-signal word injection</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">GPT-4 inner monologue</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">TTS voice synthesis</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">artist hears and reacts</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">new facial data</span>
+                    <span class="flow-arrow flow-loop">↻</span>
+                </div>
+                <p class="exhibition-text" style="margin-bottom: 32px;">The loop is intentionally closed. The system takes the artist's reactions to its own outputs as new inputs.</p>
+                
+                <h3 class="exhibition-subheading">System Architecture</h3>
+                <p class="exhibition-text">Resonance Loop operates through the following integrated pipeline:</p>
+                <ol class="exhibition-list">
+                    <li><strong>Real-time facial tracking:</strong> MediaPipe extracts 468 facial landmarks at 30fps.</li>
+                    <li><strong>XYZ meta-coordinate transformation:</strong> Landmark movement is interpreted as directionality, intensity, and temporal cohesion.</li>
+                    <li><strong>Narrative phase classification:</strong> Temporal changes in XYZ values are mapped to six phases that describe different positions within unfolding affect.</li>
+                    <li><strong>Custom ML model application:</strong> A Gaussian Mixture Model (GMM) and Hidden Markov Model (HMM) trained on paired expression–word data provide a small dictionary of words associated with stable microexpression states and their transitions.</li>
+                    <li><strong>Word selection:</strong> Narrative phase output is combined with neighbouring cluster words to form a short candidate set for inner monologue.</li>
+                    <li><strong>LLM Based Inner monologue generation:</strong> Prompt engineering produces brief, fragmentary internal speech shaped by the current phase.</li>
+                    <li><strong>Voice synthesis:</strong> Text is rendered through a TTS model trained on the artist's voice.</li>
+                    <li><strong>Recursive feedback:</strong> The artist's facial reactions to the generated voice are tracked again as new input.</li>
+                </ol>
+                
+                <h3 class="exhibition-subheading">Pre-Verbal Affective Dynamics (PVAD)</h3>
+                <p class="exhibition-text">PVAD models how affective expression unfolds over time by linking microexpressions, linguistic tendencies, and temporal behaviour into a continuous loop. Facial microexpression data was captured simultaneously with natural speech and later processed to align specific moments of movement with the words spoken at those moments, producing a paired dataset.</p>
+                <p class="exhibition-text">A GMM identifies similarity structures within this data, while an HMM describes how these structures transition over time. Together, they produce a limited dictionary of words statistically associated with stable expressive states. At runtime, this dictionary is combined with real-time XYZ analysis and narrative phase classification. The resulting internal speech is played back, prompting new microexpressions that continue the loop.</p>
+
+                
+                <h3 class="exhibition-subheading">468 Landmarks and the XYZ Meta-Coordinate System</h3>
+                <p class="exhibition-text">The 468 landmarks extracted through MediaPipe are transformed into a three-dimensional representation of temporal dynamics:</p>
+                <ul class="exhibition-list">
+                    <li><strong>X-axis (Directionality/Flow):</strong> Expansion versus contraction of expression, computed from frame-to-frame changes in features such as mouth width and brow height.</li>
+                    <li><strong>Y-axis (Intensity/Amplitude):</strong> Speed and strength of facial change. Aggregates movement velocity, asymmetry, and z-depth tension.</li>
+                    <li><strong>Z-axis (Temporal Cohesion):</strong> Duration and layering of states, increasing with sustained expression, directional reversals, and hesitation patterns.</li>
+                </ul>
+                
+                <h3 class="exhibition-subheading">Six Narrative Phases</h3>
+                <p class="exhibition-text">PVAD identifies six phases that describe temporal positions within affective experience:</p>
+                <ol class="exhibition-list">
+                    <li><strong>Neutral:</strong> Minimal facial activity. XYZ characteristics: X≈0, Y&lt;0.5, Z&lt;0.3. Baseline between affective events.</li>
+                    <li><strong>Sensory Reaction:</strong> Sudden intensity spike. XYZ: Y&gt;15 OR ΔY&gt;8. Immediate, involuntary response to stimulus, occurring before conscious emotional regulation.</li>
+                    <li><strong>Pre-Verbal Hesitation:</strong> Microexpressions before speech commitment. XYZ: |X|&gt;0.5, Y&lt;2.0, Z&lt;1.0. The "thinking face": contemplation, uncertainty, processing. The gap between internal experience and external expression.</li>
+                    <li><strong>Post-Verbal Residue:</strong> Expressions lingering after verbal utterance. XYZ: Y&gt;2.0, Z&gt;2.0. Emotional "hangover", feelings persisting beyond the immediate moment. What remains unsaid but still felt.</li>
+                    <li><strong>Sharp Transition:</strong> Brief, intense changes. XYZ: Y&gt;1.5, Z&lt;1.0. Punctuated shifts: decisions, rejections, conclusions.</li>
+                    <li><strong>Systemic Shift:</strong> Broader baseline changes. Default classification for patterns not fitting other categories.</li>
+                </ol>
+                
+                <h3 class="exhibition-subheading">Custom Machine Learning Model</h3>
+                <p class="exhibition-text">Facial microexpression data was captured alongside natural speech and later aligned at the level of specific moments. These expression–word pairs trained a GMM to identify similarity structures and an HMM to describe their transitions over time. Clusters emerge from statistical proximity across both expression features and associated word tendencies.</p>
+                
+                <h3 class="exhibition-subheading">Dual-Signal Semantic Analysis</h3>
+                <p class="exhibition-text">Brief user utterances are supplemented through two signals:</p>
+
+                <ul class="exhibition-list">
+                    <li><strong>Temporal sequences:</strong> Probabilistic chains based on observed pairing patterns.</li>
+                    <li><strong>Cluster similarity:</strong> Neighbouring words in feature space, maintaining thematic coherence.</li>
+                </ul>
+                <p class="exhibition-text">These signals produce a short candidate set for internal speech.</p>
+                <pre class="code-block"><code>semantic_coherence = (cluster_similarity × 0.5) + (temporal_probability × 0.5)</code></pre>
+
+                <h3 class="exhibition-subheading">Inner Monologue Generation</h3>
+                <p class="exhibition-text">XYZ values and narrative phases condition a language model to produce fragmentary internal speech. Prompt engineering shapes:</p>
+                <ul class="exhibition-list">
+                    <li>Incomplete phrasing</li>
+                    <li>Dropped subjects</li>
+                    <li>Interjections</li>
+                    <li>Private verb endings</li>
+                    <li>Short length</li>
+                </ul>
+                
+                <p class="exhibition-text">This style reflects immediate, non-communicative inner speech.</p>
+
+                <h3 class="exhibition-subheading">Linguistic Style Mapping</h3>
+                <p class="exhibition-text">Changes in XYZ influence linguistic qualities:</p>
+                <ol class="exhibition-list">
+                    <li><strong>High Y:</strong> Single-word utterances.</li>
+                    <li><strong>Low Y:</strong> Soft, hesitant phrasing.</li>
+                    <li><strong>High Z:</strong> Topic drift and lingering reflection.</li>
+                    <li><strong>Phase-specific:</strong> Direct perception, hesitation, trailing memory, etc.</li>
+                </ol>
+            </div>
+            
+            <!-- Slide 3: Philosophical Implications -->
+            <div class="mobile-resonance-slide">
+                <h2>Philosophical Implications: The Affective Mirror</h2>
+                
+                <h3 class="exhibition-subheading">Ambiguity as Resistance in Affective Computation</h3>
+                
+                <p class="exhibition-text">The PVAD framework builds on the ongoing debates in affective computing, where researchers increasingly recognise that emotion cannot be fully formalised or captured through discrete categories. Rather than viewing this limitation as a technical flaw, PVAD makes it the central condition of the system. Emotion is treated not as information to be resolved but as a dynamic field of unfolding uncertainty.</p>
+
+                <p class="exhibition-text">In most research environments, affective systems are optimised to minimise ambiguity and maximise prediction accuracy. In this work, ambiguity itself becomes method. The continuous loop between face, language, and voice does not aim for stable classification but sustains the tension between sensation and interpretation. This refusal of closure functions as a quiet form of resistance to the instrumental logic of affective AI, which depends on certainty to operate.</p>
+                
+                <p class="exhibition-text">Within the art context, PVAD serves as a mirror that reflects the epistemological limits of machine perception. It exposes how data-driven systems convert lived immediacy into representation and how that conversion reshapes the sense of self. The artist's participation is not an act of self-portraiture but of self-translation under algorithmic observation. Emotion, here, is not private interiority but a relational negotiation between the biological, the linguistic, and the computational.</p>
+
+                <p class="exhibition-text">By bringing this process into public view, Resonance Loop transforms what would normally occur within a closed research environment into a shared inquiry into perception and ethics. As viewers watch the system unfold, they become implicated in the same question: when affect is made visible, what remains unseen? In Resonance Loop, that question extends into the very technologies of observation themselves.</p>
+
+
+                <h3 class="exhibition-subheading">Systems of Capture: Surveillance and Self-Observation</h3>
+
+                <p class="exhibition-text">Resonance Loop operates in a public setting: a book café in Yeouido, Seoul's financial district. Surrounded by offices, screens and surveillance cameras, the work sits within daily life where reading, rest and observation coexist. Surveillance here is not exceptional but atmospheric, quietly woven into how people appear to one another.</p>
+                
+                <p class="exhibition-text">The system mirrors facial recognition and affect detection technologies used in digital surveillance and consumer analytics. Here, those mechanisms are exposed as aesthetic experience. The algorithm's gaze becomes visible, its interpretive logic audible through the artist's continuous observation.</p>
+                
+                <p class="exhibition-text">This blurs voluntary and involuntary visibility. The artist chooses to be seen, yet that choice reveals how limited agency becomes under constant observation. The algorithm reads the face, translates it into words, returns those words as voice. Each cycle erodes the boundary between self-expression and system interpretation.</p>
+                
+                <p class="exhibition-text">By placing this process in public space, the work reveals surveillance as an ordinary affective condition. Observation is quiet, continuous, relational. Viewers share the same informational field as the artist, aware that presence itself becomes data.</p>
+                
+                <p class="exhibition-text" style="margin-bottom: 80px;">The work reframes surveillance beyond control mechanisms. It becomes a way of sensing modern subjectivity, where to exist is already to be translated, measured, inferred upon. What remains is not spectacle but mutual exposure, where watching becomes participation and recognition.</p>
+            </div>
+        </div>
+    </div>
+    
     <!-- Two-column grid layout starts here -->
     <div class="exhibition-content-wrapper">
         <div class="exhibition-text-column">
@@ -176,7 +328,138 @@
         <img src="images/resonance_loop/Sequence 12.00_07_26_13.Still001.jpg" alt="Resonance Loop" class="grid-image" loading="lazy" onclick="openLightbox(this.src)">
     </div>
     
-    <p class="cv-medium" style="margin-bottom: 40px;">Affective translation software, Short Film, LED display</p>
+    <p class="cv-medium" style="margin-bottom: 40px;">얼굴인식-언어 생성 프로그램, 단채널 영상, 컬러, 2채널 사운드</p>
+    
+    <!-- Mobile Text Carousel (Mobile Only) -->
+    <div class="mobile-resonance-carousel">
+        <!-- Carousel Navigation Dots -->
+        <div class="mobile-resonance-dots">
+            <span class="mobile-resonance-dot active" data-slide="0"></span>
+            <span class="mobile-resonance-dot" data-slide="1"></span>
+            <span class="mobile-resonance-dot" data-slide="2"></span>
+        </div>
+        
+        <div class="mobile-resonance-track">
+            <!-- Slide 1: Main Text -->
+            <div class="mobile-resonance-slide">
+                <p class="exhibition-text">공진회로는 관찰당하는 자신을 다시 관찰할 때 생기는 순환 구조를 다룬다. 영상 속 작가는 카메라 앞에 말없이 서 있다. 카메라에 연결된 커스텀 시스템은 작가의 미세한 표정 변화를 실시간으로 읽어내고, 이를 작가 자신의 목소리로 합성된 내면의 독백으로 변환한다. 작가는 헤드폰을 통해 들려오는 '자신의 생각'을 듣고 반응한다 그리고 이 반응은 다시 표정 데이터가 되어 새로운 독백을 생성한다. 이 순환은 14분 동안 지속된다.</p>
+                
+                <p class="exhibition-text">작품의 핵심은 불가능한 고리 (Impossible Loop)에 있다. 살아있는 주체가 468개의 얼굴 랜드마크 좌표로 환원되고, 이 숫자들이 언어로, 그리고 합성된 목소리로 재구성된다. 알고리즘이 포착한 표정과 그것이 의미한다고 간주되는 '내면' 사이에는 언제나 간극이 존재한다. 그러나 시스템은 이를 확정된 서사로 번역하고, 작가는 이 번역된 자아를 듣는 동시에 그에 반응하며 다시 데이터가 된다.</p>
+                
+                <p class="exhibition-text">이 작품은 기술을 사용해 기술을 비판해야 하는 역설을 회피하지 않는다. 오히려 그 불가능성을 작품의 구조 자체로 만든다. 관객은 영상 속 작가를 관찰하며 감시 시스템의 작동을 목격한다. 그러나 관찰하는 순간, 자신도 그 감시 구조에 참여하고 있음을 깨닫게 된다. <strong>우리는 언제 관찰자이고 언제 감시자인가?</strong></p>
+            </div>
+            
+            <!-- Slide 2: System Architecture -->
+            <div class="mobile-resonance-slide">
+                <h2>기술적 구조: PVAD 시스템</h2>
+                <h3 class="exhibition-subheading">재귀적 순환 구조</h3>
+                <div class="flowchart">
+                    <div class="flowchart-circle">
+                        <div class="orbit-dot"></div>
+                    </div>
+                    <span class="flow-step">작가의 표정</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">468 랜드마크 추출</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">XYZ 메타좌표 변환</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">커스텀 ML 모델 적용</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">서사 단계 분류</span>
+                    <span class="flow-step">Dual-Signal 단어 삽입</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">GPT-4 내면 독백 생성</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">TTS 음성 합성</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">작가가 듣고 반응</span>
+                    <span class="flow-arrow">→</span>
+                    <span class="flow-step">새로운 표정 데이터</span>
+                    <span class="flow-arrow flow-loop">↻</span>
+                </div>
+                <p class="exhibition-text" style="margin-bottom: 32px;">이 고리는 의도적으로 닫혀있다. 시스템은 자신이 생성한 출력에 반응하는 작가를 다시 입력으로 받아들인다.</p>
+                
+                <h3 class="exhibition-subheading">시스템 아키텍처</h3>
+                <p class="exhibition-text">공진회로는 다음의 통합 파이프라인으로 작동한다:</p>
+                <ol class="exhibition-list">
+                    <li><strong>실시간 얼굴 추적:</strong> MediaPipe가 초당 30프레임으로 468개의 얼굴 랜드마크를 추출한다.</li>
+                    <li><strong>XYZ 메타좌표 변환:</strong> 각 랜드마크의 움직임은 방향성(X), 강도(Y), 시간적 응집성(Z)으로 해석된다.</li>
+                    <li><strong>서사 단계 분류:</strong> XYZ 값의 시간적 변화는 감정의 전개 위치를 나타내는 6가지 서사 단계 중 하나로 분류된다.</li>
+                    <li><strong>커스텀 ML 모델 적용:</strong> 작가의 실제 표정-언어 데이터를 학습한 Gaussian Mixture Model(GMM) 및 Hidden Markov Model(HMM) 기반 모델이 안정된 미세표정 상태와 그 전환을 식별한다.</li>
+                    <li><strong>단어 선택:</strong> 서사 단계의 출력은 인접 클러스터 단어와 결합되어 짧은 내면 언어 후보 세트를 형성한다.</li>
+                    <li><strong>LLM 기반 내면 독백 생성:</strong> 선택된 단어는 프롬프트 엔지니어링을 통해 단편적, 불완전한 문장으로 재구성된다.</li>
+                    <li><strong>음성 합성:</strong> 생성된 텍스트는 작가의 음성으로 학습된 TTS 모델을 통해 재생된다.</li>
+                    <li><strong>재귀적 피드백:</strong> 작가의 얼굴 반응이 다시 시스템의 입력으로 되돌아가며 순환이 완성된다.</li>
+                </ol>
+                
+                <h3 class="exhibition-subheading">언어 이전 감정 흐름 모델 (Pre-Verbal Affective Dynamics, PVAD)</h3>
+                <p class="exhibition-text">PVAD는 감정의 '순간적 분류'가 아니라 '시간에 따른 감정의 흐름'을 모델링한다. 미세표정 데이터와 자연 발화 데이터를 동시 수집해, 특정 단어가 말해지는 순간의 표정 변화를 정렬하고 이를 통해 '감정의 시간적 서사'를 학습시킨다.</p>
+                <p class="exhibition-text">GMM은 유사한 감정 상태 간의 통계적 구조를, HMM은 그 전환 과정을 기술한다. 이로써 시스템은 단순한 감정 라벨 대신, 특정 표정 상태가 지속·전환·주저하는 과정을 읽어낸다.</p>
+                <p class="exhibition-text">실시간으로 분석된 XYZ 메타좌표와 결합된 이 모델은 내면 독백을 생성하며, 그 결과가 다시 작가의 얼굴에 반영되어 새로운 입력이 된다.</p>
+
+                
+                <h3 class="exhibition-subheading">468개 랜드마크와 XYZ 메타좌표계</h3>
+                <p class="exhibition-text">PVAD는 얼굴의 움직임을 단순한 좌표값이 아닌, 시간의 흐름 속에서 해석한다.</p>
+                <ul class="exhibition-list">
+                    <li><strong>X축 (방향성/흐름):</strong> 표정의 확장(열림, 개입) 또는 수축(닫힘, 회피). 입 너비와 눈썹 높이의 프레임 간 변화량으로 계산</li>
+                    <li><strong>Y축 (강도/진폭):</strong> 표정 변화의 속도와 강도. 움직임 속도, 비대칭성, z축 깊이 긴장을 종합</li>
+                    <li><strong>Z축 (시간적 응집성):</strong> 지속 시간과 복잡성. 지속된 상태, 방향 반전, 망설임 패턴에 따라 증가하며 감정 경험의 층위를 포착</li>
+                </ul>
+                
+                <h3 class="exhibition-subheading">6가지 서사 단계 (Narrative Phases)</h3>
+                <p class="exhibition-text">PVAD는 감정을 분류하는 대신, 감정이 전개되는 6가지 서사 단계를 식별한다:</p>
+                <ol class="exhibition-list">
+                    <li><strong>중립 (Neutral):</strong> 최소한의 표정 활동. XYZ 특성: X≈0, Y&lt;0.5, Z&lt;0.3. 감정적 사건 사이의 기준선</li>
+                    <li><strong>감각 반응 (Sensory Reaction):</strong> 갑작스러운 강도 급증. XYZ 특성: Y&gt;15 또는 ΔY&gt;8. 자극에 대한 즉각적, 무의식적 반응. 의식적 감정 조절 이전에 발생</li>
+                    <li><strong>언어 이전 망설임 (Pre-Verbal Hesitation):</strong> 말하기 전에 나타나는 미세표정. XYZ 특성: |X|&gt;0.5, Y&lt;2.0, Z&lt;1.0. 생각하는 얼굴, 사색, 불확실성, 처리 과정. 내적 경험과 외적 표현 사이의 간극</li>
+                    <li><strong>언어 이후 잔여 (Post-Verbal Residue):</strong> 언어 표현 이후에도 지속되는 표정. XYZ 특성: Y&gt;2.0, Z&gt;2.0. 감정적 여운, 즉각적 순간을 넘어 지속되는 감정. 말해지지 않았지만 여전히 느껴지는 것</li>
+                    <li><strong>급격한 전환 (Sharp Transition):</strong> 짧고 강렬한 변화. XYZ 특성: Y&gt;1.5, Z&lt;1.0. 결정, 거부, 결론</li>
+                    <li><strong>체계적 변화 (Systemic Shift):</strong> 전반적인 감정 기준선의 변화. 다른 범주에 맞지 않는 패턴의 기본 분류</li>
+                </ol>
+                
+                <h3 class="exhibition-subheading">커스텀 머신러닝 모델</h3>
+                <p class="exhibition-text">작가의 자연스러운 발화 시 얼굴 표정 데이터를 수집하고, 특정 시점의 표정과 단어를 매칭하여 정렬한다. 이렇게 구성된 표정-단어 데이터셋을 통해 표정과 언어 패턴 간의 관계를 학습시킨다. GMM은 데이터 내 유사한 패턴을 군집화하고, HMM은 이 패턴이 시간에 따라 어떻게 전환되는지를 모델링한다. 두 모델의 결합을 통해, 표정의 세부 특징과 언어적 패턴이 통계적으로 가까운 지점에서 감정 상태 클러스터를 형성한다.</p>
+                
+                <h3 class="exhibition-subheading">내면 독백 생성 (Inner Monologue Generation)</h3>
+                <p class="exhibition-text">PVAD는 언어를 완결된 표현이 아닌, 감정의 중간 상태로 다룬다. 프롬프트 엔지니어링을 통해 '주어의 생략', '문장의 단절', '감탄사적 말투' 등을 강조하며, 이는 사고가 언어로 굳어지기 전의 흐름을 시뮬레이션한다.</p>
+                
+                <p class="exhibition-text">예시:</p>
+                <ul class="exhibition-list">
+                    <li>Y가 높을 때: 단어 단위의 발화 ("됐다.")</li>
+                    <li>Z가 높을 때: 주제 이탈과 반추 ("그랬는데… 아직도.")</li>
+                    <li>Pre-Verbal 단계: 망설임과 중얼거림 ("음… 왜 그랬지.")</li>
+                </ul>
+                <p class="exhibition-text">생성된 문장은 TTS 모델을 통해 작가의 음성으로 재생되며, 그 소리를 들은 작가의 표정이 다시 시스템의 입력으로 피드백된다.</p>
+            </div>
+            
+            <!-- Slide 3: Philosophical Implications -->
+            <div class="mobile-resonance-slide">
+                <h2>철학적 함의:<br>감정 인식의 모호성</h2>
+                
+                <p class="exhibition-text">언어 이전 감정 흐름 모델(PVAD)은 감성 컴퓨팅 연구에서 최근 활발히 논의되고 있는 중간 상태(in-between states)에 대한 관심에서 출발한다고 볼 수 있다. 감정을 이산적 범주로 완전히 구분하기 어렵다는 점은 더 이상 기술적 한계로만 여겨지지 않는다. PVAD는 이러한 구분 불가능성을 극복해야 할 결함이 아니라 감정 자체의 본질로 받아들이고자 한다. 감정을 해결되어야 할 문제가 아니라 시간 속에서 끊임없이 변화하는 흐름으로 다루는 것이다.</p>
+                
+                <p class="exhibition-text">PVAD에서 얼굴, 언어, 음성은 서로를 번역하며 순환한다. 이 순환은 감정을 하나의 결론으로 수렴시키지 않는다. 대신 감각과 해석 사이의 긴장을 그대로 유지하며 작동한다고 볼 수 있다. 이러한 '미완결성'은 명확성과 효율성을 추구하는 감성 컴퓨팅의 도구적 논리에 대한 조용한 저항으로 읽힐 수 있다.</p>
+                
+                <p class="exhibition-text">예술적 맥락에서 PVAD는 기계적 지각이 가진 인식론적 한계를 비추는 거울로 작동한다고 본다. 데이터 기반 시스템이 살아 있는 경험을 어떻게 기호와 수치로 바꾸는지, 그리고 그 과정이 자아 감각을 어떻게 재구성하는지를 드러내고자 한다. 이 과정에서 작가는 스스로를 표현하는 주체라기보다는, 알고리즘적 관찰 속에서 끊임없이 해석되고 번역되는 존재가 된다고 볼 수 있다. 감정은 더 이상 사적인 내면이 아니라, 생물학적, 언어적, 계산적 층위가 교차하며 만들어지는 관계적 협상의 산물로 이해될 수 있다.</p>
+                
+                <p class="exhibition-text">이러한 실험의 과정을 공공 공간으로 옮김으로써, 《공진회로》는 기술을 연구의 대상이 아닌 함께 경험할 수 있는 현장으로 확장하고자 한다. 관객은 시스템이 작동하는 모습을 보면서 같은 질문과 마주한다. 감정이 데이터로 바뀔 때, 그 과정에서 무엇이 사라지는가?</p>
+                
+                <h3 class="exhibition-subheading">보이는 삶:<br>감시와 자기-전시의 경계</h3>
+
+                <p class="exhibition-text">《공진회로》는 갤러리가 아닌 일상의 한가운데에서 작동한다. 서울 여의도의 한 북카페에 설치된 이 작업은 사무실과 스크린, 감시 카메라가 얽혀 있는 금융 지구의 일상 속에 자리한다. 책을 읽고, 커피를 마시고, 잠시 머무는 사람들 사이에서 감시는 특별한 사건이 아니라 공기처럼 스며든 사회적 조건으로 드러난다.</p>
+
+                <p class="exhibition-text">현대의 감시는 억압의 형태로 오지 않는다. 그것은 편의와 안전, 연결의 이름으로 작동한다. 우리는 카메라 앞에 서는 것을 거부하지 않는다. 오히려 스스로를 드러낸다. SNS에 얼굴을 올리고, 생체 인증으로 문을 열고, 알고리즘의 추천을 받아들인다. 이 자발성은 진짜일까, 아니면 이미 선택지가 사라진 상태에서의 순응일까.</p>
+
+                <p class="exhibition-text">이곳의 카메라와 센서는 더 이상 '감시 장치'로 인식되지 않는다. 오히려 우리가 서로를 인식하고 드러내는 방식을 구성하는 환경의 일부처럼 작동한다. 《공진회로》는 이러한 일상적 감시 환경 속에서, 기술이 감정을 읽고 번역하는 과정을 드러낸다. 숨겨진 계산의 흐름이 시각과 청각의 층위로 노출되며, 기술이 작동하는 방식 자체가 하나의 정서적 사건으로 제시된다.</p>
+
+                <p class="exhibition-text">작가는 스스로를 시스템의 지속적인 관찰 대상으로 두는 동시에, 카메라를 응시한다. 관객이 화면을 마주하는 순간, 그 시선은 되돌아온다. 보는 행위와 보이는 행위가 서로 교차하면서, 관객은 자신이 '지켜보는 자'가 아니라 '응시받는 자'가 되어버린다. 이때의 '보이기'는 단순한 노출이 아니라 관계의 형성이다. 자발적 노출과 비자발적 노출의 경계는 점점 희미해지고, '보이기'는 자율성과 종속성이 동시에 드러나는 행위가 된다.</p>
+
+                <p class="exhibition-text">알고리즘은 얼굴을 읽고, 그것을 단어로 번역한 뒤 다시 음성으로 되돌린다. 반복이 쌓일수록 자기 표현과 시스템 해석의 경계는 희미해진다. 주체는 점차 알고리즘의 언어 속으로 스며들고, 자신의 표정이 곧 데이터로, 데이터가 곧 자기 인식의 일부로 변한다. 《공진회로》는 이 순환을 통해 감시를 외부의 통제 장치가 아니라, 우리가 살아가는 정서적 풍경이자 존재의 조건으로 다시 바라보게 한다.</p>
+
+                <p class="exhibition-text" style="margin-bottom: 80px;">감시는 더 이상 위협적으로 느껴지지 않는다. 오히려 일상에 스며든 관계적 행위로 작동한다. 그러나 바로 그 무해함이 감시의 진짜 얼굴을 흐리게 만든다. 우리는 관찰자인 동시에 관찰 대상이다. 타인을 보면서 동시에 보여진다. 이 상호 노출의 구조 속에서 '보인다는 것'은 더 이상 수동적 경험이 아니다. 그것은 현대적 존재 방식 그 자체가 된다.</p>
+            </div>
+        </div>
+    </div>
     
     <!-- Two-column grid layout starts here -->
     <div class="exhibition-content-wrapper">

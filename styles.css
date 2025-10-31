@@ -770,8 +770,13 @@ body:-moz-full-screen .main-content {
     }
     
     /* Add padding to all sections except hero and mobile-about with safe areas - doubled side padding */
-    .mobile-content-container > *:not(.hero-intro):not(.mobile-about-container) {
+    .mobile-content-container > *:not(.hero-intro):not(.mobile-about-container):not(.cv-medium) {
         padding: 20px calc(40px + env(safe-area-inset-right)) 20px calc(40px + env(safe-area-inset-left)) !important;
+    }
+    
+    /* cv-medium should only have side padding, no top/bottom */
+    .mobile-content-container > .cv-medium {
+        padding: 0 calc(40px + env(safe-area-inset-right)) 0 calc(40px + env(safe-area-inset-left)) !important;
     }
     
     /* Mobile about section gets original padding (not doubled) */
@@ -1100,7 +1105,9 @@ body:-moz-full-screen .main-content {
     
     .mobile-content-container .cv-medium {
         font-size: 11px;
-        margin: 12px 0 !important;
+        margin: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
     }
     
     .mobile-exhibition-description {
@@ -1137,13 +1144,6 @@ body:-moz-full-screen .main-content {
     
     .mobile-exhibition-description .exhibition-text:last-child {
         margin-bottom: 0 !important;
-    }
-    
-    .mobile-content-container .cv-medium {
-        margin: 8px 0 0 0 !important;
-        font-size: 10px;
-        font-style: italic;
-        color: var(--text-muted);
     }
     
     /* Mobile-specific: Center flowchart circle horizontally */
@@ -2254,6 +2254,47 @@ h3 {
     visibility: hidden;
 }
 
+/* Desktop exhibition pages: smaller, italic caption styling */
+@media (min-width: 1025px) {
+    .content-body .cv-medium,
+    :lang(ko) .content-body .cv-medium {
+        font-size: 10px !important;
+        font-style: italic !important;
+        line-height: 1.4 !important;
+        font-family: var(--font-mono) !important;
+    }
+    
+    /* Desktop English: Use sans-serif font for main text (not mono) */
+    /* Apply to: process, exhibitions, research sections */
+    .lang-en .exhibition-text,
+    .lang-en .content-body p:not(.cv-year):not(.cv-location):not(.cv-medium):not(.cv-title),
+    .lang-en .process-section p,
+    .content-body .lang-en .exhibition-text,
+    .content-body .lang-en p:not(.cv-year):not(.cv-location):not(.cv-medium):not(.cv-title) {
+        font-family: var(--font-sans) !important;
+        font-weight: 400 !important;
+    }
+    
+    /* Exhibition overview only: smaller CV info (year, location only) */
+    .cv-entry-list .cv-year,
+    .cv-entry-list .cv-location {
+        font-size: 10px !important;
+    }
+    
+    /* Korean: slightly larger (11px) */
+    :lang(ko) .cv-entry-list .cv-year,
+    :lang(ko) .cv-entry-list .cv-location {
+        font-size: 11px !important;
+    }
+    
+    /* Individual exhibition pages: larger main text (18px) for both English and Korean */
+    .content-body .lang-en .exhibition-text,
+    .content-body .lang-kr .exhibition-text {
+        font-size: 15px !important;
+        line-height: 1.8 !important;
+    }
+}
+
 .cv-location {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -2854,12 +2895,14 @@ body[data-lang="kr"] .lang-kr {
     color: var(--text-primary);
     position: relative !important;
     z-index: 10 !important;
+    font-size: 11px !important;
 }
 
 .flow-arrow {
     display: inline;
     color: var(--accent-primary);
     margin: 0 8px;
+    font-size: 11px !important;
     opacity: 0.7;
     position: relative !important;
     z-index: 10 !important;
@@ -3888,6 +3931,15 @@ ol.exhibition-list {
         overflow: hidden;
     }
     
+    /* Mobile Resonance Loop Text Carousel */
+    .mobile-resonance-carousel {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 24px 0;
+        overflow: hidden;
+    }
+    
     .mobile-process-carousel .mobile-carousel-track {
         display: flex;
         transition: transform 0.3s ease;
@@ -3925,6 +3977,101 @@ ol.exhibition-list {
     }
     
     .mobile-process-carousel .mobile-carousel-dot.active {
+        background-color: #525252;
+    }
+    
+    /* Hide original text when carousel is present - use adjacent sibling */
+    .mobile-resonance-carousel ~ .mobile-exhibition-description,
+    .mobile-resonance-carousel ~ .exhibition-content-wrapper,
+    .lang-en .mobile-resonance-carousel ~ .mobile-exhibition-description,
+    .lang-en .mobile-resonance-carousel ~ .exhibition-content-wrapper,
+    .lang-kr .mobile-resonance-carousel ~ .mobile-exhibition-description,
+    .lang-kr .mobile-resonance-carousel ~ .exhibition-content-wrapper {
+        display: none !important;
+    }
+    
+    /* Also hide if carousel is in parent */
+    .mobile-exhibition-description:has(~ .mobile-resonance-carousel),
+    .exhibition-content-wrapper:has(~ .mobile-resonance-carousel) {
+        display: none !important;
+    }
+    
+    /* Mobile Resonance Carousel Track and Slides - Copy process carousel structure */
+    .mobile-resonance-carousel .mobile-resonance-track {
+        display: flex;
+        transition: transform 0.3s ease;
+    }
+    
+    .mobile-resonance-carousel .mobile-resonance-slide {
+        min-width: 100%;
+        flex-shrink: 0;
+        padding: 0 6px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        max-height: 70vh;
+        /* Hide scrollbar but keep scrolling functionality */
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    .mobile-resonance-carousel .mobile-resonance-slide::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+    }
+    
+    .mobile-resonance-carousel .mobile-resonance-slide h2 {
+        font-size: 16px;
+        margin-bottom: 16px;
+        color: var(--text-primary);
+    }
+    
+    /* Carousel text styling - match mobile-exhibition-description */
+    .mobile-resonance-carousel .exhibition-text {
+        margin: 0 0 16px 0 !important;
+        font-size: 14px !important;
+        line-height: 1.8 !important;
+        font-family: var(--font-sans) !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.01em !important;
+    }
+    
+    /* Korean carousel text */
+    :lang(ko) .mobile-resonance-carousel .exhibition-text {
+        font-family: 'Noto Sans KR', sans-serif !important;
+        font-size: 15px !important;
+        letter-spacing: 0.02em !important;
+        line-height: 1.8 !important;
+        word-break: keep-all !important;
+    }
+    
+    /* English carousel text */
+    :lang(en) .mobile-resonance-carousel .exhibition-text {
+        font-family: var(--font-sans) !important;
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.01em !important;
+        line-height: 1.8 !important;
+    }
+    
+    /* Mobile Resonance Carousel Dots */
+    .mobile-resonance-carousel .mobile-resonance-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 0 0 20px 0;
+        margin: 0;
+    }
+    
+    .mobile-resonance-carousel .mobile-resonance-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #d4d4d4;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    .mobile-resonance-carousel .mobile-resonance-dot.active {
         background-color: #525252;
     }
     
@@ -4171,7 +4318,7 @@ ol.exhibition-list {
     /* Korean text for desktop process pages */
     :lang(ko) .content-body .exhibition-text {
         font-family: 'Noto Sans KR', sans-serif !important;
-        font-size: 14px !important;
+        font-size: 15px !important;
         letter-spacing: 0.02em !important;
         line-height: 1.8 !important;
         word-break: keep-all !important;
@@ -4213,8 +4360,9 @@ ol.exhibition-list {
 
 /* Desktop Process Carousels - DESKTOP ONLY - Complete Self-Contained */
 @media (min-width: 1025px) {
-    /* Hide mobile carousel on desktop */
-    .mobile-process-carousel {
+    /* Hide mobile carousels on desktop */
+    .mobile-process-carousel,
+    .mobile-resonance-carousel {
         display: none !important;
     }
     

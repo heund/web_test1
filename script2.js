@@ -780,7 +780,30 @@ class TerminalPortfolio {
             const titleDataEn = escapeAttr(enTitle ? enTitle.textContent : '');
             const titleDataKr = escapeAttr(krTitle ? krTitle.textContent : '');
             
+            // Check if this is resonance-loop page to include carousel
+            const enResonanceCarousel = enContainer ? enContainer.querySelector('.mobile-resonance-carousel') : null;
+            const krResonanceCarousel = krContainer ? krContainer.querySelector('.mobile-resonance-carousel') : null;
+            
+            let carouselHTML = '';
+            if (fileId === 'exhibition-resonance') {
+                if (enResonanceCarousel && krResonanceCarousel) {
+                    carouselHTML = `
+                        <div class="lang-en">${enResonanceCarousel.outerHTML}</div>
+                        <div class="lang-kr">${krResonanceCarousel.outerHTML}</div>
+                    `;
+                } else if (enResonanceCarousel) {
+                    carouselHTML = `<div class="lang-en">${enResonanceCarousel.outerHTML}</div>`;
+                }
+            }
+            
             // Rebuild with mobile-specific classes for CSS targeting
+            // Only include description if no carousel exists
+            const descriptionHTML = carouselHTML ? '' : `
+                <div class="mobile-exhibition-description">
+                    ${descriptionsHTML}
+                </div>
+            `;
+            
             htmlContent = `
                 <div class="mobile-exhibition-header">
                     <h1 data-en="${titleDataEn}" data-kr="${titleDataKr}">${title ? title.textContent : ''}</h1>
@@ -789,9 +812,8 @@ class TerminalPortfolio {
                 </div>
                 ${imageGrid ? imageGrid.outerHTML : ''}
                 <div class="cv-medium" data-en="${mediumDataEn}" data-kr="${mediumDataKr}">${medium ? medium.textContent : ''}</div>
-                <div class="mobile-exhibition-description">
-                    ${descriptionsHTML}
-                </div>
+                ${carouselHTML}
+                ${descriptionHTML}
             `;
         }
         
@@ -836,6 +858,15 @@ class TerminalPortfolio {
                             window.initializeAudioCarousel(carouselId);
                         }
                     });
+                }, 100);
+            }
+            
+            // Initialize mobile resonance carousel if on resonance-loop page and mobile
+            if (fileId === 'exhibition-resonance' && isMobileDevice) {
+                setTimeout(() => {
+                    if (window.initMobileResonanceCarousel) {
+                        window.initMobileResonanceCarousel();
+                    }
                 }, 100);
             }
         }
@@ -1748,4 +1779,102 @@ window.toggleSection = function(titleElement) {
         icon.textContent = '▼';
         section.classList.remove('expanded');
     }
+};
+
+// Mobile Resonance Loop Text Carousel
+window.initMobileResonanceCarousel = function() {
+    // Find all carousels (both English and Korean)
+    const carousels = document.querySelectorAll('.mobile-resonance-carousel');
+    
+    if (carousels.length === 0) return;
+    
+    carousels.forEach(carousel => {
+        const track = carousel.querySelector('.mobile-resonance-track');
+        const dots = carousel.querySelectorAll('.mobile-resonance-dot');
+        let currentSlide = 0;
+        
+        // Function to update carousel position
+        function updateCarousel() {
+            const offset = -currentSlide * 100;
+            track.style.transform = `translateX(${offset}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+            
+            // Reset scroll position of the current slide to top
+            const slides = carousel.querySelectorAll('.mobile-resonance-slide');
+            if (slides[currentSlide]) {
+                slides[currentSlide].scrollTop = 0;
+            }
+            
+            // Also scroll the carousel container to show the dots at the top
+            carousel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        
+        // Add click handlers to dots
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateCarousel();
+            });
+        });
+        
+        // Add swipe support with direction detection
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        let swipeDirection = null;
+        
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+            swipeDirection = null;
+        });
+        
+        carousel.addEventListener('touchmove', (e) => {
+            if (swipeDirection === null) {
+                const deltaX = Math.abs(e.changedTouches[0].screenX - touchStartX);
+                const deltaY = Math.abs(e.changedTouches[0].screenY - touchStartY);
+                
+                // Determine swipe direction based on which delta is larger
+                if (deltaX > deltaY && deltaX > 10) {
+                    swipeDirection = 'horizontal';
+                } else if (deltaY > deltaX && deltaY > 10) {
+                    swipeDirection = 'vertical';
+                }
+            }
+        });
+        
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            // Only trigger slide change on horizontal swipes
+            if (swipeDirection !== 'horizontal') return;
+            
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0 && currentSlide < dots.length - 1) {
+                    // Swipe left - next slide
+                    currentSlide++;
+                    updateCarousel();
+                } else if (diff < 0 && currentSlide > 0) {
+                    // Swipe right - previous slide
+                    currentSlide--;
+                    updateCarousel();
+                }
+            }
+        }
+        
+        // Initial update
+        updateCarousel();
+    });
 };
