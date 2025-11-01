@@ -1712,6 +1712,11 @@ body:fullscreen .main-content {
     background: rgba(120, 113, 108, 0.05);
 }
 
+/* Hide process.md from navigation */
+.nav-item[data-file="process"] {
+    display: none !important;
+}
+
 /* Nav Items - Relational Network Style */
 .nav-item {
     display: flex;
@@ -2619,12 +2624,12 @@ h3 {
     }
 }
 
-/* Korean h3 titles - match resonance loop styling */
+/* Korean h3 titles - match h2 weight */
 :lang(ko) .process-section h3,
 :lang(ko) .audio-section h3,
 :lang(ko) h3 {
     font-family: 'Noto Serif KR', serif !important;
-    font-weight: 400 !important;
+    font-weight: 650 !important;
     letter-spacing: -0.02em !important;
 }
 
@@ -4423,6 +4428,13 @@ ol.exhibition-list {
     line-height: 1.8 !important;
 }
 
+/* References section - mobile (applies to all screen sizes) */
+.content-body h2.references-section ~ p.exhibition-text,
+.mobile-content-container h2.references-section ~ p.exhibition-text {
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+}
+
 /* Desktop process pages - match about page font sizes */
 @media (min-width: 1025px) {
     /* Override content-body base font size for desktop */
@@ -4477,12 +4489,17 @@ ol.exhibition-list {
         font-family: 'Noto Serif KR', serif !important;
     }
     
+    /* References section - smaller text for both English and Korean */
+    .content-body h2.references-section ~ p.exhibition-text {
+        font-size: 12px !important;
+        line-height: 1.6 !important;
+    }
+    
     /* ============================================
        DESKTOP-ONLY CAROUSEL (Base styles removed - will be desktop-specific)
        ============================================ */
 
 /* Desktop Process Carousels - DESKTOP ONLY - Complete Self-Contained */
-@media (min-width: 1025px) {
     /* Hide mobile carousels on desktop */
     .mobile-process-carousel,
     .mobile-resonance-carousel,
