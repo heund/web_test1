@@ -817,7 +817,7 @@ class TerminalPortfolio {
                 } else if (enResonanceCarousel) {
                     carouselHTML = `<div class="lang-en">${enResonanceCarousel.outerHTML}</div>`;
                 }
-            } else if (fileId === 'exhibition-embodied') {
+            } else if (fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') {
                 if (enEmbodiedCarousel && krEmbodiedCarousel) {
                     carouselHTML = `
                         <div class="lang-en">${enEmbodiedCarousel.outerHTML}</div>
@@ -902,15 +902,17 @@ class TerminalPortfolio {
                 }, 100);
             }
             
-            // Initialize mobile embodied carousel if on embodied-algorithms page and mobile
-            if (fileId === 'exhibition-embodied' && isMobileDevice) {
+            // Initialize mobile embodied carousel if on embodied-algorithms or rotating-weights page and mobile
+            if ((fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && isMobileDevice) {
+                console.log('[Script2] Initializing embodied carousel for:', fileId);
                 setTimeout(() => {
                     if (window.initMobileEmbodiedCarousel) {
+                        console.log('[Script2] Calling initMobileEmbodiedCarousel');
                         window.initMobileEmbodiedCarousel();
                     }
                     // Initialize custom video players after carousel is loaded
                     if (window.initCustomVideoPlayers) {
-                        console.log('[Script2] Calling initCustomVideoPlayers for embodied page');
+                        console.log('[Script2] Calling initCustomVideoPlayers');
                         window.initCustomVideoPlayers();
                     }
                 }, 200);
@@ -1946,10 +1948,15 @@ window.initMobileResonanceCarousel = function() {
 // Mobile Embodied Algorithms Carousel - Copy resonance carousel logic
 window.initMobileEmbodiedCarousel = function() {
     const carousels = document.querySelectorAll('.mobile-embodied-carousel');
+    console.log('[Embodied Carousel] Found', carousels.length, 'carousels');
     
-    if (carousels.length === 0) return;
+    if (carousels.length === 0) {
+        console.log('[Embodied Carousel] No carousels found, exiting');
+        return;
+    }
     
-    carousels.forEach(carousel => {
+    carousels.forEach((carousel, index) => {
+        console.log('[Embodied Carousel] Initializing carousel', index);
         const track = carousel.querySelector('.mobile-embodied-track');
         const dots = carousel.querySelectorAll('.mobile-embodied-dot');
         let currentSlide = 0;
