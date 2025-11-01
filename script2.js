@@ -560,7 +560,6 @@ class TerminalPortfolio {
         // STEP 4.7: Re-initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page
         const isMobileDevice = window.innerWidth <= 768;
         if ((this.currentFile === 'exhibition-resonance' || this.currentFile === 'exhibition-embodied' || this.currentFile === 'exhibition-rotating') && !isMobileDevice) {
-            console.log('[Script2] Re-initializing desktop carousel after language switch');
             setTimeout(() => {
                 if (window.initDesktopResonanceCarousel) {
                     window.initDesktopResonanceCarousel();
@@ -1687,7 +1686,6 @@ class TerminalPortfolio {
                 const src = item.dataset.src;
                 const videoSrc = item.dataset.videoSrc;
                 
-                console.log('[Folder Item] Clicked:', {type, src, videoSrc});
                 
                 if (type === 'image') {
                     openLightbox(src);
@@ -1699,7 +1697,6 @@ class TerminalPortfolio {
                     const content = item.dataset.content;
                     this.openTextViewer(content, item.querySelector('.folder-item-label').textContent);
                 } else if (type === 'video') {
-                    console.log('[Folder Item] Video type detected, calling openVideoViewer');
                     // Open video in viewer window
                     this.openVideoViewer(videoSrc, item.querySelector('.folder-item-label').textContent);
                 }
@@ -2120,15 +2117,12 @@ window.initMobileResonanceCarousel = function() {
 // Mobile Embodied Algorithms Carousel - Copy resonance carousel logic
 window.initMobileEmbodiedCarousel = function() {
     const carousels = document.querySelectorAll('.mobile-embodied-carousel');
-    console.log('[Embodied Carousel] Found', carousels.length, 'carousels');
     
     if (carousels.length === 0) {
-        console.log('[Embodied Carousel] No carousels found, exiting');
         return;
     }
     
     carousels.forEach((carousel, index) => {
-        console.log('[Embodied Carousel] Initializing carousel', index);
         const track = carousel.querySelector('.mobile-embodied-track');
         const dots = carousel.querySelectorAll('.mobile-embodied-dot');
         let currentSlide = 0;
@@ -2211,34 +2205,19 @@ window.initMobileEmbodiedCarousel = function() {
 
 // Desktop Resonance Loop Carousel
 window.initDesktopResonanceCarousel = function() {
-    console.log('[Desktop Resonance Carousel] === INITIALIZATION STARTED ===');
-    
     // Find the visible language section
     const enSection = document.querySelector('.lang-en');
     const krSection = document.querySelector('.lang-kr');
-    
-    console.log('[Desktop Resonance Carousel] enSection:', enSection);
-    console.log('[Desktop Resonance Carousel] krSection:', krSection);
-    
-    if (enSection) {
-        console.log('[Desktop Resonance Carousel] enSection display:', window.getComputedStyle(enSection).display);
-    }
-    if (krSection) {
-        console.log('[Desktop Resonance Carousel] krSection display:', window.getComputedStyle(krSection).display);
-    }
     
     // Determine which section is visible (check computed style or use currentLang from PageManager)
     let visibleSection = null;
     if (enSection && window.getComputedStyle(enSection).display !== 'none') {
         visibleSection = enSection;
-        console.log('[Desktop Resonance Carousel] Using English section');
     } else if (krSection && window.getComputedStyle(krSection).display !== 'none') {
         visibleSection = krSection;
-        console.log('[Desktop Resonance Carousel] Using Korean section');
     }
     
     if (!visibleSection) {
-        console.log('[Desktop Resonance Carousel] ERROR: No visible language section found!');
         return;
     }
     
@@ -2246,38 +2225,25 @@ window.initDesktopResonanceCarousel = function() {
     const slides = visibleSection.querySelectorAll('.desktop-resonance-slide');
     const dots = visibleSection.querySelectorAll('.desktop-resonance-dot');
     
-    console.log('[Desktop Resonance Carousel] Querying for slides...');
-    console.log('[Desktop Resonance Carousel] Found', slides.length, 'slides');
-    console.log('[Desktop Resonance Carousel] Slides:', slides);
-    
     if (slides.length === 0) {
-        console.log('[Desktop Resonance Carousel] ERROR: No slides found!');
         return;
     }
     
-    console.log('[Desktop Resonance Carousel] Found', dots.length, 'dots');
-    console.log('[Desktop Resonance Carousel] Dots:', dots);
-    
     let currentSlide = 0;
     
-    console.log('[Desktop Resonance Carousel] Hiding all slides except first...');
     slides.forEach((slide, index) => {
         if (index === 0) {
             slide.style.display = 'block';
-            console.log('[Desktop Resonance Carousel] Slide', index, 'set to display: block');
         } else {
             slide.style.display = 'none';
-            console.log('[Desktop Resonance Carousel] Slide', index, 'set to display: none');
         }
     });
     
     // Reset all dots to inactive, then set first dot as active
-    console.log('[Desktop Resonance Carousel] Resetting dots...');
     dots.forEach((dot, index) => {
         dot.classList.remove('active');
         if (index === 0) {
             dot.classList.add('active');
-            console.log('[Desktop Resonance Carousel] First dot set as active');
         }
     });
     
@@ -2296,15 +2262,10 @@ window.initDesktopResonanceCarousel = function() {
         }
     });
     
-    console.log('[Desktop Resonance Carousel] === INITIALIZATION COMPLETE ===');
-    
     // Function to show a specific slide
     function showSlide(index) {
-        console.log('[Desktop Resonance Carousel] showSlide called with index:', index);
-        
         slides.forEach((slide, i) => {
             slide.style.display = i === index ? 'block' : 'none';
-            console.log('[Desktop Resonance Carousel] Slide', i, 'display:', slide.style.display);
         });
         
         // Update dots active state
@@ -2321,15 +2282,11 @@ window.initDesktopResonanceCarousel = function() {
             // Get the exhibition-content-wrapper (parent container)
             const wrapper = slides[index].closest('.exhibition-content-wrapper');
             if (wrapper) {
-                console.log('[Desktop Resonance Carousel] Scrolling to wrapper');
                 wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                console.log('[Desktop Resonance Carousel] WARNING: No wrapper found for slide', index);
             }
         }
         
         currentSlide = index;
-        console.log('[Desktop Resonance Carousel] Current slide now:', currentSlide);
     }
     
     // Expose navigation function globally for dot clicks
