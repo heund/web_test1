@@ -1319,18 +1319,16 @@ class TerminalPortfolio {
             case 'help':
                 if (this.currentLang === 'kr') {
                     alert('> about.md: 소개\n' +
-                          '> process: 작업 방식\n' +
                           '> exhibitions: 전시\n' +
                           '> research: 연구, 이론적 기반\n' +
                           '> contact: 연락처\n\n' +
-                          '사이드바의 섹션을 클릭하여 이동하세요');
+                          '사이드바의 섹션을 클릭하여 이동하세요 :)');
                 } else {
                     alert('> about.md: Background and practice\n' +
-                          '> process: How I work and think\n' +
                           '> exhibitions: Project documentation\n' +
                           '> research: Theoretical foundations\n' +
                           '> contact: Get in touch\n\n' +
-                          'Click any section in the sidebar to navigate');
+                          'Click any section in the sidebar to navigate :)');
                 }
                 break;
                 
