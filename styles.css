@@ -586,6 +586,7 @@ body:fullscreen .main-content {
         overflow-y: auto !important;
         background: rgba(245, 245, 244, 0.8) !important;
         backdrop-filter: blur(10px) !important;
+        -webkit-backdrop-filter: blur(10px) !important;
         border-bottom: 1px solid #E5E5E5 !important;
         padding: 8px 16px !important;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
@@ -2657,6 +2658,7 @@ body[data-lang="kr"] .lang-kr {
 /* Collapsible sections */
 .collapsible-title {
     cursor: pointer;
+    -webkit-user-select: none;
     user-select: none;
     transition: opacity 0.2s;
     margin-top: 0 !important;
@@ -3331,6 +3333,7 @@ ol.exhibition-list {
     height: 100%;
     background-color: rgba(245, 245, 244, 0.7);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     align-items: center;
     justify-content: center;
 }
@@ -3367,6 +3370,7 @@ ol.exhibition-list {
     color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s;
+    -webkit-user-select: none;
     user-select: none;
     padding: 20px;
     background: rgba(255, 255, 255, 0.1);
@@ -3413,6 +3417,7 @@ ol.exhibition-list {
     max-width: 80%;
     text-align: center;
     backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     z-index: 10000;
 }
 
@@ -4364,6 +4369,7 @@ ol.exhibition-list {
     padding: 100px 60px 100px 60px !important;
     background: rgba(250, 250, 249, 0.3) !important; /* Use --bg-content color (#FAFAF9) with transparency */
     backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
     border-radius: 8px !important;
     margin: 0 auto !important;
     max-width: 700px !important;
@@ -4380,6 +4386,20 @@ ol.exhibition-list {
     margin-bottom: 32px !important;
     color: var(--text-primary) !important;
     font-family: 'IBM Plex Mono', monospace !important;
+}
+
+/* Second h2 (Systems Artist) - smaller and less gap */
+.desktop-about-text-section h2:nth-of-type(2) {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    margin-top: -20px !important;
+    margin-bottom: 32px !important;
+}
+
+/* Make desktop about h2 visible (override fade-in default) */
+.desktop-about-text-section h2 {
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 /* Paragraphs use exhibition-text class - match contact page terminal-output-style */
