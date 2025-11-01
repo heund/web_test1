@@ -4435,6 +4435,159 @@ ol.exhibition-list {
     line-height: 1.6 !important;
 }
 
+/* Custom Video Player */
+.custom-video-player {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    background: transparent;
+}
+
+.custom-video {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    display: block;
+}
+
+.custom-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.custom-video-player.playing .custom-video-overlay {
+    opacity: 0;
+}
+
+.custom-play-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.custom-play-btn:hover {
+    transform: scale(1.1);
+}
+
+.custom-play-btn svg {
+    width: 80px;
+    height: 80px;
+    fill: #525252;
+    transition: fill 0.3s ease;
+}
+
+.custom-play-btn:hover svg {
+    fill: #3a3a3a;
+}
+
+/* Custom Video Controls */
+.custom-video-controls {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 16px;
+    border-radius: 24px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+}
+
+.custom-video-player.playing .custom-video-controls {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.custom-video-player.playing .custom-video-controls.show-controls {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.custom-mute-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.custom-mute-btn:hover {
+    transform: scale(1.1);
+}
+
+.custom-mute-btn .volume-icon {
+    width: 24px;
+    height: 24px;
+    stroke: #525252;
+}
+
+.custom-mute-btn.muted .volume-waves {
+    display: none;
+}
+
+.custom-volume-slider {
+    width: 80px;
+    height: 5px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #d3d3d3;
+    outline: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.custom-volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    background: #525252;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.custom-volume-slider::-webkit-slider-thumb:hover {
+    background: #3a3a3a;
+}
+
+.custom-volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    background: #525252;
+    cursor: pointer;
+    border-radius: 50%;
+    border: none;
+    transition: background 0.2s ease;
+}
+
+.custom-volume-slider::-moz-range-thumb:hover {
+    background: #3a3a3a;
+}
+
 /* Desktop process pages - match about page font sizes */
 @media (min-width: 1025px) {
     /* Override content-body base font size for desktop */

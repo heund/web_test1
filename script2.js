@@ -908,7 +908,12 @@ class TerminalPortfolio {
                     if (window.initMobileEmbodiedCarousel) {
                         window.initMobileEmbodiedCarousel();
                     }
-                }, 100);
+                    // Initialize custom video players after carousel is loaded
+                    if (window.initCustomVideoPlayers) {
+                        console.log('[Script2] Calling initCustomVideoPlayers for embodied page');
+                        window.initCustomVideoPlayers();
+                    }
+                }, 200);
             }
         }
         
@@ -983,7 +988,6 @@ class TerminalPortfolio {
         
         // Global fade-in animation for all content pages (except hero and about)
         if (fileId !== 'hero' && fileId !== 'about') {
-            console.log('[DEBUG FADE] Page:', fileId, 'First visit:', !this.animatedPages.has(fileId));
             
             if (!this.animatedPages.has(fileId)) {
                 // Check if mobile
@@ -993,7 +997,6 @@ class TerminalPortfolio {
                 // First visit: animate with staggered timing (faster on mobile)
                 let delay = 0;
                 const staggerDelay = isMobile ? 50 : 100; // Faster stagger on mobile
-                console.log('[DEBUG FADE] isMobile:', isMobile, 'isContact:', isContactPage);
                 
                 // Special handling for contact page
                 if (isContactPage) {
@@ -1054,7 +1057,6 @@ class TerminalPortfolio {
                             document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p');
                     }
                     
-                    console.log('[DEBUG FADE] Found', paragraphs.length, 'paragraphs. langContainer:', !!langContainer, 'fileId:', fileId);
                     paragraphs.forEach((element, index) => {
                         const animDelay = delay + 200 + (index * staggerDelay);
                         setTimeout(() => {
