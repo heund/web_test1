@@ -1933,7 +1933,11 @@ class TerminalPortfolio {
             fullscreenBtn.onclick = (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                if (!document.fullscreenElement) {
+                
+                // iOS Safari uses webkitEnterFullscreen on the video element
+                if (video.webkitEnterFullscreen) {
+                    video.webkitEnterFullscreen();
+                } else if (!document.fullscreenElement) {
                     player.requestFullscreen().catch(err => {
                         console.error('Error attempting to enable fullscreen:', err);
                     });
