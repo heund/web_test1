@@ -1858,39 +1858,99 @@ class TerminalPortfolio {
     }
     
     openVideoViewer(src, title) {
-        console.log('[Video Viewer] Opening video:', src);
-        console.log('[Video Viewer] Title:', title);
-        
         const videoViewer = document.getElementById('video-viewer');
-        const videoPlayer = document.getElementById('video-player');
-        const videoSource = document.getElementById('video-source');
+        const videoPlayer = document.getElementById('video-viewer-player');
         const videoTitle = document.getElementById('video-viewer-title');
         
-        console.log('[Video Viewer] Elements:', {
-            videoViewer: !!videoViewer,
-            videoPlayer: !!videoPlayer,
-            videoSource: !!videoSource,
-            videoTitle: !!videoTitle
-        });
-        
-        if (videoViewer && videoPlayer && videoSource) {
+        if (videoViewer && videoPlayer) {
             videoTitle.textContent = title;
-            videoSource.src = src;
-            console.log('[Video Viewer] Video source set to:', videoSource.src);
+            videoPlayer.src = src;
             videoPlayer.load();
-            console.log('[Video Viewer] Video load() called');
             videoViewer.classList.add('active');
-            console.log('[Video Viewer] Added active class, classList:', videoViewer.classList);
-            console.log('[Video Viewer] Display style:', window.getComputedStyle(videoViewer).display);
-            console.log('[Video Viewer] Z-index:', window.getComputedStyle(videoViewer).zIndex);
-        } else {
-            console.error('[Video Viewer] Missing elements!');
+            
+            // Initialize custom video player for the video viewer only
+            setTimeout(() => {
+                const player = videoViewer.querySelector('.custom-video-player');
+                if (player) {
+                    this.initSingleVideoPlayer(player);
+                }
+            }, 100);
         }
+    }
+    
+    initSingleVideoPlayer(player) {
+        const video = player.querySelector('.custom-video');
+        const playBtn = player.querySelector('.custom-play-btn');
+        const volumeBtn = player.querySelector('.custom-volume-btn');
+        const volumeSlider = player.querySelector('.custom-volume-slider');
+        const fullscreenBtn = player.querySelector('.custom-fullscreen-btn');
+        
+        if (!video || !playBtn) return;
+        
+        // Play/Pause on button click
+        playBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (video.paused) {
+                video.play();
+                player.classList.add('playing');
+            } else {
+                video.pause();
+                player.classList.remove('playing');
+            }
+        };
+        
+        // Play/Pause on video click
+        video.onclick = (e) => {
+            e.preventDefault();
+            if (video.paused) {
+                video.play();
+                player.classList.add('playing');
+            } else {
+                video.pause();
+                player.classList.remove('playing');
+            }
+        };
+        
+        // Volume controls
+        if (volumeBtn && volumeSlider) {
+            volumeBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                video.muted = !video.muted;
+                volumeBtn.classList.toggle('muted', video.muted);
+            };
+            
+            volumeSlider.oninput = (e) => {
+                video.volume = e.target.value / 100;
+                video.muted = false;
+                volumeBtn.classList.remove('muted');
+            };
+        }
+        
+        // Fullscreen button
+        if (fullscreenBtn) {
+            fullscreenBtn.onclick = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!document.fullscreenElement) {
+                    player.requestFullscreen().catch(err => {
+                        console.error('Error attempting to enable fullscreen:', err);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            };
+        }
+        
+        // Update playing state
+        video.onplay = () => player.classList.add('playing');
+        video.onpause = () => player.classList.remove('playing');
     }
     
     closeVideoViewer() {
         const videoViewer = document.getElementById('video-viewer');
-        const videoPlayer = document.getElementById('video-player');
+        const videoPlayer = document.getElementById('video-viewer-player');
         
         if (videoViewer) {
             videoViewer.classList.remove('active');

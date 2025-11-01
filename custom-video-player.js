@@ -11,6 +11,11 @@ function initCustomVideoPlayers() {
     }
     
     videoPlayers.forEach((player, index) => {
+        // Skip video viewer player (it has its own initialization)
+        if (player.closest('#video-viewer')) {
+            return;
+        }
+        
         const video = player.querySelector('.custom-video');
         const playBtn = player.querySelector('.custom-play-btn');
         const muteBtn = player.querySelector('.custom-mute-btn') || player.querySelector('.custom-volume-btn');
@@ -46,19 +51,28 @@ function initCustomVideoPlayers() {
             togglePlayPause(freshVideo, player);
         });
         
-        // Get controls container
+        // Get controls container and fullscreen button
         const controlsContainer = player.querySelector('.custom-video-controls');
+        const fullscreenButton = player.querySelector('.custom-fullscreen-btn');
         let controlsTimeout;
         
         // Show controls temporarily
         function showControlsTemporarily() {
             if (controlsContainer) {
                 controlsContainer.classList.add('show-controls');
-                clearTimeout(controlsTimeout);
-                controlsTimeout = setTimeout(() => {
-                    controlsContainer.classList.remove('show-controls');
-                }, 2000); // Hide after 2 seconds of inactivity
             }
+            if (fullscreenButton) {
+                fullscreenButton.classList.add('show-controls');
+            }
+            clearTimeout(controlsTimeout);
+            controlsTimeout = setTimeout(() => {
+                if (controlsContainer) {
+                    controlsContainer.classList.remove('show-controls');
+                }
+                if (fullscreenButton) {
+                    fullscreenButton.classList.remove('show-controls');
+                }
+            }, 2000); // Hide after 2 seconds of inactivity
         }
         
         // Mute/Unmute button
@@ -88,6 +102,24 @@ function initCustomVideoPlayers() {
                 freshVideo.muted = volume === 0;
                 if (freshMuteBtn) {
                     freshMuteBtn.classList.toggle('muted', volume === 0);
+                }
+                showControlsTemporarily();
+            });
+        }
+        
+        // Fullscreen button
+        const freshFullscreenBtn = player.querySelector('.custom-fullscreen-btn');
+        if (freshFullscreenBtn) {
+            freshFullscreenBtn.addEventListener('mouseenter', showControlsTemporarily);
+            freshFullscreenBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!document.fullscreenElement) {
+                    player.requestFullscreen().catch(err => {
+                        console.error('Error attempting to enable fullscreen:', err);
+                    });
+                } else {
+                    document.exitFullscreen();
                 }
                 showControlsTemporarily();
             });

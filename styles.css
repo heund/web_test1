@@ -515,6 +515,18 @@ body:fullscreen .main-content {
     position: relative;
 }
 
+.video-viewer-content .custom-video-player {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.video-viewer-content .custom-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 .video-viewer-content video {
     width: 100%;
     height: 100%;
@@ -4611,18 +4623,35 @@ ol.exhibition-list {
     transition: opacity 0.3s ease;
 }
 
-.custom-video-player.playing .custom-video-controls {
+.custom-fullscreen-btn {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 50%;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+    width: 44px;
+    height: 44px;
+}
+
+.custom-video-player.playing .custom-video-controls,
+.custom-video-player.playing .custom-fullscreen-btn {
     opacity: 0;
     pointer-events: none;
 }
 
-.custom-video-player.playing .custom-video-controls.show-controls {
+.custom-video-player.playing .custom-video-controls.show-controls,
+.custom-video-player.playing .custom-fullscreen-btn.show-controls {
     opacity: 1;
     pointer-events: auto;
 }
 
 .custom-mute-btn,
-.custom-volume-btn {
+.custom-volume-btn,
+.custom-fullscreen-btn {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -4634,7 +4663,8 @@ ol.exhibition-list {
 }
 
 .custom-mute-btn:hover,
-.custom-volume-btn:hover {
+.custom-volume-btn:hover,
+.custom-fullscreen-btn:hover {
     transform: scale(1.1);
 }
 
@@ -4643,6 +4673,105 @@ ol.exhibition-list {
     width: 24px;
     height: 24px;
     stroke: #525252;
+}
+
+.custom-fullscreen-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: #525252;
+    fill: none;
+}
+
+/* Fullscreen mode styles - container goes fullscreen to keep custom controls */
+.custom-video-player:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.custom-video-player:fullscreen .custom-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.custom-video-player:fullscreen .custom-video-controls,
+.custom-video-player:fullscreen .custom-fullscreen-btn {
+    position: fixed;
+    z-index: 10001;
+}
+
+/* Webkit fullscreen */
+.custom-video-player:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.custom-video-player:-webkit-full-screen .custom-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.custom-video-player:-webkit-full-screen .custom-video-controls,
+.custom-video-player:-webkit-full-screen .custom-fullscreen-btn {
+    position: fixed;
+    z-index: 10001;
+}
+
+/* Firefox fullscreen */
+.custom-video-player:-moz-full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.custom-video-player:-moz-full-screen .custom-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.custom-video-player:-moz-full-screen .custom-video-controls,
+.custom-video-player:-moz-full-screen .custom-fullscreen-btn {
+    position: fixed;
+    z-index: 10001;
+}
+
+/* MS fullscreen */
+.custom-video-player:-ms-fullscreen {
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.custom-video-player:-ms-fullscreen .custom-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.custom-video-player:-ms-fullscreen .custom-video-controls,
+.custom-video-player:-ms-fullscreen .custom-fullscreen-btn {
+    position: fixed;
+    z-index: 10001;
 }
 
 .custom-mute-btn.muted .volume-waves,
