@@ -90,6 +90,51 @@ body {
     overflow: hidden;
 }
 
+/* Desktop Resonance Carousel Slides - Hidden by default on desktop */
+@media (min-width: 769px) {
+    .desktop-resonance-slide {
+        display: none;
+    }
+}
+
+/* Desktop Resonance Carousel Dots - Vertical Stack */
+.desktop-resonance-dots {
+    display: none; /* Hidden on mobile */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 50px 0 0px 0;
+    position: sticky;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.desktop-resonance-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #d4d4d4;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.desktop-resonance-dot:hover {
+    background-color: #a3a3a3;
+    transform: scale(1.2);
+}
+
+.desktop-resonance-dot.active {
+    background-color: #525252;
+    transform: scale(1.3);
+}
+
+/* Show desktop dots only on desktop */
+@media (min-width: 1025px) {
+    .desktop-resonance-dots {
+        display: flex;
+    }
+}
+
 /* Mobile: center vertically */
 @media (max-width: 1024px) {
     .main-content {
@@ -4451,6 +4496,18 @@ ol.exhibition-list {
     display: block;
 }
 
+/* Desktop-specific video player styles */
+@media (min-width: 769px) {
+    .desktop-resonance-slide .custom-video-player {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .desktop-resonance-slide .custom-video {
+        max-height: 500px;
+    }
+}
+
 .custom-video-overlay {
     position: absolute;
     top: 0;
@@ -4523,7 +4580,8 @@ ol.exhibition-list {
     pointer-events: auto;
 }
 
-.custom-mute-btn {
+.custom-mute-btn,
+.custom-volume-btn {
     background: transparent;
     border: none;
     cursor: pointer;
@@ -4534,17 +4592,20 @@ ol.exhibition-list {
     transition: transform 0.2s ease;
 }
 
-.custom-mute-btn:hover {
+.custom-mute-btn:hover,
+.custom-volume-btn:hover {
     transform: scale(1.1);
 }
 
-.custom-mute-btn .volume-icon {
+.custom-mute-btn .volume-icon,
+.custom-volume-btn .volume-icon {
     width: 24px;
     height: 24px;
     stroke: #525252;
 }
 
-.custom-mute-btn.muted .volume-waves {
+.custom-mute-btn.muted .volume-waves,
+.custom-volume-btn.muted .volume-waves {
     display: none;
 }
 
@@ -4824,6 +4885,5 @@ ol.exhibition-list {
     .audio-carousel-dot.active {
         background: var(--text-secondary);
     }
-}
 
 /* OLD MOBILE CAROUSEL DOT RULES REMOVED */

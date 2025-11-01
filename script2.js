@@ -557,6 +557,17 @@ class TerminalPortfolio {
             }
         }
         
+        // STEP 4.7: Re-initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page
+        const isMobileDevice = window.innerWidth <= 768;
+        if ((this.currentFile === 'exhibition-resonance' || this.currentFile === 'exhibition-embodied' || this.currentFile === 'exhibition-rotating') && !isMobileDevice) {
+            console.log('[Script2] Re-initializing desktop carousel after language switch');
+            setTimeout(() => {
+                if (window.initDesktopResonanceCarousel) {
+                    window.initDesktopResonanceCarousel();
+                }
+            }, 100);
+        }
+        
         // STEP 5: Process page animations removed - no typewriter animations
         
         // STEP 6: Update code-architecture animation if it exists and has a selected node
@@ -899,7 +910,34 @@ class TerminalPortfolio {
                     if (window.initMobileResonanceCarousel) {
                         window.initMobileResonanceCarousel();
                     }
+                    // Reset scroll after carousel initialization
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                        const mobileContentContainer = document.querySelector('.mobile-content-container');
+                        if (mobileContentContainer) {
+                            mobileContentContainer.scrollTop = 0;
+                        }
+                    }, 50);
                 }, 100);
+            }
+            
+            // Initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page and desktop
+            console.log('[Script2] Checking desktop carousel conditions...');
+            console.log('[Script2] fileId:', fileId);
+            console.log('[Script2] isMobileDevice:', isMobileDevice);
+            if ((fileId === 'exhibition-resonance' || fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && !isMobileDevice) {
+                console.log('[Script2] Conditions met! Scheduling desktop carousel init...');
+                setTimeout(() => {
+                    console.log('[Script2] Timeout fired, checking if initDesktopResonanceCarousel exists...');
+                    if (window.initDesktopResonanceCarousel) {
+                        console.log('[Script2] Calling initDesktopResonanceCarousel');
+                        window.initDesktopResonanceCarousel();
+                    } else {
+                        console.log('[Script2] ERROR: initDesktopResonanceCarousel not found!');
+                    }
+                }, 100);
+            } else {
+                console.log('[Script2] Conditions NOT met for desktop carousel');
             }
             
             // Initialize mobile embodied carousel if on embodied-algorithms or rotating-weights page and mobile
@@ -910,6 +948,14 @@ class TerminalPortfolio {
                         console.log('[Script2] Calling initMobileEmbodiedCarousel');
                         window.initMobileEmbodiedCarousel();
                     }
+                    // Reset scroll after carousel initialization
+                    setTimeout(() => {
+                        window.scrollTo(0, 0);
+                        const mobileContentContainer = document.querySelector('.mobile-content-container');
+                        if (mobileContentContainer) {
+                            mobileContentContainer.scrollTop = 0;
+                        }
+                    }, 50);
                     // Initialize custom video players after carousel is loaded
                     if (window.initCustomVideoPlayers) {
                         console.log('[Script2] Calling initCustomVideoPlayers');
@@ -2035,4 +2081,153 @@ window.initMobileEmbodiedCarousel = function() {
         
         updateCarousel();
     });
+};
+
+// Desktop Resonance Loop Carousel
+window.initDesktopResonanceCarousel = function() {
+    console.log('[Desktop Resonance Carousel] === INITIALIZATION STARTED ===');
+    
+    // Find the visible language section
+    const enSection = document.querySelector('.lang-en');
+    const krSection = document.querySelector('.lang-kr');
+    
+    console.log('[Desktop Resonance Carousel] enSection:', enSection);
+    console.log('[Desktop Resonance Carousel] krSection:', krSection);
+    
+    if (enSection) {
+        console.log('[Desktop Resonance Carousel] enSection display:', window.getComputedStyle(enSection).display);
+    }
+    if (krSection) {
+        console.log('[Desktop Resonance Carousel] krSection display:', window.getComputedStyle(krSection).display);
+    }
+    
+    // Determine which section is visible (check computed style or use currentLang from PageManager)
+    let visibleSection = null;
+    if (enSection && window.getComputedStyle(enSection).display !== 'none') {
+        visibleSection = enSection;
+        console.log('[Desktop Resonance Carousel] Using English section');
+    } else if (krSection && window.getComputedStyle(krSection).display !== 'none') {
+        visibleSection = krSection;
+        console.log('[Desktop Resonance Carousel] Using Korean section');
+    }
+    
+    if (!visibleSection) {
+        console.log('[Desktop Resonance Carousel] ERROR: No visible language section found!');
+        return;
+    }
+    
+    // Only select slides and dots from the visible language section
+    const slides = visibleSection.querySelectorAll('.desktop-resonance-slide');
+    const dots = visibleSection.querySelectorAll('.desktop-resonance-dot');
+    
+    console.log('[Desktop Resonance Carousel] Querying for slides...');
+    console.log('[Desktop Resonance Carousel] Found', slides.length, 'slides');
+    console.log('[Desktop Resonance Carousel] Slides:', slides);
+    
+    if (slides.length === 0) {
+        console.log('[Desktop Resonance Carousel] ERROR: No slides found!');
+        return;
+    }
+    
+    console.log('[Desktop Resonance Carousel] Found', dots.length, 'dots');
+    console.log('[Desktop Resonance Carousel] Dots:', dots);
+    
+    let currentSlide = 0;
+    
+    console.log('[Desktop Resonance Carousel] Hiding all slides except first...');
+    slides.forEach((slide, index) => {
+        if (index === 0) {
+            slide.style.display = 'block';
+            console.log('[Desktop Resonance Carousel] Slide', index, 'set to display: block');
+        } else {
+            slide.style.display = 'none';
+            console.log('[Desktop Resonance Carousel] Slide', index, 'set to display: none');
+        }
+    });
+    
+    // Reset all dots to inactive, then set first dot as active
+    console.log('[Desktop Resonance Carousel] Resetting dots...');
+    dots.forEach((dot, index) => {
+        dot.classList.remove('active');
+        if (index === 0) {
+            dot.classList.add('active');
+            console.log('[Desktop Resonance Carousel] First dot set as active');
+        }
+    });
+    
+    // Hide dots from the inactive language section
+    const allDots = document.querySelectorAll('.desktop-resonance-dot');
+    allDots.forEach(dot => {
+        // Check if this dot is in the visible section
+        if (visibleSection.contains(dot)) {
+            dot.parentElement.style.display = 'flex'; // Show the dots container
+        } else {
+            // Hide dots container from inactive language
+            const dotsContainer = dot.closest('.desktop-resonance-dots');
+            if (dotsContainer) {
+                dotsContainer.style.display = 'none';
+            }
+        }
+    });
+    
+    console.log('[Desktop Resonance Carousel] === INITIALIZATION COMPLETE ===');
+    
+    // Function to show a specific slide
+    function showSlide(index) {
+        console.log('[Desktop Resonance Carousel] showSlide called with index:', index);
+        
+        slides.forEach((slide, i) => {
+            slide.style.display = i === index ? 'block' : 'none';
+            console.log('[Desktop Resonance Carousel] Slide', i, 'display:', slide.style.display);
+        });
+        
+        // Update dots active state
+        dots.forEach((dot, i) => {
+            if (i === index) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+        
+        // Scroll to the top of the active slide
+        if (slides[index]) {
+            // Get the exhibition-content-wrapper (parent container)
+            const wrapper = slides[index].closest('.exhibition-content-wrapper');
+            if (wrapper) {
+                console.log('[Desktop Resonance Carousel] Scrolling to wrapper');
+                wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.log('[Desktop Resonance Carousel] WARNING: No wrapper found for slide', index);
+            }
+        }
+        
+        currentSlide = index;
+        console.log('[Desktop Resonance Carousel] Current slide now:', currentSlide);
+    }
+    
+    // Expose navigation function globally for dot clicks
+    window.navigateToResonanceSlide = function(index) {
+        showSlide(index);
+        // Only re-initialize video players if navigating to a slide with videos (slide 1 for embodied-algorithms, slide 1 for rotating-weights)
+        const currentSlideElement = slides[index];
+        if (currentSlideElement && currentSlideElement.querySelector('.custom-video-player')) {
+            setTimeout(() => {
+                if (window.initCustomVideoPlayers) {
+                    console.log('[Desktop Resonance Carousel] Re-initializing video players for slide', index);
+                    window.initCustomVideoPlayers();
+                }
+            }, 100);
+        }
+    };
+    
+    console.log('[Desktop Resonance Carousel] Initialized with', slides.length, 'slides');
+    
+    // Re-initialize video players after carousel setup
+    setTimeout(() => {
+        if (window.initCustomVideoPlayers) {
+            console.log('[Desktop Resonance Carousel] Re-initializing video players');
+            window.initCustomVideoPlayers();
+        }
+    }, 200);
 };

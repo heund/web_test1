@@ -13,7 +13,7 @@ function initCustomVideoPlayers() {
     videoPlayers.forEach((player, index) => {
         const video = player.querySelector('.custom-video');
         const playBtn = player.querySelector('.custom-play-btn');
-        const muteBtn = player.querySelector('.custom-mute-btn');
+        const muteBtn = player.querySelector('.custom-mute-btn') || player.querySelector('.custom-volume-btn');
         const volumeSlider = player.querySelector('.custom-volume-slider');
         
         if (!video || !playBtn) {
@@ -30,7 +30,7 @@ function initCustomVideoPlayers() {
         // Get fresh references
         const freshVideo = player.querySelector('.custom-video');
         const freshPlayBtn = player.querySelector('.custom-play-btn');
-        const freshMuteBtn = player.querySelector('.custom-mute-btn');
+        const freshMuteBtn = player.querySelector('.custom-mute-btn') || player.querySelector('.custom-volume-btn');
         const freshVolumeSlider = player.querySelector('.custom-volume-slider');
         
         // Play/Pause on button click
