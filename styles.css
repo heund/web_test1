@@ -3,7 +3,7 @@
  * Centered floating window with paper aesthetic
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Noto+Serif+KR:wght@400;600;700&family=Lora:wght@400;500;600;700&display=swap');
 
 :root {
     /* Color Palette - Paper Aesthetic */
@@ -30,7 +30,7 @@
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
     --font-display: 'Crimson Pro', serif;
-    --font-cambria: 'Cambria', serif;
+    --font-cambria: 'Lora', serif;
 }
 
 * {
@@ -1004,8 +1004,16 @@ body:fullscreen .main-content {
         font-size: 22px !important;
         font-weight: 600 !important;
         margin-bottom: 32px !important;
-        margin-top: 0 !important;
-        color: var(--text-primary) !important;
+        line-height: 1.4 !important;
+        letter-spacing: -0.02em !important;
+    }
+    
+    /* Second h2 (Systems Artist) - smaller and less gap */
+    .mobile-content-container .mobile-about-text-section h2:nth-of-type(2) {
+        font-size: 14px !important;
+        font-weight: 400 !important;
+        margin-top: -20px !important;
+        margin-bottom: 32px !important;
     }
     
     /* About section h1 - exclude from exhibition header margin style */
@@ -1043,7 +1051,7 @@ body:fullscreen .main-content {
         margin: 0 0 4px 0 !important;
         font-size: 26px !important;
         font-weight: 400 !important;
-        font-family: 'Noto Serif', serif !important;
+        font-family: 'Lora', serif !important;
         line-height: 1.4 !important;
         letter-spacing: 0.01em;
     }
@@ -2058,7 +2066,7 @@ body:fullscreen .main-content {
 h1 {
     font-size: 2.5rem;
     font-weight: 400;
-    font-family: 'Noto Serif', serif;
+    font-family: 'Lora', serif;
     margin-bottom: 16px;
     color: var(--text-primary);
     line-height: 1.2;
@@ -2073,7 +2081,7 @@ h1 {
 h2 {
     font-size: 1.75rem;
     font-weight: 500;
-    font-family: 'Noto Serif', serif;
+    font-family: 'Lora', serif;
     margin-top: 40px;
     margin-bottom: 16px;
     color: var(--text-primary);
@@ -2092,7 +2100,7 @@ h2 {
 h3 {
     font-size: 1.25rem;
     font-weight: 500;
-    font-family: 'Noto Serif', serif;
+    font-family: 'Lora', serif;
     margin-top: 32px;
     margin-bottom: 12px;
     color: var(--text-primary);
@@ -2523,7 +2531,7 @@ h3 {
 
 /* Emphasis words that break out of terminal style */
 .emphasis-word {
-    font-family: 'Crimson Pro', 'Noto Serif KR', serif;
+    font-family: 'Lora', 'Noto Serif KR', serif;
     font-size: 18px;
     font-weight: 600;
     font-style: italic;
@@ -2832,14 +2840,14 @@ body[data-lang="kr"] .lang-kr {
     font-family: 'IBM Plex Mono', monospace !important;
 }
 
-/* English headings use Cambria */
+/* English headings use Lora */
 .lang-en h1,
 .lang-en h2,
 .lang-en h3,
 .lang-en h4,
 .lang-en h5,
 .lang-en h6 {
-    font-family: var(--font-cambria) !important;
+    font-family: 'Lora', serif !important;
 }
 
 /* English exhibition subheadings bold */
@@ -3440,7 +3448,7 @@ ol.exhibition-list {
     .content-body h1,
     .mobile-content-container h1 {
         font-size: 26px !important;
-        font-family: 'Noto Serif KR', 'Crimson Pro', serif !important;
+        font-family: 'Lora', 'Noto Serif KR', serif !important;
     }
     
     .content-body h2 {
@@ -3457,6 +3465,8 @@ ol.exhibition-list {
    ============================================ */
 .waving-hand-svg {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -3528,6 +3538,8 @@ ol.exhibition-list {
    ============================================ */
 .shaking-frown-svg {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -3611,6 +3623,8 @@ ol.exhibition-list {
    ============================================ */
 .fading-heart-svg {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -3644,6 +3658,8 @@ ol.exhibition-list {
    ============================================ */
 .rotating-funny-svg {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -3700,6 +3716,8 @@ ol.exhibition-list {
    ============================================ */
 .rotating-fire-svg {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -3775,6 +3793,8 @@ ol.exhibition-list {
    ============================================ */
 .static-cat-svg {
     position: fixed;
+    top: 50%;
+    left: 50%;
     z-index: 9999;
     pointer-events: none;
     transform: translate(-50%, -50%);
@@ -4421,7 +4441,7 @@ ol.exhibition-list {
     .content-body h2 {
         font-size: 1.75rem !important; /* Match exhibition h2 */
         font-weight: 500 !important; /* Match exhibition h2 */
-        font-family: 'Noto Serif', serif !important; /* Match exhibition h2 */
+        font-family: 'Lora', serif !important; /* Match exhibition h2 */
         margin-top: 40px !important;
         margin-bottom: 16px !important;
         color: var(--text-primary) !important;
