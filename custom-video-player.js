@@ -32,6 +32,15 @@ function initCustomVideoPlayers() {
             player.appendChild(spinner);
         }
         
+        // Add poster image if it doesn't exist and video has poster attribute
+        if (!player.querySelector('.video-poster-img') && video.poster) {
+            const posterImg = document.createElement('img');
+            posterImg.className = 'video-poster-img';
+            posterImg.src = video.poster;
+            posterImg.alt = 'Video thumbnail';
+            player.insertBefore(posterImg, player.firstChild);
+        }
+        
         // Remove any existing listeners to prevent duplicates
         const newPlayBtn = playBtn.cloneNode(true);
         playBtn.parentNode.replaceChild(newPlayBtn, playBtn);
