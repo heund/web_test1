@@ -25,6 +25,13 @@ function initCustomVideoPlayers() {
             return;
         }
         
+        // Add loading spinner if it doesn't exist
+        if (!player.querySelector('.video-loading-spinner')) {
+            const spinner = document.createElement('div');
+            spinner.className = 'video-loading-spinner';
+            player.appendChild(spinner);
+        }
+        
         // Remove any existing listeners to prevent duplicates
         const newPlayBtn = playBtn.cloneNode(true);
         playBtn.parentNode.replaceChild(newPlayBtn, playBtn);
@@ -145,6 +152,23 @@ function initCustomVideoPlayers() {
         
         freshVideo.addEventListener('play', function() {
             player.classList.add('playing');
+        });
+        
+        // Show loading spinner while video is loading
+        freshVideo.addEventListener('waiting', function() {
+            player.classList.add('loading');
+        });
+        
+        freshVideo.addEventListener('loadstart', function() {
+            player.classList.add('loading');
+        });
+        
+        freshVideo.addEventListener('canplay', function() {
+            player.classList.remove('loading');
+        });
+        
+        freshVideo.addEventListener('playing', function() {
+            player.classList.remove('loading');
         });
         
         // Store reference for carousel pause functionality

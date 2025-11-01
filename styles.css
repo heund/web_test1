@@ -4606,6 +4606,32 @@ ol.exhibition-list {
     fill: #3a3a3a;
 }
 
+/* Video Loading Spinner */
+.video-loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(82, 82, 82, 0.2);
+    border-top-color: #525252;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.custom-video-player.loading .video-loading-spinner {
+    opacity: 1;
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
 /* Custom Video Controls */
 .custom-video-controls {
     position: absolute;

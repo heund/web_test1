@@ -1865,6 +1865,8 @@ class TerminalPortfolio {
         if (videoViewer && videoPlayer) {
             videoTitle.textContent = title;
             videoPlayer.src = src;
+            // Set poster image (replace .mp4 with _poster.jpg)
+            videoPlayer.poster = src.replace('.mp4', '_poster.jpg');
             videoPlayer.load();
             videoViewer.classList.add('active');
             
@@ -1886,6 +1888,13 @@ class TerminalPortfolio {
         const fullscreenBtn = player.querySelector('.custom-fullscreen-btn');
         
         if (!video || !playBtn) return;
+        
+        // Add loading spinner if it doesn't exist
+        if (!player.querySelector('.video-loading-spinner')) {
+            const spinner = document.createElement('div');
+            spinner.className = 'video-loading-spinner';
+            player.appendChild(spinner);
+        }
         
         // Play/Pause on button click
         playBtn.onclick = (e) => {
@@ -1950,6 +1959,12 @@ class TerminalPortfolio {
         // Update playing state
         video.onplay = () => player.classList.add('playing');
         video.onpause = () => player.classList.remove('playing');
+        
+        // Show loading spinner while video is loading
+        video.addEventListener('waiting', () => player.classList.add('loading'));
+        video.addEventListener('loadstart', () => player.classList.add('loading'));
+        video.addEventListener('canplay', () => player.classList.remove('loading'));
+        video.addEventListener('playing', () => player.classList.remove('loading'));
     }
     
     closeVideoViewer() {
