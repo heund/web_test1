@@ -2389,6 +2389,10 @@ h3 {
     font-size: 14px;
 }
 
+.command-input::-webkit-input-placeholder {
+    color: var(--text-muted);
+}
+
 .command-input::placeholder {
     color: var(--text-muted);
 }
