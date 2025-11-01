@@ -4544,11 +4544,9 @@ ol.exhibition-list {
 .custom-video {
     width: 100%;
     height: auto;
-    min-height: 300px;
     max-height: 80vh;
     object-fit: contain;
     display: block;
-    background: #000;
 }
 
 /* Desktop-specific video player styles */
