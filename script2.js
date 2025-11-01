@@ -1859,7 +1859,8 @@ class TerminalPortfolio {
         
         if (videoViewer && videoPlayer) {
             videoTitle.textContent = title;
-            videoPlayer.src = src;
+            // Add #t=0.001 to force iOS Safari to show first frame
+            videoPlayer.src = src + '#t=0.001';
             // Set poster image (replace .mp4 with _poster.jpg)
             videoPlayer.poster = src.replace('.mp4', '_poster.jpg');
             videoPlayer.load();
@@ -1889,15 +1890,6 @@ class TerminalPortfolio {
             const spinner = document.createElement('div');
             spinner.className = 'video-loading-spinner';
             player.appendChild(spinner);
-        }
-        
-        // Add poster image if it doesn't exist and video has poster attribute
-        if (!player.querySelector('.video-poster-img') && video.poster) {
-            const posterImg = document.createElement('img');
-            posterImg.className = 'video-poster-img';
-            posterImg.src = video.poster;
-            posterImg.alt = 'Video thumbnail';
-            player.insertBefore(posterImg, player.firstChild);
         }
         
         // Play/Pause on button click
