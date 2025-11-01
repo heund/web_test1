@@ -922,22 +922,12 @@ class TerminalPortfolio {
             }
             
             // Initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page and desktop
-            console.log('[Script2] Checking desktop carousel conditions...');
-            console.log('[Script2] fileId:', fileId);
-            console.log('[Script2] isMobileDevice:', isMobileDevice);
             if ((fileId === 'exhibition-resonance' || fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && !isMobileDevice) {
-                console.log('[Script2] Conditions met! Scheduling desktop carousel init...');
                 setTimeout(() => {
-                    console.log('[Script2] Timeout fired, checking if initDesktopResonanceCarousel exists...');
                     if (window.initDesktopResonanceCarousel) {
-                        console.log('[Script2] Calling initDesktopResonanceCarousel');
                         window.initDesktopResonanceCarousel();
-                    } else {
-                        console.log('[Script2] ERROR: initDesktopResonanceCarousel not found!');
                     }
                 }, 100);
-            } else {
-                console.log('[Script2] Conditions NOT met for desktop carousel');
             }
             
             // Initialize mobile embodied carousel if on embodied-algorithms or rotating-weights page and mobile
@@ -1692,11 +1682,14 @@ class TerminalPortfolio {
             });
         });
         
-        // Folder item click handlers (open images/pdfs/text)
+        // Folder item click handlers (open images/pdfs/text/videos)
         document.querySelectorAll('.folder-item').forEach(item => {
             item.addEventListener('click', () => {
                 const type = item.dataset.type;
                 const src = item.dataset.src;
+                const videoSrc = item.dataset.videoSrc;
+                
+                console.log('[Folder Item] Clicked:', {type, src, videoSrc});
                 
                 if (type === 'image') {
                     openLightbox(src);
@@ -1707,6 +1700,10 @@ class TerminalPortfolio {
                     // Open text document in viewer window
                     const content = item.dataset.content;
                     this.openTextViewer(content, item.querySelector('.folder-item-label').textContent);
+                } else if (type === 'video') {
+                    console.log('[Folder Item] Video type detected, calling openVideoViewer');
+                    // Open video in viewer window
+                    this.openVideoViewer(videoSrc, item.querySelector('.folder-item-label').textContent);
                 }
             });
         });
@@ -1724,6 +1721,14 @@ class TerminalPortfolio {
         if (textViewerClose) {
             textViewerClose.addEventListener('click', () => {
                 this.closeTextViewer();
+            });
+        }
+        
+        // Video viewer close button
+        const videoViewerClose = document.getElementById('video-viewer-close');
+        if (videoViewerClose) {
+            videoViewerClose.addEventListener('click', () => {
+                this.closeVideoViewer();
             });
         }
     }
@@ -1849,6 +1854,50 @@ class TerminalPortfolio {
         
         if (textViewer) {
             textViewer.classList.remove('active');
+        }
+    }
+    
+    openVideoViewer(src, title) {
+        console.log('[Video Viewer] Opening video:', src);
+        console.log('[Video Viewer] Title:', title);
+        
+        const videoViewer = document.getElementById('video-viewer');
+        const videoPlayer = document.getElementById('video-player');
+        const videoSource = document.getElementById('video-source');
+        const videoTitle = document.getElementById('video-viewer-title');
+        
+        console.log('[Video Viewer] Elements:', {
+            videoViewer: !!videoViewer,
+            videoPlayer: !!videoPlayer,
+            videoSource: !!videoSource,
+            videoTitle: !!videoTitle
+        });
+        
+        if (videoViewer && videoPlayer && videoSource) {
+            videoTitle.textContent = title;
+            videoSource.src = src;
+            console.log('[Video Viewer] Video source set to:', videoSource.src);
+            videoPlayer.load();
+            console.log('[Video Viewer] Video load() called');
+            videoViewer.classList.add('active');
+            console.log('[Video Viewer] Added active class, classList:', videoViewer.classList);
+            console.log('[Video Viewer] Display style:', window.getComputedStyle(videoViewer).display);
+            console.log('[Video Viewer] Z-index:', window.getComputedStyle(videoViewer).zIndex);
+        } else {
+            console.error('[Video Viewer] Missing elements!');
+        }
+    }
+    
+    closeVideoViewer() {
+        const videoViewer = document.getElementById('video-viewer');
+        const videoPlayer = document.getElementById('video-player');
+        
+        if (videoViewer) {
+            videoViewer.classList.remove('active');
+            if (videoPlayer) {
+                videoPlayer.pause();
+                videoPlayer.currentTime = 0;
+            }
         }
     }
 }

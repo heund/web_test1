@@ -311,6 +311,10 @@ Maybe the future of AI isn't about making machines more human, but about creatin
                 <i data-lucide="file-text" class="folder-item-icon"></i>
                 <span class="folder-item-label">echo_chamber_reflections.txt</span>
             </div>
+            <div class="folder-item" data-type="video" data-video-src="videos/youtube_forensics.mp4">
+                <i data-lucide="video" class="folder-item-icon"></i>
+                <span class="folder-item-label">youtube_forensics.mp4</span>
+            </div>
         </div>
     </div>
     
@@ -337,6 +341,22 @@ Maybe the future of AI isn't about making machines more human, but about creatin
         </div>
         <div class="text-viewer-content">
             <pre id="text-content"></pre>
+        </div>
+    </div>
+    
+    <!-- Video Viewer Window -->
+    <div class="video-viewer-window" id="video-viewer">
+        <div class="folder-window-titlebar">
+            <div class="folder-window-title" id="video-viewer-title">Video Player</div>
+            <div class="window-controls">
+                <span class="window-btn close" id="video-viewer-close"></span>
+            </div>
+        </div>
+        <div class="video-viewer-content">
+            <video id="video-player" controls>
+                <source id="video-source" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
     
