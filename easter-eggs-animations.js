@@ -3,19 +3,6 @@
 
 class EasterEggAnimations {
     
-    // Helper function to center element using JavaScript (Safari/Opera fix)
-    static centerElement(element) {
-        // Small delay to ensure viewport is stable (Safari/Opera need this on first load)
-        setTimeout(() => {
-            // Use clientHeight/clientWidth for accurate viewport (excludes browser UI)
-            const centerY = document.documentElement.clientHeight / 2;
-            const centerX = document.documentElement.clientWidth / 2;
-            
-            element.style.top = `${centerY}px`;
-            element.style.left = `${centerX}px`;
-        }, 10);
-    }
-    
     // Waving hand animation
     static showWavingHand() {
         // Create hand image element
@@ -23,9 +10,6 @@ class EasterEggAnimations {
         handContainer.className = 'waving-hand-svg';
         handContainer.innerHTML = `<img src="icons/hand.svg" alt="Waving hand">`;
         document.body.appendChild(handContainer);
-        
-        // Center using JavaScript for Safari compatibility
-        EasterEggAnimations.centerElement(handContainer);
         
         // Remove after animation completes
         setTimeout(() => {
@@ -41,9 +25,6 @@ class EasterEggAnimations {
         frownContainer.innerHTML = `<img src="icons/swear.svg" alt="Disapproving frown">`;
         document.body.appendChild(frownContainer);
         
-        // Center using JavaScript for Safari compatibility
-        EasterEggAnimations.centerElement(frownContainer);
-        
         // Remove after animation completes
         setTimeout(() => {
             frownContainer.remove();
@@ -57,9 +38,6 @@ class EasterEggAnimations {
         catContainer.className = 'static-cat-svg';
         catContainer.innerHTML = `<img src="icons/cat.svg" alt="Cat">`;
         document.body.appendChild(catContainer);
-        
-        // Center using JavaScript for Safari compatibility
-        EasterEggAnimations.centerElement(catContainer);
         
         // Remove after animation completes
         setTimeout(() => {
@@ -75,9 +53,6 @@ class EasterEggAnimations {
         heartContainer.innerHTML = `<img src="icons/heart.svg" alt="Heart">`;
         document.body.appendChild(heartContainer);
         
-        // Center using JavaScript for Safari compatibility
-        EasterEggAnimations.centerElement(heartContainer);
-        
         // Remove after animation completes
         setTimeout(() => {
             heartContainer.remove();
@@ -92,9 +67,6 @@ class EasterEggAnimations {
         funnyContainer.innerHTML = `<img src="icons/funny.svg" alt="Funny">`;
         document.body.appendChild(funnyContainer);
         
-        // Center using JavaScript for Safari compatibility
-        EasterEggAnimations.centerElement(funnyContainer);
-        
         // Remove after animation completes
         setTimeout(() => {
             funnyContainer.remove();
@@ -108,9 +80,6 @@ class EasterEggAnimations {
         fireContainer.className = 'rotating-fire-svg';
         fireContainer.innerHTML = `<img src="icons/fire.svg" alt="Fire">`;
         document.body.appendChild(fireContainer);
-        
-        // Center using JavaScript for Safari compatibility
-        EasterEggAnimations.centerElement(fireContainer);
         
         // Remove after animation completes
         setTimeout(() => {
