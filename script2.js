@@ -931,10 +931,8 @@ class TerminalPortfolio {
             
             // Initialize mobile embodied carousel if on embodied-algorithms or rotating-weights page and mobile
             if ((fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && isMobileDevice) {
-                console.log('[Script2] Initializing embodied carousel for:', fileId);
                 setTimeout(() => {
                     if (window.initMobileEmbodiedCarousel) {
-                        console.log('[Script2] Calling initMobileEmbodiedCarousel');
                         window.initMobileEmbodiedCarousel();
                     }
                     // Reset scroll after carousel initialization
@@ -947,7 +945,6 @@ class TerminalPortfolio {
                     }, 50);
                     // Initialize custom video players after carousel is loaded
                     if (window.initCustomVideoPlayers) {
-                        console.log('[Script2] Calling initCustomVideoPlayers');
                         window.initCustomVideoPlayers();
                     }
                 }, 200);
@@ -2298,19 +2295,15 @@ window.initDesktopResonanceCarousel = function() {
         if (currentSlideElement && currentSlideElement.querySelector('.custom-video-player')) {
             setTimeout(() => {
                 if (window.initCustomVideoPlayers) {
-                    console.log('[Desktop Resonance Carousel] Re-initializing video players for slide', index);
                     window.initCustomVideoPlayers();
                 }
             }, 100);
         }
     };
     
-    console.log('[Desktop Resonance Carousel] Initialized with', slides.length, 'slides');
-    
     // Re-initialize video players after carousel setup
     setTimeout(() => {
         if (window.initCustomVideoPlayers) {
-            console.log('[Desktop Resonance Carousel] Re-initializing video players');
             window.initCustomVideoPlayers();
         }
     }, 200);
