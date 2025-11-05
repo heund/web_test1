@@ -689,8 +689,8 @@
         <div class="mobile-embodied-slide" style="padding: 20px 6px;">
             <div style="display: flex; align-items: center; justify-content: center;">
                 <div class="custom-video-player">
-                    <video playsinline class="custom-video">
-                        <source src="http://heund.github.io/web_test1/videos/embodied_interaction.mp4" type="video/mp4">
+                    <video playsinline class="custom-video" controlsList="nodownload" preload="none" poster="../videos/embodied_interaction_poster.jpg">
+                        <source src="../videos/embodied_interaction.mp4#t=0.001" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                     <div class="custom-video-overlay">
@@ -709,6 +709,11 @@
                         </button>
                         <input type="range" class="custom-volume-slider" min="0" max="100" value="100">
                     </div>
+                    <button class="custom-fullscreen-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                        </svg>
+                    </button>
                 </div>
             </div>
             <p class="cv-medium" style="margin-top: 16px; margin-bottom: 0; text-align: center;">흐르는 알고리즘: 인터랙티브 데이터 사운드화</p>
