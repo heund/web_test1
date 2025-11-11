@@ -198,35 +198,10 @@ class TerminalPortfolio {
                 html: null
             },
             
-            // PROCESS FILE
-            'process': {
-                breadcrumb: 'process.md',
-                htmlFile: 'process.html',
-                html: null
-            },
-            
             // DESKTOP ABOUT (MOBILE STYLE)
             'desktop-about': {
                 breadcrumb: 'desktop-about.md',
                 htmlFile: 'desktop-about.html',
-                html: null
-            },
-            
-            'process-systems': {
-                breadcrumb: 'process/systems.md',
-                htmlFile: 'process/process-systems.html',
-                html: null
-            },
-            
-            'process-visual': {
-                breadcrumb: 'process/visual-language.md',
-                htmlFile: 'process/process-visual.html',
-                html: null
-            },
-            
-            'process-experience': {
-                breadcrumb: 'process/experience.md',
-                htmlFile: 'process/process-experience.html',
                 html: null
             },
             
@@ -242,7 +217,7 @@ class TerminalPortfolio {
                         <div class="terminal-line-blank terminal-line-blank-en-only"></div>
                         <div class="terminal-line-email">
                             <span class="prompt-symbol">></span>
-                            <a href="mailto:hello@heund.net" class="contact-email">hello@heund.net</a>
+                            <a href="#" class="contact-email" id="email-link"></a>
                         </div>
                         <div class="terminal-line-blank"></div>
                         <div class="terminal-line-muted">
@@ -252,7 +227,21 @@ class TerminalPortfolio {
                             <a href="https://www.youtube.com/@heund" target="_blank" class="contact-link">YouTube</a>
                         </div>
                     </div>
-                `
+                `,
+                // Function to initialize email after content is loaded
+                initEmail: function() {
+                    const emailLink = document.getElementById('email-link');
+                    if (emailLink) {
+                        // Obfuscated email parts
+                        const user = 'hello';
+                        const domain = 'heund';
+                        const tld = 'net';
+                        const email = user + '@' + domain + '.' + tld;
+                        
+                        emailLink.href = 'mailto:' + email;
+                        emailLink.textContent = email;
+                    }
+                }
             }
         };
         
@@ -276,12 +265,23 @@ class TerminalPortfolio {
         // Set default language on page load
         await this.switchLanguage(this.currentLang);
         
-        this.loadContent('hero');
+        // Check for hash in URL and load that content, otherwise load hero
+        const hash = window.location.hash.substring(1); // Remove the # symbol
+        const initialContent = hash && this.content[hash] ? hash : 'hero';
+        this.loadContent(initialContent);
         
         // Set initial main content position
         setTimeout(() => {
             this.updateMainContentPosition();
         }, 100);
+        
+        // Handle hash changes (browser back/forward)
+        window.addEventListener('hashchange', () => {
+            const newHash = window.location.hash.substring(1);
+            if (newHash && this.content[newHash]) {
+                this.loadContent(newHash);
+            }
+        });
     }
     
     setupMobileContent() {
@@ -343,6 +343,8 @@ class TerminalPortfolio {
             item.addEventListener('click', () => {
                 const fileId = item.dataset.file;
                 if (fileId) {
+                    // Update URL hash for SEO and browser history
+                    window.location.hash = fileId;
                     this.loadContent(fileId);
                     
                     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -357,6 +359,8 @@ class TerminalPortfolio {
             navHeader.addEventListener('click', () => {
                 const fileId = navHeader.dataset.file;
                 if (fileId) {
+                    // Update URL hash for SEO and browser history
+                    window.location.hash = fileId;
                     this.loadContent(fileId);
                     
                     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -689,8 +693,8 @@ class TerminalPortfolio {
                 // Desktop about structure
                 htmlContent = `
                     <div class="desktop-about-container">
-                        <!-- Sticky parallax overlay with scattered text -->
-                        <div class="desktop-about-sticky">
+                        <!-- Sticky parallax overlay with scattered text (hidden from crawlers) -->
+                        <div class="desktop-about-sticky" aria-hidden="true">
                             <div class="about-terminal">
                                 <div class="terminal-output">
                                     <p class="output-line">${scatteredText}</p>
@@ -698,7 +702,7 @@ class TerminalPortfolio {
                             </div>
                         </div>
                         
-                        <!-- Scrollable content area below -->
+                        <!-- Scrollable content area below (main content for SEO) -->
                         <div class="desktop-about-scroll-content">
                             <div class="desktop-about-spacer"></div>
                             <div class="desktop-about-text-section">
@@ -715,8 +719,8 @@ class TerminalPortfolio {
                 // Mobile about structure
                 htmlContent = `
                     <div class="mobile-about-container">
-                        <!-- Sticky parallax overlay with scattered text -->
-                        <div class="mobile-about-sticky">
+                        <!-- Sticky parallax overlay with scattered text (hidden from crawlers) -->
+                        <div class="mobile-about-sticky" aria-hidden="true">
                             <div class="about-terminal">
                                 <div class="terminal-prompt">
                                     <span class="prompt-symbol">></span>
@@ -728,7 +732,7 @@ class TerminalPortfolio {
                             </div>
                         </div>
                         
-                        <!-- Scrollable content area below -->
+                        <!-- Scrollable content area below (main content for SEO) -->
                         <div class="mobile-about-scroll-content">
                             <div class="mobile-about-spacer"></div>
                             <div class="mobile-about-text-section">
@@ -859,99 +863,67 @@ class TerminalPortfolio {
             `;
         }
         
-        // Check if mobile and process page
+        // Check if mobile
         const isMobileDevice = window.innerWidth <= 1024;
         
-        // Initialize mobile horizontal section carousel for process page
-        if (isMobileDevice && fileId === 'process') {
-            // Cleanup any existing carousel
-            if (window.cleanupMobileProcessCarousel) {
-                window.cleanupMobileProcessCarousel();
-            }
-            
-            // Initialize horizontal section carousel (which loads process.html sections)
+        // Load content into container
+        contentArea.innerHTML = htmlContent;
+        
+        // Initialize mobile resonance carousel if on resonance-loop page and mobile
+        if (fileId === 'exhibition-resonance' && isMobileDevice) {
             setTimeout(() => {
-                if (window.initMobileProcessCarousel) {
-                    window.initMobileProcessCarousel();
+                if (window.initMobileResonanceCarousel) {
+                    window.initMobileResonanceCarousel();
+                }
+                // Reset scroll after carousel initialization
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                    const mobileContentContainer = document.querySelector('.mobile-content-container');
+                    if (mobileContentContainer) {
+                        mobileContentContainer.scrollTop = 0;
+                    }
+                }, 50);
+            }, 100);
+        }
+        
+        // Initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page and desktop
+        if ((fileId === 'exhibition-resonance' || fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && !isMobileDevice) {
+            setTimeout(() => {
+                if (window.initDesktopResonanceCarousel) {
+                    window.initDesktopResonanceCarousel();
                 }
             }, 100);
-        } else {
-            // Cleanup carousel if switching away from process on mobile
-            if (isMobileDevice && window.cleanupMobileProcessCarousel) {
-                window.cleanupMobileProcessCarousel();
-            }
-            
-            // Load into appropriate container (non-process or desktop)
-            contentArea.innerHTML = htmlContent;
-            
-            // Initialize carousels if this is the process page on desktop
-            if (fileId === 'process') {
+        }
+        
+        // Initialize mobile embodied carousel if on embodied-algorithms or rotating-weights page and mobile
+        if ((fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && isMobileDevice) {
+            setTimeout(() => {
+                if (window.initMobileEmbodiedCarousel) {
+                    window.initMobileEmbodiedCarousel();
+                }
+                // Reset scroll after carousel initialization
                 setTimeout(() => {
-                    // Initialize new clean process carousels
-                    if (window.initializeProcessCarousels) {
-                        window.initializeProcessCarousels();
+                    window.scrollTo(0, 0);
+                    const mobileContentContainer = document.querySelector('.mobile-content-container');
+                    if (mobileContentContainer) {
+                        mobileContentContainer.scrollTop = 0;
                     }
-                    
-                    // Initialize audio carousels
-                    const audioCarousels = document.querySelectorAll('[data-audio-carousel]');
-                    audioCarousels.forEach(carousel => {
-                        const carouselId = carousel.getAttribute('data-audio-carousel');
-                        if (window.initializeAudioCarousel) {
-                            window.initializeAudioCarousel(carouselId);
-                        }
-                    });
-                }, 100);
-            }
-            
-            // Initialize mobile resonance carousel if on resonance-loop page and mobile
-            if (fileId === 'exhibition-resonance' && isMobileDevice) {
-                setTimeout(() => {
-                    if (window.initMobileResonanceCarousel) {
-                        window.initMobileResonanceCarousel();
-                    }
-                    // Reset scroll after carousel initialization
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                        const mobileContentContainer = document.querySelector('.mobile-content-container');
-                        if (mobileContentContainer) {
-                            mobileContentContainer.scrollTop = 0;
-                        }
-                    }, 50);
-                }, 100);
-            }
-            
-            // Initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page and desktop
-            if ((fileId === 'exhibition-resonance' || fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && !isMobileDevice) {
-                setTimeout(() => {
-                    if (window.initDesktopResonanceCarousel) {
-                        window.initDesktopResonanceCarousel();
-                    }
-                }, 100);
-            }
-            
-            // Initialize mobile embodied carousel if on embodied-algorithms or rotating-weights page and mobile
-            if ((fileId === 'exhibition-embodied' || fileId === 'exhibition-rotating') && isMobileDevice) {
-                setTimeout(() => {
-                    if (window.initMobileEmbodiedCarousel) {
-                        window.initMobileEmbodiedCarousel();
-                    }
-                    // Reset scroll after carousel initialization
-                    setTimeout(() => {
-                        window.scrollTo(0, 0);
-                        const mobileContentContainer = document.querySelector('.mobile-content-container');
-                        if (mobileContentContainer) {
-                            mobileContentContainer.scrollTop = 0;
-                        }
-                    }, 50);
-                    // Initialize custom video players after carousel is loaded
-                    if (window.initCustomVideoPlayers) {
-                        window.initCustomVideoPlayers();
-                    }
-                }, 200);
-            }
+                }, 50);
+                // Initialize custom video players after carousel is loaded
+                if (window.initCustomVideoPlayers) {
+                    window.initCustomVideoPlayers();
+                }
+            }, 200);
         }
         
         this.currentFile = fileId;
+        
+        // Initialize email obfuscation for contact page
+        if (fileId === 'contact' && contentData.initEmail) {
+            setTimeout(() => {
+                contentData.initEmail();
+            }, 10);
+        }
         
         // Update main content position based on current page
         this.updateMainContentPosition();
@@ -998,11 +970,6 @@ class TerminalPortfolio {
             
             // Add scroll lock functionality for desktop about
             this.setupDesktopAboutScrollLock();
-        } else if (fileId === 'process') {
-            // No animations for process page
-            if (contentBody) {
-                contentBody.style.overflow = 'auto'; // Allow normal scrolling
-            }
         } else {
             // Reset overflow for other pages
             if (contentBody) {
@@ -1073,22 +1040,21 @@ class TerminalPortfolio {
                     });
                     
                     // Animate paragraphs and text (0.2s + stagger)
-                    // Only select from visible language section (except process page which has content outside lang container)
-                    const isProcessPage = fileId === 'process';
+                    // Only select from visible language section
                     const currentLangClass = this.currentLang === 'kr' ? '.lang-kr' : '.lang-en';
-                    const langContainer = !isProcessPage ? document.querySelector(currentLangClass) : null;
+                    const langContainer = document.querySelector(currentLangClass);
                     
                     let paragraphs;
                     if (isMobile) {
                         // On mobile: include carousel content, exclude desktop accordion
                         paragraphs = langContainer ? 
-                            langContainer.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p') :
-                            document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p');
+                            langContainer.querySelectorAll('.exhibition-text, p:not(.exhibition-text)') :
+                            document.querySelectorAll('.exhibition-text, p:not(.exhibition-text)');
                     } else {
                         // On desktop: exclude mobile carousel content
                         paragraphs = langContainer ? 
-                            langContainer.querySelectorAll('.exhibition-text:not(.mobile-resonance-carousel *):not(.mobile-embodied-carousel *), p:not(.exhibition-text):not(.mobile-resonance-carousel *):not(.mobile-embodied-carousel *), .process-section p') :
-                            document.querySelectorAll('.exhibition-text, p:not(.exhibition-text), .process-section p');
+                            langContainer.querySelectorAll('.exhibition-text:not(.mobile-resonance-carousel *):not(.mobile-embodied-carousel *), p:not(.exhibition-text):not(.mobile-resonance-carousel *):not(.mobile-embodied-carousel *)') :
+                            document.querySelectorAll('.exhibition-text, p:not(.exhibition-text)');
                     }
                     
                     paragraphs.forEach((element, index) => {
@@ -1127,12 +1093,12 @@ class TerminalPortfolio {
                 this.animatedPages.add(fileId);
             } else {
                 // Revisit: add classes immediately without animation
-                document.querySelectorAll('h1, h2, .exhibition-text, .cv-entry, p, .process-section p, .terminal-line, .terminal-line-primary, .terminal-line-email, .terminal-line-muted').forEach(element => {
+                document.querySelectorAll('h1, h2, .exhibition-text, .cv-entry, p, .terminal-line, .terminal-line-primary, .terminal-line-email, .terminal-line-muted').forEach(element => {
                     element.classList.add('fade-in-exhibition');
                     element.style.opacity = '1';
                     element.style.visibility = 'visible';
                 });
-                document.querySelectorAll('.grid-image, .image-item, .cv-flyer, .process-carousel, .mobile-process-carousel').forEach(element => {
+                document.querySelectorAll('.grid-image, .image-item, .cv-flyer').forEach(element => {
                     element.classList.add('fade-in-exhibition');
                     element.style.opacity = '1';
                 });

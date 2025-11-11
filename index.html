@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Hee-Eun Kim: Systems Artist</title>
+    <meta name="description" content="Hee-Eun Kim is a systems artist and researcher exploring the intersection of data, environment, and interactive systems through sound, installation, and computational art.">
+    <link rel="canonical" href="https://www.heund.net/" />
+    
+    <!-- Language variants for SEO -->
+    <link rel="alternate" hreflang="en" href="https://www.heund.net/" />
+    <link rel="alternate" hreflang="ko" href="https://www.heund.net/" />
+    <link rel="alternate" hreflang="x-default" href="https://www.heund.net/" />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -77,13 +85,6 @@
                             <i data-lucide="file-text" class="nav-icon"></i>
                             <span class="nav-label">about.md</span>
                         </div>
-                        
-                        <!-- File: Process -->
-                        <div class="nav-item" data-file="process">
-                            <i data-lucide="file-text" class="nav-icon"></i>
-                            <span class="nav-label">process.md</span>
-                        </div>
-                        
                         
                         <!-- Folder: Exhibitions -->
                         <div class="nav-folder">
@@ -417,16 +418,13 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
     </div>
     
     <script src="code-architecture.js"></script>
-    <script src="process-network.js"></script>
     <!-- Easter Egg System -->
     <script src="easter-eggs-config.js"></script>
     <script src="easter-eggs-animations.js"></script>
     <script src="easter-eggs.js"></script>
     <!-- Main Script -->
     <script src="script2.js?v=29"></script>
-    <script src="process-nodes.js"></script>
     <script src="video-player.js"></script>
-    <script src="mobile-process-carousel.js"></script>
     <script>
         // Lightbox state
         let currentImageIndex = 0;
@@ -459,7 +457,7 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
             }
             
             // Check for any fixed navigation arrows
-            const navArrows = document.querySelectorAll('.mobile-process-nav');
+            const navArrows = document.querySelectorAll('.mobile-nav-arrows');
             navArrows.forEach(arrow => {
                 const rect = arrow.getBoundingClientRect();
                 if (rect.left < 100) {
@@ -508,8 +506,8 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
                 
                 if (clickedImg) {
                     // Check if it's from a desktop or mobile carousel
-                    const desktopCarousel = clickedImg.closest('.process-carousel');
-                    const mobileCarousel = clickedImg.closest('.mobile-process-carousel');
+                    const desktopCarousel = clickedImg.closest('.carousel');
+                    const mobileCarousel = clickedImg.closest('.mobile-carousel');
                     
                     if (desktopCarousel) {
                         // Desktop carousel
@@ -622,10 +620,10 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
         let carouselPositions = {};
         let audioCarouselPositions = {};
         
-        // Initialize all process carousels
-        window.initializeProcessCarousels = function() {
+        // Initialize all carousels
+        window.initializeCarousels = function() {
             // Initialize desktop carousels
-            const carousels = document.querySelectorAll('.process-carousel');
+            const carousels = document.querySelectorAll('.carousel');
             carousels.forEach(carousel => {
                 const carouselId = carousel.getAttribute('data-carousel');
                 if (carouselId) {
@@ -634,7 +632,7 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
             });
             
             // Initialize mobile carousels
-            const mobileCarousels = document.querySelectorAll('.mobile-process-carousel');
+            const mobileCarousels = document.querySelectorAll('.mobile-carousel');
             mobileCarousels.forEach(carousel => {
                 const carouselId = carousel.getAttribute('data-mobile-carousel');
                 if (carouselId) {
