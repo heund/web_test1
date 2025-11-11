@@ -1,1 +1,4 @@
-folders/experiments/*.mp4 
+folders/experiments/*.mp4
+
+# Local development scripts
+git_update.bat
