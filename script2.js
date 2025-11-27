@@ -24,7 +24,6 @@ class TerminalPortfolio {
                     if (isKorean) {
                         // Korean structure
                         return `
-                            <img src="images/profile/image1.jpg" alt="Profile" class="profile-picture" id="profile-picture">
                             <div class="about-terminal">
                                 <div class="terminal-prompt">
                                     <span class="prompt-symbol">></span>
@@ -68,7 +67,6 @@ class TerminalPortfolio {
                     } else {
                         // English structure - completely independent
                         return `
-                            <img src="images/profile/image1.jpg" alt="Profile" class="profile-picture" id="profile-picture">
                             <div class="about-terminal">
                                 <div class="terminal-prompt">
                                     <span class="prompt-symbol">></span>
@@ -1217,39 +1215,7 @@ class TerminalPortfolio {
         if (!profilePic || !contentBody) return;
         
         // Clean up any existing scroll listeners first
-        if (this.profileScrollHandler) {
-            contentBody.removeEventListener('scroll', this.profileScrollHandler);
-        }
-        
-        const images = [
-            'images/profile/image1.jpg',
-            'images/profile/image2.jpg',
-            'images/profile/image3.jpg',
-            'images/profile/image4.jpg',
-            'images/profile/image5.jpg',
-            'images/profile/image6.jpg',
-            'images/profile/image7.jpg'
-        ];
-        
-        let currentImageIndex = 0;
-        
-        const updateImage = () => {
-            const scrollTop = contentBody.scrollTop;
-            const scrollHeight = contentBody.scrollHeight - contentBody.clientHeight;
-            const scrollPercent = scrollTop / scrollHeight;
-            
-            // Calculate which image to show based on scroll position
-            const newIndex = Math.min(Math.floor(scrollPercent * images.length), images.length - 1);
-            
-            if (newIndex !== currentImageIndex) {
-                currentImageIndex = newIndex;
-                profilePic.src = images[currentImageIndex];
-            }
-        };
-        
-        // Store the handler reference for cleanup
-        this.profileScrollHandler = updateImage;
-        contentBody.addEventListener('scroll', updateImage);
+        // Profile image cycling functionality removed
     }
     
     setupCommands() {
