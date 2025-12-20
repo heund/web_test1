@@ -1,4 +1,31 @@
 // Portfolio Website - Refactored Script
+// --- Path → hash adapter (SEO / direct URL support) ---
+(function adaptPathToHash() {
+  const path = window.location.pathname.replace(/\/+$/, "");
+
+  const pathToHash = {
+    "/about": "#about",
+
+    "/research/overview": "#research-overview",
+    "/research/bdss": "#research-bdss",
+    "/research/rcs": "#research-rcs",
+
+    "/exhibitions/overview": "#exhibitions-overview",
+    "/exhibitions/metal-rave": "#exhibition-metal",
+    "/exhibitions/resonance-loop": "#exhibition-resonance",
+    "/exhibitions/rotating-weights": "#exhibition-rotating",
+    "/exhibitions/embodied-algorithms": "#exhibition-embodied",
+    "/exhibitions/void-form": "#exhibition-void",
+    "/exhibitions/soil-contamination": "#exhibition-solar",
+    "/exhibitions/4x4-mediengruppe": "#exhibition-rhythm",
+
+    "/contact": "#contact"
+  };
+
+  if (!window.location.hash && pathToHash[path]) {
+    history.replaceState(null, "", pathToHash[path]);
+  }
+})();
 
 class TerminalPortfolio {
     constructor() {

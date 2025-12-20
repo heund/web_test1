@@ -3,15 +3,27 @@
     {
       "source": "/videos/(.*)",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "video/mp4"
-        },
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        }
+        { "key": "Content-Type", "value": "video/mp4" },
+        { "key": "Access-Control-Allow-Origin", "value": "*" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/about", "destination": "/" },
+
+    { "source": "/research/overview", "destination": "/" },
+    { "source": "/research/bdss", "destination": "/" },
+    { "source": "/research/rcs", "destination": "/" },
+
+    { "source": "/exhibitions/overview", "destination": "/" },
+    { "source": "/exhibitions/metal-rave", "destination": "/" },
+    { "source": "/exhibitions/resonance-loop", "destination": "/" },
+    { "source": "/exhibitions/rotating-weights", "destination": "/" },
+    { "source": "/exhibitions/embodied-algorithms", "destination": "/" },
+    { "source": "/exhibitions/void-form", "destination": "/" },
+    { "source": "/exhibitions/soil-contamination", "destination": "/" },
+    { "source": "/exhibitions/4x4-mediengruppe", "destination": "/" },
+
+    { "source": "/contact", "destination": "/" }
   ]
 }
