@@ -370,56 +370,6 @@ class TerminalPortfolio {
                 if (fileId) {
                     // Update URL hash for SEO and browser history
                     window.location.hash = fileId;
-
-                    // Push clean path URL for analytics, mirroring adaptPathToHash mapping
-                    let cleanPath = null;
-                    switch (fileId) {
-                        case 'about':
-                            cleanPath = '/about';
-                            break;
-                        case 'research-overview':
-                            cleanPath = '/research/overview';
-                            break;
-                        case 'research-bdss':
-                            cleanPath = '/research/bdss';
-                            break;
-                        case 'research-rcs':
-                            cleanPath = '/research/rcs';
-                            break;
-                        case 'exhibitions-overview':
-                            cleanPath = '/exhibitions/overview';
-                            break;
-                        case 'exhibition-metal':
-                            cleanPath = '/exhibitions/metal-rave';
-                            break;
-                        case 'exhibition-resonance':
-                            cleanPath = '/exhibitions/resonance-loop';
-                            break;
-                        case 'exhibition-rotating':
-                            cleanPath = '/exhibitions/rotating-weights';
-                            break;
-                        case 'exhibition-embodied':
-                            cleanPath = '/exhibitions/embodied-algorithms';
-                            break;
-                        case 'exhibition-void':
-                            cleanPath = '/exhibitions/void-form';
-                            break;
-                        case 'exhibition-solar':
-                            cleanPath = '/exhibitions/soil-contamination';
-                            break;
-                        case 'exhibition-rhythm':
-                            cleanPath = '/exhibitions/4x4-mediengruppe';
-                            break;
-                        case 'contact':
-                            cleanPath = '/contact';
-                            break;
-                        default:
-                            cleanPath = null;
-                    }
-
-                    if (cleanPath) {
-                        history.pushState(null, "", cleanPath);
-                    }
                     this.loadContent(fileId);
                     
                     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
