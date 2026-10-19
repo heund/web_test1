@@ -25,7 +25,7 @@ The preview is available at `http://127.0.0.1:4173`. Stop it with Ctrl+C. Previe
 - Runtime fragments live under `/_fragments/` in build output. Do not link to them from authored content or add them to the sitemap.
 - ISEA remains in `/research/overview` and `/ko/research/overview`; old standalone ISEA URLs redirect to the English overview. No new ISEA detail page is introduced.
 
-The generated title/description, canonical, language alternates and structured data are also updated on in-page navigation. The terminal layout, canvas and existing exhibition interactions remain in place. A small visible introduction sits below the canvas without covering its interaction area. Existing work images provide page-specific sharing previews, with a shared fallback for general and research pages.
+The generated title/description, canonical, language alternates and structured data are also updated on in-page navigation. The homepage retains its canvas-only presentation; artist identity and descriptions remain in metadata and structured data without an added visible introduction. Existing work images provide page-specific sharing previews, with a shared fallback for general and research pages.
 
 ## Vercel verification
 

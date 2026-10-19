@@ -31,8 +31,13 @@ for (const route of site.routes) for (const lang of ['en', 'kr']) {
         titles.add(document.title);
         assert.ok(document.querySelector('meta[name="description"]').content.length > 50);
         const content = document.querySelector('#content');
-        assert.ok(content.textContent.trim().length > 60, 'Content is in the HTTP response, before JS');
-        assert.ok(content.querySelector('h1'), 'Page has a semantic heading');
+        if (route.id === 'hero') {
+            assert.ok(content.querySelector('#code-architecture-canvas'));
+            assert.equal(content.textContent.trim(), '', 'The canvas homepage has no visible SEO introduction');
+        } else {
+            assert.ok(content.textContent.trim().length > 60, 'Content is in the HTTP response, before JS');
+            assert.ok(content.querySelector('h1'), 'Content page has a semantic heading');
+        }
         assert.equal(content.querySelector(lang === 'kr' ? '.lang-en' : '.lang-kr'), null);
         for (const video of content.querySelectorAll('video')) {
             assert.ok(video.hasAttribute('controls'), 'Static video has native playback controls without JavaScript');

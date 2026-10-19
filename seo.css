@@ -5,22 +5,6 @@ a.lang-btn { text-decoration: none; }
 a.cv-title-link { display: block; }
 a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
 
-/* Reserve space for the introduction so it never covers the interactive canvas. */
-.hero-intro { flex-direction: column; align-items: stretch; }
-.portfolio-canvas { position: relative; flex: 1 1 auto; min-height: 180px; }
-.portfolio-introduction {
-    position: relative; flex: 0 0 auto; z-index: 1;
-    padding: 12px 24px 16px; background: var(--bg-content);
-    text-align: center;
-}
-.portfolio-introduction h1, .portfolio-introduction p {
-    opacity: 1 !important; visibility: visible !important; transform: none !important;
-    margin: 4px 0 !important;
-}
-.portfolio-introduction h1 { font-size: 16px !important; }
-.portfolio-introduction p { font-size: 11px !important; line-height: 1.5 !important; }
-.portfolio-introduction a { color: inherit; text-underline-offset: 3px; }
-
 /* Semantic headings retain the existing About name and role hierarchy. */
 .desktop-about-text-section h1,
 .mobile-content-container .mobile-about-text-section h1 {
@@ -62,7 +46,6 @@ a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
     .static-page .content-area { display: block !important; width: 100%; overflow: visible !important; }
     .static-page #content { display: block !important; height: auto !important; overflow: visible !important; padding: 24px; }
     .static-page #mobile-content, .static-page #nav-toggle, .static-page .mobile-scroll-indicator { display: none !important; }
-    .portfolio-introduction { padding: 8px 16px 12px; }
     .mobile-content-container .mobile-about-text-section h1 { font-size: 22px !important; }
     .mobile-content-container .mobile-about-text-section h2 { font-size: 14px !important; }
 }
