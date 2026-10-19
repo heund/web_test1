@@ -7,6 +7,7 @@
     "/about": "#about",
 
     "/research/overview": "#research-overview",
+    "/research/isea-2026": "#research-isea",
     "/research/bdss": "#research-bdss",
     "/research/rcs": "#research-rcs",
 
@@ -211,6 +212,12 @@ class TerminalPortfolio {
                 html: null
             },
             
+            'research-isea': {
+                breadcrumb: 'research/isea-2026.md',
+                htmlFile: 'research/research-isea.html',
+                html: null
+            },
+
             'research-rcs': {
                 breadcrumb: 'research/rcs.md',
                 htmlFile: 'research/research-rcs.html',
