@@ -2224,16 +2224,14 @@ h3 {
     font-weight: 600;
 }
 
-.content-body a,
-.mobile-content-container .research-link {
+.content-body a {
     color: var(--accent-primary);
     text-decoration: none;
     border-bottom: 1px solid transparent;
     transition: border-color 0.2s;
 }
 
-.content-body a:hover,
-.mobile-content-container .research-link:hover {
+.content-body a:hover {
     border-bottom-color: var(--accent-primary);
 }
 

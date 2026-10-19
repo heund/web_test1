@@ -12,7 +12,6 @@
     { "source": "/about", "destination": "/" },
 
     { "source": "/research/overview", "destination": "/" },
-    { "source": "/research/isea-2026", "destination": "/" },
     { "source": "/research/bdss", "destination": "/" },
     { "source": "/research/rcs", "destination": "/" },
 
