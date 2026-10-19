@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initCustomVideoPlayers() {
+    // Keep native controls usable until the interactive content has loaded.
+    if (document.body.classList.contains('static-page')) return;
     const videoPlayers = document.querySelectorAll('.custom-video-player');
     
     if (videoPlayers.length === 0) {

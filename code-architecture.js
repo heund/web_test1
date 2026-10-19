@@ -9,6 +9,9 @@ class CodeArchitecture {
         if (!this.canvas) return;
         
         this.ctx = this.canvas.getContext('2d');
+        if (!this.ctx) return;
+        this.destroyed = false;
+        this.animationFrame = null;
         this.resize();
         
         this.codeLines = [];
@@ -120,12 +123,15 @@ class CodeArchitecture {
     "관찰하는 순간 이미 연루된다"
         ];
         
-        window.addEventListener('resize', () => this.resize());
-        this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
-        this.canvas.addEventListener('mousedown', (e) => this.handleMouseDown(e));
-        this.canvas.addEventListener('mouseup', (e) => this.handleMouseUp(e));
-        this.canvas.addEventListener('mouseleave', (e) => this.handleMouseUp(e));
-        this.canvas.addEventListener('click', (e) => this.handleClick(e));
+        this.eventHandlers = [
+            [window, 'resize', () => this.resize()],
+            [this.canvas, 'mousemove', event => this.handleMouseMove(event)],
+            [this.canvas, 'mousedown', event => this.handleMouseDown(event)],
+            [this.canvas, 'mouseup', event => this.handleMouseUp(event)],
+            [this.canvas, 'mouseleave', event => this.handleMouseUp(event)],
+            [this.canvas, 'click', event => this.handleClick(event)]
+        ];
+        this.eventHandlers.forEach(([target, type, handler]) => target.addEventListener(type, handler));
         
         // Generate first 3 lines immediately so animation starts right away
         this.generateCodeLine();
@@ -645,6 +651,7 @@ class CodeArchitecture {
     }
     
     animate() {
+        if (this.destroyed) return;
         this.time++;
         
         // Clear canvas
@@ -660,17 +667,35 @@ class CodeArchitecture {
         
         this.ctx.restore();
         
-        requestAnimationFrame(() => this.animate());
+        this.animationFrame = requestAnimationFrame(() => this.animate());
     }
+
+    destroy() {
+        if (this.destroyed) return;
+        this.destroyed = true;
+        if (this.animationFrame !== null) cancelAnimationFrame(this.animationFrame);
+        this.animationFrame = null;
+        this.eventHandlers?.forEach(([target, type, handler]) => target.removeEventListener(type, handler));
+        this.eventHandlers = [];
+    }
+}
+
+function destroyCodeArchitecture() {
+    window.codeArchAnimation?.destroy();
+    window.codeArchAnimation = null;
 }
 
 // Initialize when hero section is loaded
 function initCodeArchitecture() {
     const canvas = document.getElementById('code-architecture-canvas');
-    if (canvas) {
-        // Always create new instance when canvas is loaded
-        window.codeArchAnimation = new CodeArchitecture('code-architecture-canvas');
-    }
+    const existing = window.codeArchAnimation;
+    if (canvas && existing?.canvas === canvas && !existing.destroyed) return existing;
+    destroyCodeArchitecture();
+    if (!canvas) return null;
+    const animation = new CodeArchitecture('code-architecture-canvas');
+    if (!animation.ctx) return null;
+    window.codeArchAnimation = animation;
+    return animation;
 }
 
 // Auto-initialize if canvas exists

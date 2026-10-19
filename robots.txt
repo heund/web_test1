@@ -2,8 +2,5 @@ User-agent: *
 Allow: /
 
 Disallow: /folders/
-Disallow: /easter-eggs.js
-Disallow: /easter-eggs-animations.js
-Disallow: /easter-eggs-config.js
 
 Sitemap: https://www.heund.net/sitemap.xml

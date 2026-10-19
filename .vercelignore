@@ -1,0 +1,9 @@
+# Temporary local SEO audit material
+/heund-seo-audit-and-patch
+
+# Keep existing local-only exclusions out of CLI deployments too
+folders/experiments/*.mp4
+git_update.bat
+
+# Source deployments build their own output on Vercel
+/dist

@@ -2,3 +2,10 @@ folders/experiments/*.mp4
 
 # Local development scripts
 git_update.bat
+
+# Temporary local SEO audit material
+/heund-seo-audit-and-patch/
+
+# Generated static site and build dependencies
+node_modules/
+dist/

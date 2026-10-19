@@ -48,6 +48,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="seo.css">
     
     <!-- Umami Analytics -->
     <script defer src="https://cloud.umami.is/script.js" data-website-id="ec07f636-d54e-484c-9d76-822bffca41b8"></script>
@@ -89,8 +90,8 @@
                     </svg>
                 </button>
                 <div class="language-toggle">
-                    <button class="lang-btn active" data-lang="en">EN</button>
-                    <button class="lang-btn" data-lang="kr">KR</button>
+                    <a href="/" class="lang-btn active" data-lang="en" lang="en">EN</a>
+                    <a href="/ko" class="lang-btn" data-lang="kr" lang="ko">KR</a>
                 </div>
                 <div class="window-controls">
                     <span class="window-btn minimize"></span>
@@ -234,7 +235,7 @@
             </div>
             
             <!-- Command Line -->
-            <div class="command-line">
+            <div data-nosnippet class="command-line">
                 <span class="command-prompt">></span>
                 <input type="text" class="command-input" id="command-input" placeholder="Type 'help' for commands...">
             </div>
@@ -254,7 +255,7 @@
     </main>
     
     <!-- Desktop Folders (visible when minimized) -->
-    <div class="desktop-folders">
+    <div data-nosnippet class="desktop-folders">
         <div class="desktop-folder" data-folder="experiments">
             <i data-lucide="folder" class="desktop-folder-icon"></i>
             <span class="desktop-folder-label">Experiments</span>
@@ -262,7 +263,7 @@
     </div>
     
     <!-- Folder Window: Experiments -->
-    <div class="folder-window" id="experiments-window">
+    <div data-nosnippet class="folder-window" id="experiments-window">
         <div class="folder-window-titlebar">
             <div class="folder-window-title">Experiments</div>
             <div class="window-controls">
@@ -387,7 +388,7 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
     </div>
     
     <!-- PDF Viewer Window -->
-    <div class="pdf-viewer-window" id="pdf-viewer">
+    <div data-nosnippet class="pdf-viewer-window" id="pdf-viewer">
         <div class="folder-window-titlebar">
             <div class="folder-window-title" id="pdf-viewer-title">PDF Viewer</div>
             <div class="window-controls">
@@ -400,7 +401,7 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
     </div>
     
     <!-- Text Document Viewer Window -->
-    <div class="text-viewer-window" id="text-viewer">
+    <div data-nosnippet class="text-viewer-window" id="text-viewer">
         <div class="folder-window-titlebar">
             <div class="folder-window-title" id="text-viewer-title">Text Document</div>
             <div class="window-controls">
@@ -413,7 +414,7 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
     </div>
     
     <!-- Video Viewer Window -->
-    <div class="video-viewer-window" id="video-viewer">
+    <div data-nosnippet class="video-viewer-window" id="video-viewer">
         <div class="folder-window-titlebar">
             <div class="folder-window-title" id="video-viewer-title">Video Player</div>
             <div class="window-controls">
@@ -473,7 +474,8 @@ The user should be aware of the algorithm's tendency to curate a relatively narr
     <script src="easter-eggs-animations.js"></script>
     <script src="easter-eggs.js"></script>
     <!-- Main Script -->
-    <script src="script2.js?v=31"></script>
+    <script src="site-routes.js"></script>
+    <script src="script2.js?v=32"></script>
     <script src="video-player.js"></script>
     <script>
         // Lightbox state

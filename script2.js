@@ -1,161 +1,24 @@
 // Portfolio Website - Refactored Script
-// --- Path → hash adapter (SEO / direct URL support) ---
-(function adaptPathToHash() {
-  const path = window.location.pathname.replace(/\/+$/, "");
-
-  const pathToHash = {
-    "/about": "#about",
-
-    "/research/overview": "#research-overview",
-    "/research/bdss": "#research-bdss",
-    "/research/rcs": "#research-rcs",
-
-    "/exhibitions/overview": "#exhibitions-overview",
-    "/exhibitions/metal-rave": "#exhibition-metal",
-    "/exhibitions/resonance-loop": "#exhibition-resonance",
-    "/exhibitions/rotating-weights": "#exhibition-rotating",
-    "/exhibitions/embodied-algorithms": "#exhibition-embodied",
-    "/exhibitions/void-form": "#exhibition-void",
-    "/exhibitions/soil-contamination": "#exhibition-solar",
-    "/exhibitions/4x4-mediengruppe": "#exhibition-rhythm",
-
-    "/contact": "#contact"
-  };
-
-  if (!window.location.hash && pathToHash[path]) {
-    history.replaceState(null, "", pathToHash[path]);
-  }
-})();
-
 class TerminalPortfolio {
     constructor() {
-        this.currentFile = 'hero';
-        this.currentLang = 'en';
+        this.currentFile = PortfolioRoutes.resolve(location.pathname, location.hash)?.id || 'hero';
+        this.currentLang = PortfolioRoutes.resolve(location.pathname, location.hash)?.lang || 'en';
         this.translations = {};
+        this.translationCache = new Map();
+        this.observedLocation = location.href;
         this.animatedPages = new Set(); // Track which pages have been animated
         
         this.content = {
             hero: {
                 breadcrumb: 'intro',
-                html: `
-                    <div class="hero-intro">
-                        <canvas id="code-architecture-canvas"></canvas>
-                    </div>
-                `
+                htmlFile: 'content/intro.html',
+                html: null
             },
             about: {
                 breadcrumb: 'about.md',
-                getHTML: function() {
-                    const isKorean = document.documentElement.lang === 'ko';
-                    
-                    if (isKorean) {
-                        // Korean structure
-                        return `
-                            <div class="about-terminal">
-                                <div class="terminal-prompt">
-                                    <span class="prompt-symbol">></span>
-                                    <span class="prompt-command">about_me.txt</span>
-                                </div>
-                                
-                                <div class="terminal-output">
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.name"></span></p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line section-marker"><span class="line-marker">//</span> 01</p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line1.text1"></span> <span class="emphasis-word" data-i18n="about.line1.emphasis"></span> <span data-i18n="about.line1.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line2.text1"></span> <span class="emphasis-word pulse" data-i18n="about.line2.emphasis"></span> <span data-i18n="about.line2.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line3.text1"></span> <span class="emphasis-word" data-i18n="about.line3.emphasis"></span> <span data-i18n="about.line3.text2"></span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line4.text1"></span> <span class="emphasis-word glow" data-i18n="about.line4.emphasis"></span> <span data-i18n="about.line4.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line5"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line6"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line6b.text1"></span> <span class="emphasis-word" data-i18n="about.line6b.emphasis"></span> <span data-i18n="about.line6b.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line7.text1"></span> <span class="emphasis-word pulse" data-i18n="about.line7.emphasis"></span> <span data-i18n="about.line7.text2"></span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line8.text1"></span> <span class="emphasis-word" data-i18n="about.line8.emphasis"></span> <span data-i18n="about.line8.text2"></span></p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line section-marker"><span class="line-marker">//</span> 02</p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line1.text1"></span> <span class="emphasis-word" data-i18n="about.section2.line1.emphasis"></span> <span data-i18n="about.section2.line1.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line2b.text1"></span> <span class="emphasis-word pulse" data-i18n="about.section2.line2b.emphasis"></span> <span data-i18n="about.section2.line2b.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line3.text1"></span> <span class="emphasis-word glow" data-i18n="about.section2.line3.emphasis"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line3b.text1"></span> <span data-i18n="about.section2.line3b.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line4.text1"></span> <span class="emphasis-word" data-i18n="about.section2.line4.emphasis"></span> <span data-i18n="about.section2.line4.text2"></span></p>
-                                </div>
-                                
-                                <div class="terminal-cursor">_</div>
-                            </div>
-                        `;
-                    } else {
-                        // English structure - completely independent
-                        return `
-                            <div class="about-terminal">
-                                <div class="terminal-prompt">
-                                    <span class="prompt-symbol">></span>
-                                    <span class="prompt-command">about_me.txt</span>
-                                </div>
-                                
-                                <div class="terminal-output">
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.name"></span></p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line section-marker"><span class="line-marker">//</span> 01</p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line1.text1"></span> <span class="emphasis-word" data-i18n="about.line1.emphasis"></span> <span data-i18n="about.line1.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line2.text1"></span> <span class="emphasis-word" data-i18n="about.line2.emphasis"></span> <span data-i18n="about.line2.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line3.text1"></span> <span class="emphasis-word pulse" data-i18n="about.line3.emphasis"></span> <span data-i18n="about.line3.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line4"></span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line5.text1"></span> <span class="emphasis-word" data-i18n="about.line5.emphasis"></span> <span data-i18n="about.line5.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line6.text1"></span> <span class="emphasis-word glow" data-i18n="about.line6.emphasis"></span> <span data-i18n="about.line6.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line7.text1"></span> <span class="emphasis-word" data-i18n="about.line7.emphasis"></span> <span data-i18n="about.line7.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line8"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line9.text1"></span> <span class="emphasis-word pulse" data-i18n="about.line9.emphasis"></span> <span data-i18n="about.line9.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line10"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line11"></span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line12"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line13"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line14.text1"></span> <span class="emphasis-word" data-i18n="about.line14.emphasis"></span> <span data-i18n="about.line14.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line15.text1"></span> <span class="emphasis-word glow" data-i18n="about.line15.emphasis"></span> <span data-i18n="about.line15.text2"></span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line16.text1"></span> <span class="emphasis-word pulse" data-i18n="about.line16.emphasis"></span> <span data-i18n="about.line16.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line17"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line18"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line19"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line20.text1"></span> <span class="emphasis-word" data-i18n="about.line20.emphasis"></span> <span data-i18n="about.line20.text2"></span></p>
-                                    <p class="output-line blank"></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line21.text1"></span> <span class="emphasis-word glow" data-i18n="about.line21.emphasis"></span> <span data-i18n="about.line21.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.line22"></span></p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line section-marker"><span class="line-marker">//</span> 02</p>
-                                    <p class="output-line blank"></p>
-                                    
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line1"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line3"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line4.text1"></span> <span class="emphasis-word" data-i18n="about.section2.line4.emphasis"></span> <span data-i18n="about.section2.line4.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line5.text1"></span> <span class="emphasis-word pulse" data-i18n="about.section2.line5.emphasis"></span> <span data-i18n="about.section2.line5.text2"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line6"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line7"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line8"></span></p>
-                                    <p class="output-line"><span class="line-marker">></span> <span data-i18n="about.section2.line9.text1"></span> <span class="emphasis-word glow" data-i18n="about.section2.line9.emphasis"></span> <span data-i18n="about.section2.line9.text2"></span></p>
-                                </div>
-                                
-                                <div class="terminal-cursor">_</div>
-                            </div>
-                        `;
-                    }
-                }
+                htmlFile: 'content/about.html',
+                html: null
             },
-            
             'exhibitions-overview': {
                 breadcrumb: 'exhibitions/overview.md',
                 htmlFile: 'exhibitions/exhibitions-overview.html',
@@ -233,26 +96,8 @@ class TerminalPortfolio {
             // CONTACT
             contact: {
                 breadcrumb: 'contact.md',
-                html: `
-                    <div class="terminal-output-style">
-                        <div class="terminal-line" data-en="> interested in collaborations?" data-kr="협업, 의뢰 등은 아래의 이메일로 연락 부탁드립니다.">> interested in collaborating?</div>
-                        <div class="terminal-line terminal-line-en-only" data-en="> want to learn more about my work?">> want to learn more about my work?</div>
-                        <div class="terminal-line-blank"></div>
-                        <div class="terminal-line-primary terminal-line-en-only" data-en="say hello">say hello</div>
-                        <div class="terminal-line-blank terminal-line-blank-en-only"></div>
-                        <div class="terminal-line-email">
-                            <span class="prompt-symbol">></span>
-                            <a href="#" class="contact-email" id="email-link"></a>
-                        </div>
-                        <div class="terminal-line-blank"></div>
-                        <div class="terminal-line-muted">
-                            <span class="prompt-symbol">></span>
-                            <a href="https://www.instagram.com/h.eund/" target="_blank" class="contact-link">Instagram</a>
-                            <span class="separator"> · </span>
-                            <a href="https://www.youtube.com/@heund" target="_blank" class="contact-link">YouTube</a>
-                        </div>
-                    </div>
-                `,
+                htmlFile: 'content/contact.html',
+                html: null,
                 // Function to initialize email after content is loaded
                 initEmail: function() {
                     const emailLink = document.getElementById('email-link');
@@ -287,28 +132,22 @@ class TerminalPortfolio {
         this.setupWindowControls();
         this.setupDesktopFolders();
         
-        // Set default language on page load
-        await this.switchLanguage(this.currentLang);
-        
-        // Check for hash in URL and load that content, otherwise load hero
-        const hash = window.location.hash.substring(1); // Remove the # symbol
-        const initialContent = hash && this.content[hash] ? hash : 'hero';
-        this.loadContent(initialContent);
-        
-        // Set initial main content position
-        setTimeout(() => {
-            this.updateMainContentPosition();
-        }, 100);
-        
-        // Handle hash changes (browser back/forward)
-        window.addEventListener('hashchange', () => {
-            const newHash = window.location.hash.substring(1);
-            if (newHash && this.content[newHash]) {
-                this.loadContent(newHash);
-            }
-        });
+        const restore = () => {
+            // A history traversal can emit both popstate and hashchange.
+            if (location.href === this.observedLocation) return;
+            this.observedLocation = location.href;
+            const target = PortfolioRoutes.resolve(location.pathname, location.hash);
+            if (!target) return;
+            this.loadContent(target.id, { lang: target.lang, history: 'replace', preserveSearch: true });
+        };
+        window.addEventListener('popstate', restore);
+        // Preserve old bookmarks such as /#research-bdss.
+        window.addEventListener('hashchange', restore);
+        const initial = PortfolioRoutes.resolve(location.pathname, location.hash) || { id: 'hero', lang: 'en' };
+        await this.loadContent(initial.id, { lang: initial.lang, history: 'replace', preserveSearch: true });
+        setTimeout(() => this.updateMainContentPosition(), 100);
     }
-    
+
     setupMobileContent() {
         // Check if mobile
         if (window.innerWidth <= 1024) {
@@ -364,66 +203,27 @@ class TerminalPortfolio {
     }
     
     setupNavigation() {
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const fileId = item.dataset.file;
-                if (fileId) {
-                    // Update URL hash for SEO and browser history
-                    window.location.hash = fileId;
-                    this.loadContent(fileId);
-                    
-                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                }
-            });
+        // Leave modified clicks and new tabs to the browser.
+        document.addEventListener('click', event => {
+            const link = event.target.closest('a[data-file]');
+            if (!link || !PortfolioRoutes.byId[link.dataset.file] || event.defaultPrevented ||
+                event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+                link.target === '_blank' || link.hasAttribute('download')) return;
+            event.preventDefault();
+            this.loadContent(link.dataset.file);
         });
-        
-        // Add click handler for nav-header (Hee-Eun Kim) to go to hero page
-        const navHeader = document.querySelector('.nav-header[data-file]');
-        if (navHeader) {
-            navHeader.addEventListener('click', () => {
-                const fileId = navHeader.dataset.file;
-                if (fileId) {
-                    // Update URL hash for SEO and browser history
-                    window.location.hash = fileId;
-                    this.loadContent(fileId);
-                    
-                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                    const heroNavItem = document.querySelector('.nav-item[data-file="hero"]');
-                    if (heroNavItem) {
-                        heroNavItem.classList.add('active');
-                    }
-                }
-            });
-        }
-        
-        // Add click handler for mobile-title (Hee-Eun Kim) to go to hero page
-        const mobileTitle = document.querySelector('.mobile-title[data-file]');
-        if (mobileTitle) {
-            mobileTitle.addEventListener('click', () => {
-                const fileId = mobileTitle.dataset.file;
-                if (fileId) {
-                    this.loadContent(fileId);
-                    
-                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                    const heroNavItem = document.querySelector('.nav-item[data-file="hero"]');
-                    if (heroNavItem) {
-                        heroNavItem.classList.add('active');
-                    }
-                }
-            });
-        }
     }
-    
+
     setupLanguageToggle() {
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const lang = btn.dataset.lang;
-                this.switchLanguage(lang);
+        document.querySelectorAll('.lang-btn').forEach(link => {
+            link.addEventListener('click', event => {
+                if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+                event.preventDefault();
+                this.switchLanguage(link.dataset.lang);
             });
         });
     }
-    
+
     updateMainContentPosition() {
         const mainContent = document.querySelector('.main-content');
         const terminalWindow = document.querySelector('.terminal-window');
@@ -514,7 +314,7 @@ class TerminalPortfolio {
         contentBody.addEventListener('scroll', scrollHandler);
         
         // Trigger initial auto-scroll to center text section when page loads
-        setTimeout(() => {
+        const initialScrollTimeout = setTimeout(() => {
             const textSection = document.querySelector('.desktop-about-text-section');
             if (textSection) {
                 const windowHeight = window.innerHeight;
@@ -531,6 +331,7 @@ class TerminalPortfolio {
         const cleanup = () => {
             contentBody.removeEventListener('scroll', scrollHandler);
             clearTimeout(scrollTimeout);
+            clearTimeout(initialScrollTimeout);
             if (animationId) {
                 cancelAnimationFrame(animationId);
                 isAnimating = false;
@@ -541,77 +342,42 @@ class TerminalPortfolio {
         this.desktopAboutScrollCleanup = cleanup;
     }
     
-    async switchLanguage(lang) {
+    async switchLanguage(lang, updatePage = true, request = this.contentRequest) {
+        if (!['en', 'kr'].includes(lang)) return;
+        if (updatePage) {
+            return this.loadContent(this.currentFile, { lang, preserveSearch: true, preserveHero: true });
+        }
+        if (request !== this.contentRequest) return;
+        const languageChanged = lang !== this.currentLang;
         this.currentLang = lang;
-        
-        // Set body data-lang attribute for CSS show/hide
-        document.body.setAttribute('data-lang', lang);
-        
-        // STEP 1: Cancel all active animations
-        if (typeof cancelAllTypewriters === 'function') {
-            cancelAllTypewriters();
-        }
-        
-        // STEP 2: Update HTML lang attribute for accessibility and CSS :lang() selectors
+        document.body.dataset.lang = lang;
         document.documentElement.lang = lang === 'kr' ? 'ko' : 'en';
-        
-        // STEP 3: Update active button
-        document.querySelectorAll('.lang-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === lang);
+        document.querySelectorAll('.lang-btn').forEach(link => {
+            link.classList.toggle('active', link.dataset.lang === lang);
         });
-        
-        // STEP 4: Load and apply all translations (both data-i18n and data-en/kr)
-        await this.loadTranslations(lang);
-        
-        // STEP 4.5: Reload about section if currently viewing it (both desktop and mobile)
-        // Both mobile and desktop need reload because sticky text is generated in loadContent()
-        if (this.currentFile === 'about') {
-            // Reload to regenerate sticky text with correct language
-            this.loadContent('about');
-        }
-        
-        // STEP 4.6: Animate new language content if on exhibition/research pages
-        if (this.currentFile !== 'hero' && this.currentFile !== 'about' && this.animatedPages.has(this.currentFile)) {
-            const currentLangClass = lang === 'kr' ? '.lang-kr' : '.lang-en';
-            const langContainer = document.querySelector(currentLangClass);
-            
-            if (langContainer) {
-                // Immediately show all elements in the new language without animation
-                const elements = langContainer.querySelectorAll('h1, h2, .exhibition-text, p, .cv-entry, .cv-year, .cv-title, .cv-location, .cv-medium');
-                elements.forEach(element => {
-                    element.classList.add('fade-in-exhibition');
-                    element.style.opacity = '1';
-                    element.style.visibility = 'visible';
-                });
-            }
-        }
-        
-        // STEP 4.7: Re-initialize desktop carousel if on resonance-loop, embodied-algorithms, or rotating-weights page
-        const isMobileDevice = window.innerWidth <= 768;
-        if ((this.currentFile === 'exhibition-resonance' || this.currentFile === 'exhibition-embodied' || this.currentFile === 'exhibition-rotating') && !isMobileDevice) {
-            setTimeout(() => {
-                if (window.initDesktopResonanceCarousel) {
-                    window.initDesktopResonanceCarousel();
-                }
-            }, 100);
-        }
-        
-        // STEP 5: Process page animations removed - no typewriter animations
-        
-        // STEP 6: Update code-architecture animation if it exists and has a selected node
-        if (window.codeArchAnimation && window.codeArchAnimation.selectedNode) {
-            const node = window.codeArchAnimation.selectedNode;
-            const statement = lang === 'kr' ? node.statementKR : node.statementEN;
-            window.codeArchAnimation.targetText = '> ' + statement;
-            window.codeArchAnimation.typedText = '';
-            window.codeArchAnimation.typeSpeed = 0;
+        if (typeof cancelAllTypewriters === 'function') cancelAllTypewriters();
+        await this.loadTranslations(lang, request);
+        if (request !== this.contentRequest) return;
+        if (languageChanged && window.codeArchAnimation?.selectedNode) {
+            const animation = window.codeArchAnimation;
+            const node = animation.selectedNode;
+            animation.targetText = '> ' + (lang === 'kr' ? node.statementKR : node.statementEN);
+            animation.typedText = '';
+            animation.typeSpeed = 0;
         }
     }
-    
-    async loadTranslations(lang) {
+
+    async loadTranslations(lang, request = this.contentRequest) {
         try {
-            const response = await fetch(`translations/${lang}.json`);
-            this.translations = await response.json();
+            let translations = this.translationCache.get(lang);
+            if (!translations) {
+                const response = await fetch(`translations/${lang}.json`);
+                if (!response.ok) throw new Error(`Translation request failed: ${response.status}`);
+                translations = await response.json();
+                this.translationCache.set(lang, translations);
+            }
+            if (request !== this.contentRequest || lang !== this.currentLang) return;
+            this.translations = translations;
             this.applyTranslations();
         } catch (error) {
             console.error('Translation load failed:', error);
@@ -650,9 +416,26 @@ class TerminalPortfolio {
         });
     }
     
-    async loadContent(fileId) {
+    updateRoute(fileId, lang, options, search = '') {
+        if (!PortfolioRoutes.byId[fileId]) return;
+        const url = PortfolioRoutes.href(fileId, lang) + search;
+        // Metadata is ready before analytics observes the History API change.
+        PortfolioRoutes.metadata(document, fileId, lang);
+        if (options.history === 'replace') history.replaceState(history.state, '', url);
+        else if (location.pathname + location.search !== url || location.hash) history.pushState(null, '', url);
+        this.observedLocation = location.href;
+        document.body.dataset.page = fileId;
+    }
+
+    async loadContent(fileId, options = {}) {
         const contentData = this.content[fileId];
         if (!contentData) return;
+        // One generation covers translations, fragment loading and the final history update.
+        const request = this.contentRequest = (this.contentRequest || 0) + 1;
+        const lang = options.lang || this.currentLang;
+        const search = options.preserveSearch ? location.search : '';
+        await this.switchLanguage(lang, false, request);
+        if (request !== this.contentRequest) return;
         
         // Clean up any existing scroll listeners before loading new content
         if (this.profileScrollHandler) {
@@ -669,20 +452,38 @@ class TerminalPortfolio {
         // Use mobile-content on mobile, content on desktop
         const contentArea = isMobile ? document.getElementById('mobile-content') : document.getElementById('content');
         if (!contentArea) return;
+
+        // Keep the active canvas and its interaction state when only the home language changes.
+        if (options.preserveHero && fileId === 'hero' && this.currentFile === 'hero' &&
+            !document.body.classList.contains('static-page') && contentArea.querySelector('#code-architecture-canvas')) {
+            this.updateRoute(fileId, lang, options, search);
+            if (typeof initCodeArchitecture === 'function') initCodeArchitecture();
+            return;
+        }
         
         // Load HTML file if needed
         if (contentData.htmlFile && !contentData.html) {
             try {
-                const response = await fetch(contentData.htmlFile);
+                const route = PortfolioRoutes.byId[fileId];
+                const response = await fetch(route ? `/_fragments/${fileId}.txt` : contentData.htmlFile);
+                if (!response.ok) throw new Error(`Content request failed: ${response.status}`);
                 contentData.html = await response.text();
             } catch (error) {
+                if (request !== this.contentRequest) return;
                 console.error('Failed to load:', error);
+                // Keep the initial HTML if enhancement fails; other links can reload it.
+                if (PortfolioRoutes.byId[fileId]) {
+                    const url = PortfolioRoutes.href(fileId, lang) + search;
+                    if (location.pathname + location.search !== url || location.hash) location.assign(url);
+                }
                 return;
             }
         }
         
-        // Clean up desktop about scroll lock if switching away from about page
-        if (this.desktopAboutScrollCleanup && fileId !== 'about') {
+        if (request !== this.contentRequest) return;
+
+        // Dispose the old about view even when a language switch replaces it with another about view.
+        if (this.desktopAboutScrollCleanup) {
             this.desktopAboutScrollCleanup();
             this.desktopAboutScrollCleanup = null;
         }
@@ -692,14 +493,8 @@ class TerminalPortfolio {
         
         // Special handling for about.md on mobile and desktop - create parallax structure
         if (fileId === 'about') {
-            const scrollableContent = `
-                <p class="output-line"><span data-en="Hee-Eun Kim" data-kr="김희은">Hee-Eun Kim</span></p>
-                <p class="output-line"><span data-en="Systems Artist" data-kr="시스템 아티스트">Systems Artist</span></p>
-                <p class="output-line"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures</span></p>
-                <p class="output-line"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions</span></p>
-                <p class="output-line"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines</span></p>
-            `;
-            
+            const scrollableContent = contentData.html;
+
             // Extract text using the SAME method as translate() for data-en/data-kr
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = scrollableContent;
@@ -731,11 +526,7 @@ class TerminalPortfolio {
                         <div class="desktop-about-scroll-content">
                             <div class="desktop-about-spacer"></div>
                             <div class="desktop-about-text-section">
-                                <h2><span data-en="Hee-Eun Kim" data-kr="김희은">Hee-Eun Kim</span></h2>
-                                <h2><span data-en="Systems Artist" data-kr="시스템 아티스트">Systems Artist</span></h2>
-                                <p class="exhibition-text"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
-                                <p class="exhibition-text"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
-                                <p class="exhibition-text"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
+                                ${contentData.html}
                             </div>
                         </div>
                     </div>
@@ -761,11 +552,7 @@ class TerminalPortfolio {
                         <div class="mobile-about-scroll-content">
                             <div class="mobile-about-spacer"></div>
                             <div class="mobile-about-text-section">
-                                <h2><span data-en="Hee-Eun Kim" data-kr="김희은">Hee-Eun Kim</span></h2>
-                                <h2><span data-en="Systems Artist" data-kr="시스템 아티스트">Systems Artist</span></h2>
-                                <p class="exhibition-text"><span data-en="Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components." data-kr="데이터, 소리, 상호작용을 통해 다르게 알고 관계 맺는 방법을 만든다. 개별 요소로 환원하여 최적화하는 사고방식 대신, 무아와 상호연결성의 관점에서 복잡성을 다룬다. 분리된 실체가 아닌 관계 속에서 나타나는 패턴과 흐름을 경험 가능하게 만든다.">Hee-Eun builds alternative infrastructures for knowing and relating through data, sound, and interaction, preserving the relational nature of systems against frameworks that reduce them to isolated components.</span></p>
-                                <p class="exhibition-text"><span data-en="Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics." data-kr="데이터를 단순한 정보가 아니라 이야기를 담은 구조로 본다. 그 안에는 사람들의 결정, 시스템의 패턴, 보이지 않는 관계들이 담겨있다. 보편적 과학이 데이터로부터 객관적 사실을 추출하는 것을 목표로 한다면, 나는 관계와 맥락 속에서만 존재가 드러난다는 인식론적 접근을 취한다. 고정된 진리가 아닌 과정과 변화 그 자체를 다룬다. 작업은 답을 제시하기보다 질문을 유지하며, 우리의 인식을 형성하는 구조들을 드러낸다.">Her work is grounded in Eastern philosophical traditions that understand reality as processual, relational, and inherently multiple. She treats data as behaviour, focusing on its actions and effects rather than static representation. Her work reveals the narrative infrastructure containing human decisions and systemic patterns without collapsing them into simplified metrics.</span></p>
-                                <p class="exhibition-text"><span data-en="Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible." data-kr="데이터 엔진, 실시간 사운드 프로세싱 시스템, 인터랙티브 소프트웨어를 개발한다. 각 시스템은 특정 맥락을 감지하고 반응하도록 만들어지며, 결과가 미리 정해지지 않고 상황에 따라 나타나는 열린 구조로 작동한다. 현장 데이터를 수집하고 분석하여 장소의 특성을 반영하며, 사운드와 시각 요소가 결합된 인터랙티브 설치로 구현한다. 관객의 참여를 통해 시스템이 반응하고 변화하며 작업이 완성된다.">Hee-Eun develops custom data engines, real-time sound processing systems, and interactive software, not as tools applied to content, but as systems built to sense and respond to specific contexts. Each operates through open structures where outcomes emerge through encounter rather than being predetermined. The work completes itself through audience participation, not as an interactive feature but as a fundamental condition: the audience becomes implicated in the processes being made visible.</span></p>
+                                ${contentData.html}
                             </div>
                         </div>
                     </div>
@@ -892,7 +679,12 @@ class TerminalPortfolio {
         const isMobileDevice = window.innerWidth <= 1024;
         
         // Load content into container
+        if (typeof destroyCodeArchitecture === 'function') destroyCodeArchitecture();
         contentArea.innerHTML = htmlContent;
+        // Remove duplicate initial content/IDs when hydrating the mobile view.
+        if (isMobile) document.getElementById('content').replaceChildren();
+        document.body.classList.remove('static-page');
+        PortfolioRoutes.prepareLinks(contentArea, this.currentLang);
         
         // Initialize mobile resonance carousel if on resonance-loop page and mobile
         if (fileId === 'exhibition-resonance' && isMobileDevice) {
@@ -942,7 +734,8 @@ class TerminalPortfolio {
         }
         
         this.currentFile = fileId;
-        
+        this.updateRoute(fileId, lang, options, search);
+
         // Initialize email obfuscation for contact page
         if (fileId === 'contact' && contentData.initEmail) {
             setTimeout(() => {
@@ -961,19 +754,6 @@ class TerminalPortfolio {
             }
         }
         
-        // Setup click handlers for cv-title-link elements
-        setTimeout(() => {
-            document.querySelectorAll('.cv-title-link').forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetFile = link.dataset.file;
-                    if (targetFile) {
-                        this.loadContent(targetFile);
-                    }
-                });
-            });
-        }, 10);
-        
         // Apply translations
         this.applyTranslations();
         
@@ -985,13 +765,17 @@ class TerminalPortfolio {
             if (contentBody) {
                 contentBody.style.overflow = 'hidden';
             }
-            setTimeout(initCodeArchitecture, 100);
+            setTimeout(() => {
+                if (request === this.contentRequest) initCodeArchitecture();
+            }, 100);
         } else if (fileId === 'about' && !isMobile && typeof initCodeArchitecture === 'function') {
             // Use hero animation for desktop about page but allow scrolling
             if (contentBody) {
                 contentBody.style.overflow = 'auto';
             }
-            setTimeout(initCodeArchitecture, 100);
+            setTimeout(() => {
+                if (request === this.contentRequest) initCodeArchitecture();
+            }, 100);
             
             // Add scroll lock functionality for desktop about
             this.setupDesktopAboutScrollLock();

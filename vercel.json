@@ -1,29 +1,60 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/videos/(.*)",
       "headers": [
-        { "key": "Content-Type", "value": "video/mp4" },
-        { "key": "Access-Control-Allow-Origin", "value": "*" }
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/_fragments/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
       ]
     }
   ],
-  "rewrites": [
-    { "source": "/about", "destination": "/" },
-
-    { "source": "/research/overview", "destination": "/" },
-    { "source": "/research/bdss", "destination": "/" },
-    { "source": "/research/rcs", "destination": "/" },
-
-    { "source": "/exhibitions/overview", "destination": "/" },
-    { "source": "/exhibitions/metal-rave", "destination": "/" },
-    { "source": "/exhibitions/resonance-loop", "destination": "/" },
-    { "source": "/exhibitions/rotating-weights", "destination": "/" },
-    { "source": "/exhibitions/embodied-algorithms", "destination": "/" },
-    { "source": "/exhibitions/void-form", "destination": "/" },
-    { "source": "/exhibitions/soil-contamination", "destination": "/" },
-    { "source": "/exhibitions/4x4-mediengruppe", "destination": "/" },
-
-    { "source": "/contact", "destination": "/" }
+  "redirects": [
+    {
+      "source": "/exhibitions/exhibitions-overview",
+      "destination": "/exhibitions/overview",
+      "permanent": true
+    },
+    {
+      "source": "/research/research-overview",
+      "destination": "/research/overview",
+      "permanent": true
+    },
+    {
+      "source": "/research/research-bdss",
+      "destination": "/research/bdss",
+      "permanent": true
+    },
+    {
+      "source": "/research/research-rcs",
+      "destination": "/research/rcs",
+      "permanent": true
+    },
+    {
+      "source": "/research/isea-2026",
+      "destination": "/research/overview",
+      "permanent": true
+    },
+    {
+      "source": "/research/research-isea",
+      "destination": "/research/overview",
+      "permanent": true
+    }
   ]
 }

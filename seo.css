@@ -1,0 +1,68 @@
+/* Progressive enhancement: use the existing terminal design with real links. */
+a.nav-item, a.nav-header, a.mobile-title { color: inherit; text-decoration: none; }
+a.nav-header { display: block; }
+a.lang-btn { text-decoration: none; }
+a.cv-title-link { display: block; }
+a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+/* Reserve space for the introduction so it never covers the interactive canvas. */
+.hero-intro { flex-direction: column; align-items: stretch; }
+.portfolio-canvas { position: relative; flex: 1 1 auto; min-height: 180px; }
+.portfolio-introduction {
+    position: relative; flex: 0 0 auto; z-index: 1;
+    padding: 12px 24px 16px; background: var(--bg-content);
+    text-align: center;
+}
+.portfolio-introduction h1, .portfolio-introduction p {
+    opacity: 1 !important; visibility: visible !important; transform: none !important;
+    margin: 4px 0 !important;
+}
+.portfolio-introduction h1 { font-size: 16px !important; }
+.portfolio-introduction p { font-size: 11px !important; line-height: 1.5 !important; }
+.portfolio-introduction a { color: inherit; text-underline-offset: 3px; }
+
+/* Semantic headings retain the existing About name and role hierarchy. */
+.desktop-about-text-section h1,
+.mobile-content-container .mobile-about-text-section h1 {
+    opacity: 1 !important; visibility: visible !important;
+    font-size: 20px !important; font-weight: 600 !important;
+    font-family: 'IBM Plex Mono', monospace !important;
+    margin: 0 0 32px !important;
+}
+.desktop-about-text-section h2,
+.mobile-content-container .mobile-about-text-section h2 {
+    opacity: 1 !important; visibility: visible !important;
+    font-size: 13px !important; font-weight: 400 !important;
+    margin: -20px 0 32px !important;
+}
+
+/* Initial server HTML is also the usable fallback if JavaScript is unavailable. */
+.static-page #content * { opacity: 1 !important; visibility: visible !important; }
+.static-page #content h1 { scroll-margin-top: 64px; }
+.static-page #content .lang-en, .static-page #content .lang-kr { display: block; }
+.static-page .nav-folder-contents { display: block; max-height: none; }
+.static-page #content .mobile-resonance-carousel,
+.static-page #content .mobile-embodied-carousel { display: none !important; }
+.static-page #content .exhibition-content-wrapper { display: block !important; }
+.static-page #content .exhibition-text-column,
+.static-page #content .exhibition-image-column { display: block !important; width: auto !important; max-width: none !important; }
+.static-page #content .desktop-resonance-slide,
+.static-page #content .desktop-embodied-slide { position: static; display: block !important; }
+.static-page #content .custom-video-overlay,
+.static-page #content .custom-video-controls,
+.static-page #content .custom-fullscreen-btn,
+.static-page #content .video-loading-spinner { display: none !important; }
+.static-page .hero-intro { min-height: 240px; }
+@media (max-width: 1024px) {
+    .static-page { overflow: auto !important; height: auto !important; }
+    .static-page .main-content { position: relative !important; inset: auto !important; transform: none !important; width: 100% !important; height: auto !important; }
+    .static-page .terminal-window { position: relative !important; height: auto !important; min-height: 100vh; overflow: visible !important; }
+    .static-page .window-content { display: flex !important; flex-direction: column; overflow: visible !important; }
+    .static-page .sidebar-nav { display: block !important; width: 100%; max-height: none; overflow: visible; }
+    .static-page .content-area { display: block !important; width: 100%; overflow: visible !important; }
+    .static-page #content { display: block !important; height: auto !important; overflow: visible !important; padding: 24px; }
+    .static-page #mobile-content, .static-page #nav-toggle, .static-page .mobile-scroll-indicator { display: none !important; }
+    .portfolio-introduction { padding: 8px 16px 12px; }
+    .mobile-content-container .mobile-about-text-section h1 { font-size: 22px !important; }
+    .mobile-content-container .mobile-about-text-section h2 { font-size: 14px !important; }
+}

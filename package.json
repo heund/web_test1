@@ -1,0 +1,11 @@
+{
+  "name": "heund-portfolio",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "test": "node --test tests/seo.test.cjs tests/runtime.test.cjs",
+    "preview": "node scripts/preview.cjs"
+  },
+  "engines": { "node": "22.x" },
+  "devDependencies": { "linkedom": "0.18.12" }
+}
